@@ -1,13 +1,13 @@
 ## Working Game Name
 # Indiecisive
-# Game Identity - 
+# Game Identity
 Embark on a 2D adventure combining action and exploration, featuring a pirate on a quest across the solar system in search for the ultimate treasure.
 
-# Design Pillars - 
+# Design Pillars
 1. Chaos
 2. Mysterious
 3. Adventure
-# Genre/Story/Mechanics Summary - 
+# Genre/Story/Mechanics Summary
 - Cyber/Space pirate, traveling from planet to planet collecting treasure and fighting off rival ships in space. Treasure hunt style–each treasure you collect guides you to the next one, with the final treasure being at the end of the hunt. (Adventure Pillar)
 - Each planet is unique and unknown, no information to guide you aside from the knowledge that a treasure is there (Mysterious Pillar)
 - Collectathon–find the treasure on each planet, and gather resources to upgrade your ship with whatever bag space you have left (Adventure Pillar)
