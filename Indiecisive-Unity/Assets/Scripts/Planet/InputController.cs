@@ -17,8 +17,14 @@ public class InputController : MonoBehaviour
     void Update()
     {
         // Get input from WASD keys or arrow keys
-        moveInput.x = Input.GetAxis("Horizontal");
-        moveInput.y = Input.GetAxis("Vertical");
+        if (moveInput.y == 0) 
+        {
+            moveInput.x = Input.GetAxis("Horizontal");
+        }
+        else if (moveInput.x == 0)
+        {
+            moveInput.y = Input.GetAxis("Vertical");
+        }
     }
 
     void FixedUpdate()
