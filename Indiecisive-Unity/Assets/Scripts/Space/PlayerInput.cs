@@ -5,14 +5,18 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
-    //Player stats
+    //Player stats TODO: tune these as necessary
     private float moveSpeed = 5f;
     private float currentHealth = 5f;
     private float maxHealth = 5f;
+    //Do we want damage as a player variable or bullet variable?
 
     //Used for movement and collision
     private Rigidbody2D playerRB;
     private Vector2 moveDirection = Vector2.zero;
+
+    //Attach prefab used to instantiate bullets
+    public GameObject bulletPrefab;
 
     //Initializes elements
     void Start()
@@ -71,6 +75,16 @@ public class PlayerInput : MonoBehaviour
         if (moveDirection != Vector2.zero)
         {
             playerRB.MovePosition(playerRB.position + moveDirection * moveSpeed * Time.fixedDeltaTime);
+        }
+
+        //Checks for if player has pressed the fire button
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            //creates a new bullet at the player's position TODO: update this based on how it looks with ship sprite
+            var newBullet = Instantiate(bulletPrefab, playerRB.position, Quaternion.identity);
+
+            //attaches bullet movement script to newly created bullet
+            newBullet.AddComponent<PlayerBullet>();
         }
 
     }
