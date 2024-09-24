@@ -1,10 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class InputController : MonoBehaviour
 {
     public float moveSpeed = 5f;  // Speed at which the player moves
+    public float interactionRadius = 2f;  // Radius within which the player can interact with the ship
+    public GameObject spaceship;  // Reference to the spaceship
+    public TextMeshProUGUI interactionText;  // Reference to the TextMeshPro text element for interaction
+    public Vector3 textOffset = new Vector3(0, 1, 0);  // Offset to position the text above the player's head
 
     private Rigidbody2D rb;
     private Vector2 moveInput;
@@ -16,9 +19,21 @@ public class InputController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         currentDirection = null;
         queuedDirection = null;
+
+        // Ensure interactionText is hidden at the start
+        if (interactionText != null)
+        {
+            interactionText.gameObject.SetActive(false);
+        }
     }
 
     void Update()
+    {
+        HandleMovementInput();
+        HandleInteraction();
+    }
+
+    void HandleMovementInput()
     {
         // Handle directional inputs, prioritize first pressed, and queue secondary direction
         if (Input.GetKeyDown(KeyCode.W))
@@ -139,5 +154,49 @@ public class InputController : MonoBehaviour
         {
             rb.MovePosition(rb.position + moveInput * moveSpeed * Time.fixedDeltaTime);
         }
+    }
+
+    void HandleInteraction()
+    {
+        // Check if the player is within interaction radius of the spaceship
+        if (spaceship != null)
+        {
+            float distanceToShip = Vector2.Distance(transform.position, spaceship.transform.position);
+
+            if (distanceToShip <= interactionRadius)
+            {
+                // Show the interaction prompt and move it above the player's head
+                if (interactionText != null)
+                {
+                    interactionText.gameObject.SetActive(true);
+                    interactionText.text = "Press E to interact";
+
+                    // Update the position of the text above the player's head
+                    Vector3 worldPosition = transform.position + textOffset;
+                    worldPosition.z = 1;
+                    interactionText.transform.position = worldPosition;
+                }
+
+                // Check if the player presses 'E' to interact
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    InteractWithShip();
+                }
+            }
+            else
+            {
+                // Hide the interaction prompt if the player is too far
+                if (interactionText != null)
+                {
+                    interactionText.gameObject.SetActive(false);
+                }
+            }
+        }
+    }
+
+    void InteractWithShip()
+    {
+        // Your interaction logic here
+        Debug.Log("Player interacted with the spaceship");
     }
 }
