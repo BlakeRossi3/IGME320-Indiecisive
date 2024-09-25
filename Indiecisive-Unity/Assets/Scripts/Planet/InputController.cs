@@ -4,21 +4,25 @@ using UnityEngine;
 public class InputController : MonoBehaviour
 {
     public float moveSpeed = 5f;  // Speed at which the player moves
-    public float interactionRadius = 2f;  // Radius within which the player can interact with the ship
-    public GameObject spaceship;  // Reference to the spaceship
+    public float interactionRadius = 5f;  // Radius within which the player can interact with the ship
     public TextMeshProUGUI interactionText;  // Reference to the TextMeshPro text element for interaction
     public Vector3 textOffset = new Vector3(0, 1, 0);  // Offset to position the text above the player's head
+    public GameObject[] interactables; // Objects the player my interact with
 
     private Rigidbody2D rb;
     private Vector2 moveInput;
     private string currentDirection;  // Track which direction is currently active
     private string queuedDirection;   // Track which direction is pressed next
+    public bool textSwitch;
+    int objectNum = -1;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         currentDirection = null;
         queuedDirection = null;
+        rb.freezeRotation = true;
+
 
         // Ensure interactionText is hidden at the start
         if (interactionText != null)
@@ -156,47 +160,47 @@ public class InputController : MonoBehaviour
         }
     }
 
+
     void HandleInteraction()
     {
-        // Check if the player is within interaction radius of the spaceship
-        if (spaceship != null)
+        
+        if (textSwitch == false)
         {
-            float distanceToShip = Vector2.Distance(transform.position, spaceship.transform.position);
-
-            if (distanceToShip <= interactionRadius)
+            for (int i = 0; i < interactables.Length; i++)
             {
-                // Show the interaction prompt and move it above the player's head
-                if (interactionText != null)
+                objectNum = i;
+                float distanceToObject = Vector2.Distance(transform.position, interactables[i].transform.position);
+
+                // Check if the player is within interaction radius of the object
+                if (distanceToObject <= interactionRadius)
                 {
+                    // Show the interaction prompt and move it above the player's head
                     interactionText.gameObject.SetActive(true);
-                    interactionText.text = "Press E to interact";
-
-                    // Update the position of the text above the player's head
-                    Vector3 worldPosition = transform.position + textOffset;
-                    worldPosition.z = 1;
-                    interactionText.transform.position = worldPosition;
-                }
-
-                // Check if the player presses 'E' to interact
-                if (Input.GetKeyDown(KeyCode.E))
-                {
-                    InteractWithShip();
-                }
-            }
-            else
-            {
-                // Hide the interaction prompt if the player is too far
-                if (interactionText != null)
-                {
-                    interactionText.gameObject.SetActive(false);
+                    interactionText.text = "Press E to Interact";
+                    textSwitch = true;
+                    break;                    
                 }
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Interact(objectNum);
+        }
+
+        float distanceToObject2 = Vector2.Distance(transform.position, interactables[objectNum].transform.position);
+
+        if (distanceToObject2 > interactionRadius)
+        {
+            // Hide the interaction prompt if the player is too far
+            interactionText.gameObject.SetActive(false);
+            textSwitch = false;
+        }                                
     }
 
-    void InteractWithShip()
+    void Interact(int type)
     {
         // Your interaction logic here
-        Debug.Log("Player interacted with the spaceship");
+        Debug.Log("Player interacted with the object");
     }
 }

@@ -8,6 +8,7 @@ public class NPC : MonoBehaviour
     public GameObject[] obstacles;          // Array of obstacles in the scene
     private int count = 0;
     public Vector2 currentDirection;        // Current movement direction
+    private Rigidbody2D rb;
 
     void Start()
     {
