@@ -111,6 +111,7 @@ public class InputController : MonoBehaviour
         if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D))
         {
             moveInput = Vector2.zero;
+            rb.velocity = Vector2.zero;
             currentDirection = null;
             queuedDirection = null;
         }
@@ -195,6 +196,11 @@ public class InputController : MonoBehaviour
             // Hide the interaction prompt if the player is too far
             interactionText.gameObject.SetActive(false);
             textSwitch = false;
+            NPC npcComponent = interactables[objectNum].GetComponent<NPC>();
+            if (npcComponent != null)
+            {
+                npcComponent.moveSpeed = 2f;
+            }
         }                                
     }
 
@@ -202,5 +208,10 @@ public class InputController : MonoBehaviour
     {
         // Your interaction logic here
         Debug.Log("Player interacted with the object");
+        NPC npcComponent = interactables[type].GetComponent<NPC>();
+        if (npcComponent != null)
+        {
+            npcComponent.moveSpeed = 0;
+        }
     }
 }

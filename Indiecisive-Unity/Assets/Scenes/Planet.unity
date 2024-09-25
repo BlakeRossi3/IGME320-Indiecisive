@@ -606,7 +606,7 @@ BoxCollider2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_LayerOverridePriority: 0
+  m_LayerOverridePriority: 1
   m_ForceSendLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -1902,15 +1902,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e087cab6112fad4d8aa2350324acf2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 2
   obstacles:
   - {fileID: 849410973}
   - {fileID: 1110458851}
   - {fileID: 958616273}
   - {fileID: 171864298}
-  - {fileID: 2042298260}
   - {fileID: 1584304313}
   - {fileID: 6639096}
-  currentDirection: {x: 0, y: -1}
+  - {fileID: 2042298260}
+  count: 0
+  currentDirection: {x: 0, y: 1}
 --- !u!212 &1085508735
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2031,9 +2033,9 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1085508733}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
-  m_UseFullKinematicContacts: 0
+  m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
@@ -2650,15 +2652,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e087cab6112fad4d8aa2350324acf2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 2
   obstacles:
   - {fileID: 849410973}
   - {fileID: 1110458851}
   - {fileID: 958616273}
   - {fileID: 171864298}
-  - {fileID: 2042298260}
   - {fileID: 1085508733}
   - {fileID: 6639096}
-  currentDirection: {x: 1, y: 0}
+  - {fileID: 2042298260}
+  count: 0
+  currentDirection: {x: -1, y: 0}
 --- !u!212 &1584304315
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2779,9 +2783,9 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1584304313}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
-  m_UseFullKinematicContacts: 0
+  m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
@@ -3048,7 +3052,7 @@ Rigidbody2D:
   m_GameObject: {fileID: 2042298260}
   m_BodyType: 0
   m_Simulated: 1
-  m_UseFullKinematicContacts: 0
+  m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0

@@ -4,33 +4,39 @@ using UnityEngine;
 
 public class NPC : MonoBehaviour
 {
-    private float moveSpeed = 2f;            // Speed of the NPC
+    public float moveSpeed = 2f;            // Speed of the NPC
     public GameObject[] obstacles;          // Array of obstacles in the scene
-    private int count = 0;
+    public int count = 0;
     public Vector2 currentDirection;        // Current movement direction
     private Rigidbody2D rb;
 
+
+
     void Start()
     {
-
+        rb = GetComponent<Rigidbody2D>();
+        rb.freezeRotation = true;
     }
 
     void Update()
     {
         // Check for collisions with obstacles
-        for (int i = 0; i < obstacles.Length; i++)
+        if (count > 20)
         {
-            if (IsCollidingWithObstacle(obstacles[i]) && count > 700)
+            for (int i = 0; i < obstacles.Length; i++)
             {
-                // If there's a collision with an obstacle, choose a new random direction
-                currentDirection = ChooseNewDirection();
-                break; // No need to check other obstacles after detecting a collision
+                if (IsCollidingWithObstacle(obstacles[i]))
+                {
+                    // If there's a collision with an obstacle, choose a new random direction
+                    currentDirection = ChooseNewDirection();
+                    break; // No need to check other obstacles after detecting a collision
+                }
             }
-        }
 
-        count++;
+        }
         // Move the NPC in the current direction
-        transform.Translate(currentDirection * moveSpeed * Time.deltaTime);
+        rb.MovePosition(rb.position + currentDirection * moveSpeed * Time.fixedDeltaTime);
+        count++;
     }
 
     // Function to detect if NPC is colliding with an obstacle
@@ -48,20 +54,21 @@ public class NPC : MonoBehaviour
 
 
     // Utility function to get a random direction
-    Vector2   ChooseNewDirection()
+    Vector2 ChooseNewDirection()
     {
         count = 0;
 
-        int randomDir = Random.Range(0, 4);
-        switch (randomDir)
-        {
-            case 0: return Vector2.up;
-            case 1: return Vector2.down;
-            case 2: return Vector2.left;
-            case 3: return Vector2.right;
-            default: return Vector2.up;  // Fallback in case something goes wrong
-        }
+        // List of all possible directions
+        List<Vector2> possibleDirections = new List<Vector2> { Vector2.up, Vector2.down, Vector2.left, Vector2.right };
 
+        // Remove the current direction from the list of possible directions
+        possibleDirections.Remove(currentDirection);
 
+        // Choose a random direction from the remaining three directions
+        int randomIndex = Random.Range(0, possibleDirections.Count);
+
+        // Return the new direction
+        return possibleDirections[randomIndex];
     }
+
 }
