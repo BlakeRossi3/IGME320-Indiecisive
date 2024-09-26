@@ -1,24 +1,43 @@
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class InputController : MonoBehaviour
 {
     public float moveSpeed = 5f;  // Speed at which the player moves
+    public float interactionRadius = 5f;  // Radius within which the player can interact with the ship
+    public TextMeshProUGUI interactionText;  // Reference to the TextMeshPro text element for interaction
+    public Vector3 textOffset = new Vector3(0, 1, 0);  // Offset to position the text above the player's head
+    public GameObject[] interactables; // Objects the player my interact with
 
     private Rigidbody2D rb;
     private Vector2 moveInput;
     private string currentDirection;  // Track which direction is currently active
     private string queuedDirection;   // Track which direction is pressed next
+    public bool textSwitch;
+    int objectNum = -1;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         currentDirection = null;
         queuedDirection = null;
+        rb.freezeRotation = true;
+
+
+        // Ensure interactionText is hidden at the start
+        if (interactionText != null)
+        {
+            interactionText.gameObject.SetActive(false);
+        }
     }
 
     void Update()
+    {
+        HandleMovementInput();
+        HandleInteraction();
+    }
+
+    void HandleMovementInput()
     {
         // Handle directional inputs, prioritize first pressed, and queue secondary direction
         if (Input.GetKeyDown(KeyCode.W))
@@ -92,6 +111,7 @@ public class InputController : MonoBehaviour
         if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D))
         {
             moveInput = Vector2.zero;
+            rb.velocity = Vector2.zero;
             currentDirection = null;
             queuedDirection = null;
         }
@@ -139,5 +159,66 @@ public class InputController : MonoBehaviour
         {
             rb.MovePosition(rb.position + moveInput * moveSpeed * Time.fixedDeltaTime);
         }
+    }
+
+
+    void HandleInteraction()
+    {
+        
+        if (textSwitch == false)
+        {
+            // Loop through all the potential interactable objects
+            for (int i = 0; i < interactables.Length; i++)
+            {
+                objectNum = i;
+                float distanceToObject = Vector2.Distance(transform.position, interactables[i].transform.position);
+
+                // Check if the player is within interaction radius of the object
+                if (distanceToObject <= interactionRadius)
+                {
+                    // Show the interaction prompt and move it above the player's head
+                    interactionText.gameObject.SetActive(true);
+                    interactionText.text = "Press E to Interact";
+                    textSwitch = true;
+                    break;                    
+                }
+            }
+        }
+
+        
+
+        float distanceToObject2 = Vector2.Distance(transform.position, interactables[objectNum].transform.position);
+
+        if (Input.GetKeyDown(KeyCode.E) && distanceToObject2 < interactionRadius)
+        {
+            Interact(objectNum);
+        }
+
+        if (distanceToObject2 > interactionRadius)
+        {
+            // Hide the interaction prompt if the player is too far
+            interactionText.gameObject.SetActive(false);
+            textSwitch = false;
+            NPC npcComponent = interactables[objectNum].GetComponent<NPC>();
+            if (npcComponent != null)
+            {
+                npcComponent.moveSpeed = 2f;
+            }
+        }                                
+    }
+
+    void Interact(int type)
+    {
+        // Your interaction logic here
+        Debug.Log("Player interacted with the object");
+        NPC npcComponent = interactables[type].GetComponent<NPC>();
+        if (npcComponent != null)
+        {
+            npcComponent.moveSpeed = 0;
+        }
+
+        npcComponent.MenuInteraction();
+
+
     }
 }
