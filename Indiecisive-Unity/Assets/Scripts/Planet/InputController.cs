@@ -167,6 +167,7 @@ public class InputController : MonoBehaviour
         
         if (textSwitch == false)
         {
+            // Loop through all the potential interactable objects
             for (int i = 0; i < interactables.Length; i++)
             {
                 objectNum = i;
@@ -184,12 +185,14 @@ public class InputController : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
+        
+
+        float distanceToObject2 = Vector2.Distance(transform.position, interactables[objectNum].transform.position);
+
+        if (Input.GetKeyDown(KeyCode.E) && distanceToObject2 < interactionRadius)
         {
             Interact(objectNum);
         }
-
-        float distanceToObject2 = Vector2.Distance(transform.position, interactables[objectNum].transform.position);
 
         if (distanceToObject2 > interactionRadius)
         {
@@ -213,5 +216,9 @@ public class InputController : MonoBehaviour
         {
             npcComponent.moveSpeed = 0;
         }
+
+        npcComponent.MenuInteraction();
+
+
     }
 }

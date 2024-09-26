@@ -9,6 +9,8 @@ public class NPC : MonoBehaviour
     public int count = 0;
     public Vector2 currentDirection;        // Current movement direction
     private Rigidbody2D rb;
+    public GameObject menu; // Menu for interacting with ship
+    private bool active = false;
 
 
 
@@ -16,12 +18,13 @@ public class NPC : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         rb.freezeRotation = true;
+        menu.SetActive(false);
     }
 
     void Update()
     {
         // Check for collisions with obstacles
-        if (count > 20)
+        if (count > 75)
         {
             for (int i = 0; i < obstacles.Length; i++)
             {
@@ -69,6 +72,20 @@ public class NPC : MonoBehaviour
 
         // Return the new direction
         return possibleDirections[randomIndex];
+    }
+
+    public void MenuInteraction()
+    {
+        if (!active)
+        {
+            menu.SetActive(true);
+            active = true;
+        }
+        else
+        {
+            menu.SetActive(false); 
+            active = false;
+        }
     }
 
 }
