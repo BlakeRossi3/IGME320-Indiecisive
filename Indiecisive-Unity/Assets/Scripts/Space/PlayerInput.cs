@@ -14,21 +14,46 @@ public class PlayerInput : MonoBehaviour
     //Used for movement and collision
     private Rigidbody2D playerRB;
     private Vector2 moveDirection = Vector2.zero;
+    private Vector3 playerPixelPosition;
 
     //Attach prefab used to instantiate bullets
     public GameObject bulletPrefab;
+
+    //Game window boundaries
+    private float screenHeight = Screen.height;
+    private float screenWidth = Screen.width;
+    private Vector3 screenPixels;
+    private Vector3 screenWorld;
+
 
     //Initializes elements
     void Start()
     {
         //connects the rigidbody assigned in the scene editor
         playerRB = GetComponent<Rigidbody2D>();
+
+        //gets the screen size in world points
+        screenPixels = new Vector3 (screenWidth, screenHeight, 0);
+        screenWorld = Camera.main.ScreenToWorldPoint(screenPixels);
     }
 
     // Update is called once per frame
     void Update()
     {
+        //player input for movement
+        playerMovement();
 
+        //handles boundary collision
+        checkBounds();
+
+        //basic player fire
+        playerFire();
+
+    }
+
+    //player input for movement. uses WASD keys.
+    private void playerMovement()
+    {
         //Checks for keyboard input, adds direction to Vector2
         if (Input.GetKeyDown(KeyCode.W))
         {
@@ -68,7 +93,7 @@ public class PlayerInput : MonoBehaviour
         // If no direction key is held, stop the player
         if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D))
         {
-            moveDirection= Vector2.zero;
+            moveDirection = Vector2.zero;
         }
 
         //applies moveDirection to player 
@@ -76,16 +101,46 @@ public class PlayerInput : MonoBehaviour
         {
             playerRB.MovePosition(playerRB.position + moveDirection * moveSpeed * Time.fixedDeltaTime);
         }
+    }
 
+    //automatically moves the player back if they go out of bounds
+    //This is a workaround due to needing the ship to have a kinematic rigidbody instead of dynamic (physics issues)
+    private void checkBounds()
+    {
+        if (transform.position.y > screenWorld.y)
+        {
+            Vector3 newPosition = new Vector3(transform.position.x, screenWorld.y, 0);
+            transform.position = newPosition;
+        }
+        if (transform.position.y < - screenWorld.y)
+        {
+            Vector3 newPosition = new Vector3(transform.position.x, -screenWorld.y, 0);
+            transform.position = newPosition;
+        }
+        if (transform.position.x < -screenWorld.x)
+        {
+            Vector3 newPosition = new Vector3(-screenWorld.x, transform.position.y, 0);
+            transform.position = newPosition;
+        }
+        if (transform.position.x > screenWorld.x)
+        {
+            Vector3 newPosition = new Vector3(screenWorld.x, transform.position.y, 0);
+            transform.position = newPosition;
+        }
+    }
+
+    //fires basic bullet
+    private void playerFire()
+    {
         //Checks for if player has pressed the fire button
         if (Input.GetKeyUp(KeyCode.Space))
         {
             //creates a new bullet at the player's position TODO: update this based on how it looks with ship sprite
             var newBullet = Instantiate(bulletPrefab, playerRB.position, Quaternion.identity);
 
-            //attaches bullet movement script to newly created bullet
+            //attaches components to newly created bullet
             newBullet.AddComponent<PlayerBullet>();
         }
-
     }
+
 }
