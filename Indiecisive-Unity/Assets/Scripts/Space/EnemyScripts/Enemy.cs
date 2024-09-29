@@ -172,4 +172,12 @@ public abstract class Enemy : MonoBehaviour
             //Destroy(gameObject);
         }
     }
+
+    public void IgnoreInCollisions(BoxCollider2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            Physics2D.IgnoreCollision(collision, GetComponent<Collider2D>());
+        }
+    }
 }
