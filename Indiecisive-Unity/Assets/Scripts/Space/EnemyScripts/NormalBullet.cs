@@ -24,14 +24,34 @@ public class NormalBullet : MonoBehaviour
         rb.gravityScale = 0;
     }
 
+    private Vector3 cameraSize;
+    private Vector3 screenMax = Vector3.zero;
+    private Vector3 screenMin = Vector3.zero;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        cameraSize.y = Camera.main.orthographicSize * 2f;
+        cameraSize.x = cameraSize.y * Camera.main.aspect;
+        screenMin = new Vector3(-(cameraSize.x / 2), cameraSize.y / 2, 0);
+        screenMax = new Vector3(cameraSize.x / 2, -(cameraSize.y / 2), 0);
+    }
+
     // Update is called once per frame
     void Update()
     {
         // shoots the bullet straight down
         transform.Translate(Vector2.down * speed * Time.fixedDeltaTime);
 
-        // TODO: make the bullet follow the rotation of the enemy
+        // destroy when off screen--translate position to pixels, compare to screen height
+        if (transform.position.x <= screenMin.x ||
+            transform.position.x >= screenMax.x ||
+            transform.position.y >= screenMin.y ||
+            transform.position.y <= screenMax.y)
+        {
+            Destroy(gameObject);
+        }
 
-        // TODO: destroy when off screen--translate position to pixels, compare to screen height
+        // TODO: make the bullet follow the rotation of the enemy
     }
 }

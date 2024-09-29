@@ -11,7 +11,7 @@ public class EnemyManager : MonoBehaviour
     [SerializeField]
     Enemy enemyPrefab;
 
-    // list of all agents
+    // list of all enemies
     [SerializeField]
     protected List<Enemy> enemies;
 
@@ -21,7 +21,7 @@ public class EnemyManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Spawn in some agents
+        // Spawn in some enemies
         Spawn();
     }
 
@@ -40,5 +40,24 @@ public class EnemyManager : MonoBehaviour
 
             enemies[i].manager = this;
         }
+    }
+
+    public Enemy FindClosest(GameObject inEnemy)
+    {
+        float minDist = Mathf.Infinity;
+        Enemy nearest = null;
+
+        foreach (Enemy enemy in enemies)
+        {
+            float dist = Vector3.Distance(inEnemy.transform.position, enemy.transform.position);
+
+            if (dist < minDist)
+            {
+                nearest = enemy;
+                minDist = dist;
+            }
+        }
+
+        return nearest;
     }
 }
