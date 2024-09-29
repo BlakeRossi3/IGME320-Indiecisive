@@ -34,6 +34,10 @@ public abstract class Enemy : MonoBehaviour
     private Vector3 screenMax = Vector3.zero;
     private Vector3 screenMin = Vector3.zero;
 
+    //TODO: placeholder hp
+    protected float currentHP = 1f;
+    protected float maxHP = 2f;
+
     public Vector3 ScreenMax { get { return screenMax; } }
 
     public Vector3 ScreenMin { get { return screenMin; } }
@@ -167,9 +171,12 @@ public abstract class Enemy : MonoBehaviour
         //checks bullet type with tag
         if (collision.gameObject.CompareTag("PlayerBullet"))
         {
-            UnityEngine.Debug.Log("Enemy Hit!");
+            currentHP -= 1;
 
-            //Destroy(gameObject);
+            if (currentHP <= 0)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 
