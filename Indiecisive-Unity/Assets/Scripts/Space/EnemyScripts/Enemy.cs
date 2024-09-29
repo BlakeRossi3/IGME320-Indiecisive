@@ -66,6 +66,7 @@ public abstract class Enemy : MonoBehaviour
     }
 
     //when trigger collisions (player bullets) hit an enemy
+    //TODO: may move this to individual enemy scripts due to (assumed) hp differences.
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //checks bullet type with tag

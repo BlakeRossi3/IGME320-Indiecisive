@@ -1,15 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Threading;
 using UnityEngine;
 
-public class PlayerInput : MonoBehaviour
+public class Player : MonoBehaviour
 {
     //Player stats TODO: tune these as necessary
-    private float moveSpeed = 5f;
-    private float currentHealth = 5f;
-    private float maxHealth = 5f;
     //Do we want damage as a player variable or bullet variable?
+    private float moveSpeed = 5f;
+    public float currentHealth = 5f;
+    private float maxHealth = 5f;
+
+    //variables for handling player game over status
+    [HideInInspector]
+    public bool isGameOver = false;
+    [SerializeField]
+    private SpriteRenderer playerSprite;
 
     //Used for movement and collision
     private Rigidbody2D playerRB;
@@ -32,6 +39,10 @@ public class PlayerInput : MonoBehaviour
         //connects the rigidbody assigned in the scene editor
         playerRB = GetComponent<Rigidbody2D>();
 
+        //obtains the sprite renderer
+        //TODO: this is used as a placeholder way of giving feedback. may remove later.
+        playerSprite = GetComponent<SpriteRenderer>();
+
         //gets the screen size in world points
         screenPixels = new Vector3 (screenWidth, screenHeight, 0);
         screenWorld = Camera.main.ScreenToWorldPoint(screenPixels);
@@ -40,15 +51,33 @@ public class PlayerInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //player input for movement
-        playerMovement();
+        //Only allow player input if not in a game over state
+        if (!isGameOver)
+        {
+            //player input for movement
+            playerMovement();
 
-        //handles boundary collision
-        checkBounds();
+            //handles boundary collision
+            checkBounds();
 
-        //basic player fire
-        playerFire();
+            //basic player fire
+            playerFire();
+        }
 
+        //player feedback for gameover state
+        //TODO: placeholder way of handling this. should be updated later on.
+        if (isGameOver)
+        {
+            playerSprite.color = Color.red;
+
+            //TODO: DEBUG PURPOSES ONLY. REMOVE LATER
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                isGameOver = false;
+                playerSprite.color = Color.white;
+            }
+
+        }
     }
 
     //player input for movement. uses WASD keys.
@@ -149,10 +178,15 @@ public class PlayerInput : MonoBehaviour
     //checks if trigger collisions occur
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        //Generic enemy bullet -- 1 dmg
         if (collision.gameObject.CompareTag("EnemyBullet"))
         {
             UnityEngine.Debug.Log("Player hit!");
+
+            //Decreases health by 1
+            currentHealth -= 1;
         }
+
     }
 
 }
