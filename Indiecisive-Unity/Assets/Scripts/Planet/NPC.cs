@@ -30,9 +30,25 @@ public class NPC : MonoBehaviour
             {
                 if (IsCollidingWithObstacle(obstacles[i]))
                 {
-                    // If there's a collision with an obstacle, choose a new random direction
-                    currentDirection = ChooseNewDirection();
-                    break; // No need to check other obstacles after detecting a collision
+                    switch (i)
+                    {
+                        case 0:
+                            currentDirection = Vector2.down;
+                            break;
+                        case 1:
+                            currentDirection = Vector2.up;
+                            break;
+                        case 2:
+                            currentDirection = Vector2.left ;
+                            break;
+                        case 3:
+                            currentDirection = Vector2.right;
+                            break;
+                        default:
+                            currentDirection = ChooseNewDirection();
+                            break; 
+                    }
+                    
                 }
             }
 
