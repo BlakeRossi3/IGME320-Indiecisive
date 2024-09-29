@@ -21,7 +21,7 @@ public class EnemyType2 : Enemy
 
     protected override void CalcSteeringForces()
     {
-        targetPos = WanderInZone(wanderZone);
+        targetPos = WanderInZone();
         TotalForce += Flee(targetPos);
         TotalForce += StayInBoundsForce() * boundsWeight;
     }

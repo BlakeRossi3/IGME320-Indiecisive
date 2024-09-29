@@ -18,8 +18,12 @@ public abstract class Enemy : MonoBehaviour
     protected bool shootsBullets;
 
     [SerializeField]
-    protected float fireDelay = 5.0f;
+    protected float fireDelay;
     protected float fireCooldown = 0.5f;
+
+    [SerializeField]
+    protected float seekPointDelay;
+    protected float seekPointCooldown = 0.0f;
 
     protected Rigidbody2D enemyRB;
     protected Vector3 TotalForce = Vector3.zero;
@@ -38,7 +42,8 @@ public abstract class Enemy : MonoBehaviour
     void Start()
     {
         enemyRB = GetComponent<Rigidbody2D>();
-        enemyRB.isKinematic = true;
+        // temporary comment out since the movement code doesn't work with kinematic
+        //enemyRB.isKinematic = true;
 
         cameraSize.y = Camera.main.orthographicSize * 2f;
         cameraSize.x = cameraSize.y * Camera.main.aspect;
@@ -109,19 +114,6 @@ public abstract class Enemy : MonoBehaviour
         return Flee(target.transform.position);
     }
 
-    //when trigger collisions (player bullets) hit an enemy
-    //TODO: may move this to individual enemy scripts due to (assumed) hp differences.
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        //checks bullet type with tag
-        if (collision.gameObject.CompareTag("PlayerBullet"))
-        {
-            UnityEngine.Debug.Log("Enemy Hit!");
-
-            //Destroy(gameObject);
-        }
-    }
-
     protected Vector3 Wander(float time, float radius)
     {
         Vector3 futurePos = CalcFuturePosition(time);
@@ -140,16 +132,19 @@ public abstract class Enemy : MonoBehaviour
         return enemyRB.velocity * time + enemyRB.position;
     }
 
-    public Vector3 WanderInZone(GameObject wanderZone)
+    public Vector3 WanderInZone(/*GameObject wanderZone*/)
     {
         Vector3 targetPos = Vector3.zero;
-        Vector3 zonePos = wanderZone.transform.position;
-        Vector3 zoneScale = wanderZone.transform.lossyScale;
+        //Vector3 zonePos = wanderZone.transform.position;
+        //Vector3 zoneScale = wanderZone.transform.lossyScale;
 
-        targetPos.x = Random.Range(zonePos.x - zoneScale.x / 2, zonePos.x + zoneScale.x / 2);
-        targetPos.y = Random.Range(zonePos.y - zoneScale.y / 2, zonePos.y + zoneScale.y / 2);
+        //targetPos.x = Random.Range(zonePos.x - zoneScale.x / 2, zonePos.x + zoneScale.x / 2);
+        //targetPos.y = Random.Range(zonePos.y - zoneScale.y / 2, zonePos.y + zoneScale.y / 2);
 
-        return Seek(targetPos);
+        targetPos.x = Random.Range(-6f, 6f);
+        targetPos.y = Random.Range(1f, 4f);
+
+        return targetPos;
     }
 
     protected Vector3 StayInBoundsForce()
@@ -163,5 +158,18 @@ public abstract class Enemy : MonoBehaviour
         }
 
         return Vector3.zero;
+    }
+
+    //when trigger collisions (player bullets) hit an enemy
+    //TODO: may move this to individual enemy scripts due to (assumed) hp differences.
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        //checks bullet type with tag
+        if (collision.gameObject.CompareTag("PlayerBullet"))
+        {
+            UnityEngine.Debug.Log("Enemy Hit!");
+
+            //Destroy(gameObject);
+        }
     }
 }

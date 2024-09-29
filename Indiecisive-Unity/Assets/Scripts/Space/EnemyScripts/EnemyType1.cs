@@ -21,7 +21,12 @@ public class EnemyType1 : Enemy
 
     protected override void CalcSteeringForces()
     {
-        targetPos = WanderInZone(wanderZone);
+        seekPointCooldown -= Time.deltaTime;
+        if (seekPointCooldown <= 0)
+        {
+            targetPos = WanderInZone();
+            seekPointCooldown = seekPointDelay;
+        }
         TotalForce += Seek(targetPos);
         TotalForce += StayInBoundsForce() * boundsWeight;
     }

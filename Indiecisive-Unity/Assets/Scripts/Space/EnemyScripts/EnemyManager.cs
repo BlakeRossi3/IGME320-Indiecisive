@@ -38,6 +38,14 @@ public class EnemyManager : MonoBehaviour
         {
             enemies.Add(Instantiate<Enemy>(enemyPrefab));
 
+            // Set position
+            Vector2 spawnPosition = Vector2.zero;
+
+            spawnPosition.x = Random.Range(-5f, 5f);
+            spawnPosition.y = Random.Range(4f, 1f);
+
+            enemies[i].transform.position = spawnPosition;
+
             enemies[i].manager = this;
         }
     }

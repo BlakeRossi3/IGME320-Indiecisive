@@ -27,13 +27,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9191297168087706564}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 4, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8651574277114618362
 SpriteRenderer:
@@ -99,11 +99,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 446767f3e75f3cf4898619e2301c81b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 3.5
-  maxForce: 10
+  maxSpeed: 2
+  maxForce: 1
   sperateRange: 1
   shootsBullets: 1
-  fireDelay: 1
+  fireDelay: 2
+  seekPointDelay: 2
   manager: {fileID: 0}
   bulletPrefab: {fileID: 1636891944895576526, guid: 48110731598ee5b46af035b9511ec78f, type: 3}
   wanderZone: {fileID: 7721859869545744811, guid: 376173e705ad81c47b1ad77914886988, type: 3}
@@ -136,7 +137,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &-3238441991092169651
 BoxCollider2D:
   m_ObjectHideFlags: 0
