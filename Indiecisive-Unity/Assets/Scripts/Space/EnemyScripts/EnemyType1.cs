@@ -33,7 +33,8 @@ public class EnemyType1 : Enemy
 
             //attaches bullet movement script to newly created bullet
             newBullet.AddComponent<NormalBullet>();
-
+            newBullet.AddComponent<BoxCollider2D>();
+            newBullet.AddComponent<Rigidbody2D>();
             fireCooldown = fireDelay;
         }
     }

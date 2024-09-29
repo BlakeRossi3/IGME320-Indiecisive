@@ -7,6 +7,22 @@ public class NormalBullet : MonoBehaviour
 {
     [SerializeField]
     protected float speed = 1f;
+    private Rigidbody2D rb;
+    private BoxCollider2D collider;
+
+    void Start()
+    {
+        //Tags the bullet for collision purposes
+        gameObject.tag = "EnemyBullet";
+        rb = GetComponent<Rigidbody2D>();
+        collider = GetComponent<BoxCollider2D>();
+
+        //setting the bullet as a trigger allows it to pass through objects but trigger collision detection
+        collider.isTrigger = true;
+
+        //Sets gravity scale to 0
+        rb.gravityScale = 0;
+    }
 
     // Update is called once per frame
     void Update()

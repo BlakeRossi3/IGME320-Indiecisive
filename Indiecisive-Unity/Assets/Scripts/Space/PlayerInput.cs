@@ -140,6 +140,18 @@ public class PlayerInput : MonoBehaviour
 
             //attaches components to newly created bullet
             newBullet.AddComponent<PlayerBullet>();
+            newBullet.AddComponent<BoxCollider2D>();
+            newBullet.AddComponent<Rigidbody2D>();
+        }
+    }
+
+
+    //checks if trigger collisions occur
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("EnemyBullet"))
+        {
+            UnityEngine.Debug.Log("Player hit!");
         }
     }
 

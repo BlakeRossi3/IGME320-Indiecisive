@@ -26,6 +26,7 @@ public abstract class Enemy : MonoBehaviour
     void Start()
     {
         enemyRB = GetComponent<Rigidbody2D>();
+        enemyRB.isKinematic = true;
     }
 
     // Update is called once per frame
@@ -62,6 +63,18 @@ public abstract class Enemy : MonoBehaviour
     protected Vector3 Seek(GameObject target)
     {
         return Seek(target.transform.position);
+    }
+
+    //when trigger collisions (player bullets) hit an enemy
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        //checks bullet type with tag
+        if (collision.gameObject.CompareTag("PlayerBullet"))
+        {
+            UnityEngine.Debug.Log("Enemy Hit!");
+
+            //Destroy(gameObject);
+        }
     }
 
 }

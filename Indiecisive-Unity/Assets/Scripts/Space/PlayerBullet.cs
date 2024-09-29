@@ -12,8 +12,22 @@ public class PlayerBullet : MonoBehaviour
     //Bullet stats TODO: tune these as necessary
     private float speed = 1f;
     private Vector3 screenPosition;
-    
+    private BoxCollider2D collider;
+    private Rigidbody2D rb;
 
+    void Start()
+    {
+        //Adds a tag to the object (used for collision)
+        gameObject.tag = "PlayerBullet";
+
+        //setting the bullet as a trigger allows it to pass through objects but trigger collision detection
+        collider = GetComponent<BoxCollider2D>();
+        collider.isTrigger = true;
+
+        //ensures gravity is zero for bullets
+        rb = GetComponent<Rigidbody2D>();
+        rb.gravityScale = 0;
+    }
     // Update is called once per frame
     void Update()
     {
@@ -29,7 +43,6 @@ public class PlayerBullet : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
     }
 
 
