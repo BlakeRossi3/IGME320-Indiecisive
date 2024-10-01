@@ -241,9 +241,14 @@ public class InputController : MonoBehaviour
         if (npcComponent != null)
         {
             npcComponent.moveSpeed = 0;
+            
         }
+        if (type < 2)
+        {
+            npcComponent.DialogueOutput(type);
+        }
+        
 
-        npcComponent.DialogueOutput(type);
         npcComponent.MenuInteraction();
         
 
