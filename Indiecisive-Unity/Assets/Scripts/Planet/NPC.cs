@@ -10,7 +10,7 @@ public class NPC : MonoBehaviour
     public Vector2 currentDirection;        // Current movement direction
     private Rigidbody2D rb;
     public GameObject menu; // Menu for interacting with ship
-    private bool active = false;
+    public bool active = false;
 
 
 
@@ -43,6 +43,9 @@ public class NPC : MonoBehaviour
                             break;
                         case 3:
                             currentDirection = Vector2.right;
+                            break;
+                        case 6:
+                            moveSpeed = 0;
                             break;
                         default:
                             currentDirection = ChooseNewDirection();

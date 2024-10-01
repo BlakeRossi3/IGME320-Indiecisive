@@ -11,20 +11,30 @@ public class InputController : MonoBehaviour
 
     private Rigidbody2D rb;
     private Vector2 moveInput;
-    private string currentDirection;  // Track which direction is currently active
+    public string currentDirection;  // Track which direction is currently active
     private string queuedDirection;   // Track which direction is pressed next
     public bool textSwitch;
     int objectNum = -1;
 
+    // Sprites for each direciton and spriteRenderer
+    private SpriteRenderer spriteRenderer;
+    public Sprite upSprite;
+    public Sprite downSprite;
+    public Sprite leftSprite;
+    public Sprite rightSprite;
+
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
         currentDirection = null;
         queuedDirection = null;
         rb.freezeRotation = true;
+        
 
-
-        // Ensure interactionText is hidden at the start
+        // hide interaction text
         if (interactionText != null)
         {
             interactionText.gameObject.SetActive(false);
@@ -46,6 +56,7 @@ public class InputController : MonoBehaviour
             {
                 moveInput = Vector2.up;
                 currentDirection = "up";
+                spriteRenderer.sprite = upSprite;
             }
             else
             {
@@ -58,6 +69,7 @@ public class InputController : MonoBehaviour
             {
                 moveInput = Vector2.left;
                 currentDirection = "left";
+                spriteRenderer.sprite = leftSprite;
             }
             else
             {
@@ -70,6 +82,7 @@ public class InputController : MonoBehaviour
             {
                 moveInput = Vector2.down;
                 currentDirection = "down";
+                spriteRenderer.sprite = downSprite;
             }
             else
             {
@@ -82,6 +95,7 @@ public class InputController : MonoBehaviour
             {
                 moveInput = Vector2.right;
                 currentDirection = "right";
+                spriteRenderer.sprite = rightSprite;
             }
             else
             {
@@ -130,21 +144,25 @@ public class InputController : MonoBehaviour
                 {
                     moveInput = Vector2.up;
                     currentDirection = "up";
+                    spriteRenderer.sprite = upSprite;
                 }
                 else if (queuedDirection == "left" && Input.GetKey(KeyCode.A))
                 {
                     moveInput = Vector2.left;
                     currentDirection = "left";
+                    spriteRenderer.sprite = leftSprite;
                 }
                 else if (queuedDirection == "down" && Input.GetKey(KeyCode.S))
                 {
-                    moveInput = Vector2.down;
+                    moveInput = Vector2.down; 
                     currentDirection = "down";
+                    spriteRenderer.sprite = downSprite;
                 }
                 else if (queuedDirection == "right" && Input.GetKey(KeyCode.D))
                 {
                     moveInput = Vector2.right;
                     currentDirection = "right";
+                    spriteRenderer.sprite = rightSprite;
                 }
             }
 
@@ -180,6 +198,7 @@ public class InputController : MonoBehaviour
                     interactionText.gameObject.SetActive(true);
                     interactionText.text = "Press E to Interact";
                     textSwitch = true;
+                   
                     break;                    
                 }
             }
@@ -203,7 +222,14 @@ public class InputController : MonoBehaviour
             if (npcComponent != null)
             {
                 npcComponent.moveSpeed = 2f;
+
+
             }
+            if(npcComponent.active)
+            {
+                npcComponent.MenuInteraction();
+            }
+
         }                                
     }
 
