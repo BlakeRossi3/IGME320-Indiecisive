@@ -56,7 +56,7 @@ public class NPC : MonoBehaviour
             }
 
         }
-        // Move the NPC in the current direction
+        // Move the NPC in the current directio
         rb.MovePosition(rb.position + currentDirection * moveSpeed * Time.fixedDeltaTime);
         count++;
     }
