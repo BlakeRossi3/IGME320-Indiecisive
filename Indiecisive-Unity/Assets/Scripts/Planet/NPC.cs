@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
+using TMPro;
 
 public class NPC : MonoBehaviour
 {
@@ -10,8 +12,11 @@ public class NPC : MonoBehaviour
     public Vector2 currentDirection;        // Current movement direction
     private Rigidbody2D rb;
     public GameObject menu; // Menu for interacting with ship
-    private bool active = false;
-
+    public bool active = false;
+    public string[,] dialogue = null; //2D Array of dialogue lines
+    private string filePath = "Assets/dialogue.txt";
+    public TextMeshProUGUI npcText;
+    private int lineNum =0;
 
 
     void Start()
@@ -19,25 +24,56 @@ public class NPC : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         rb.freezeRotation = true;
         menu.SetActive(false);
+
+        LoadDialogue();
+
     }
 
     void Update()
     {
         // Check for collisions with obstacles
-        if (count > 75)
+        if (count > 120)
         {
             for (int i = 0; i < obstacles.Length; i++)
             {
                 if (IsCollidingWithObstacle(obstacles[i]))
                 {
-                    // If there's a collision with an obstacle, choose a new random direction
-                    currentDirection = ChooseNewDirection();
-                    break; // No need to check other obstacles after detecting a collision
+                    switch (i)
+                    {
+                        case 0:
+                            currentDirection = Vector2.down;
+                            break;
+                        case 1:
+                            currentDirection = Vector2.up;
+                            break;
+                        case 2:
+                            currentDirection = Vector2.left ;
+                            break;
+                        case 3:
+                            currentDirection = Vector2.right;
+                            break;
+                        case 6:
+                            moveSpeed = 0;
+                            break;
+                        case 8:
+                        case 9:
+                        case 10:
+                        case 11:
+                            currentDirection.x *= -1;
+                            currentDirection.y *= -1;
+                            count = 0;
+                            break;
+
+                        default:
+                            currentDirection = ChooseNewDirection();
+                            break; 
+                    }
+                    
                 }
             }
 
         }
-        // Move the NPC in the current direction
+        // Move the NPC in the current directio
         rb.MovePosition(rb.position + currentDirection * moveSpeed * Time.fixedDeltaTime);
         count++;
     }
@@ -86,6 +122,75 @@ public class NPC : MonoBehaviour
             menu.SetActive(false); 
             active = false;
         }
+    }
+
+    void LoadDialogue()
+    {
+        
+        // Read all lines from the dialogue file
+        string[] lines = File.ReadAllLines(filePath);
+
+        int npcCount = 0;
+        int maxLines = 0;
+
+        // First pass: Count the NPCs and max lines
+        foreach (string line in lines)
+        {
+            if (line.StartsWith("NPC"))
+            {
+                npcCount++;
+            }
+            else
+            {
+                maxLines++;
+            }
+        }
+
+        maxLines /= npcCount; // Adjust max lines based on NPC count
+
+        // Initialize the 2D dialogue array
+        dialogue = new string[maxLines, npcCount];
+
+        int npcIndex = -1;
+        int lineIndex = 0;
+
+        // Second pass: Populate the 2D array
+        foreach (string line in lines)
+        {
+            if (line.StartsWith("NPC"))
+            {
+                npcIndex++;
+                lineIndex = 0;  // Reset line index for each NPC
+            }
+            else if (!string.IsNullOrWhiteSpace(line))
+            {
+                if (npcIndex >= 0)
+                {
+                    
+                    dialogue[lineIndex, npcIndex] = line;
+                    lineIndex++;
+                }
+            }
+        }
+    }
+
+    public void DialogueOutput(int NPCnum)
+    {
+        if (lineNum >= dialogue.GetLength(NPCnum))
+        {
+            menu.SetActive(false);
+            active = false;
+            lineNum = 0;
+        }
+        else
+        {
+            Debug.Log("Line Number: "+ lineNum + " - " + dialogue[lineNum, NPCnum]);
+            npcText.text = dialogue[lineNum, NPCnum];
+            lineNum++;
+        }
+        
+
+        
     }
 
 }
