@@ -29,7 +29,7 @@ public class EnemyType1 : Enemy
         }
         TotalForce += Seek(targetPos);
         TotalForce += StayInBoundsForce() * boundsWeight;
-        //IgnoreInCollisions(enemyRB.GetComponent<BoxCollider2D>()); not working yet :(
+        //IgnoreCollisionsWithEnemies(enemyRB.GetComponent<Collider2D>());
     }
 
     protected override void ShootBullets()

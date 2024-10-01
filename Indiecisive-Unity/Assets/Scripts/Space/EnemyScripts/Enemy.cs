@@ -180,11 +180,12 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-    public void IgnoreInCollisions(BoxCollider2D collision)
+    public void IgnoreCollisionsWithEnemies(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Enemy")
-        {
-            Physics2D.IgnoreCollision(collision, GetComponent<Collider2D>());
-        }
+        Physics2D.IgnoreCollision(collision, GetComponent<Collider2D>());
+        //if (collision.gameObject.tag == "Enemy")
+        //{
+        //    Physics2D.IgnoreCollision(collision, GetComponent<Collider2D>());
+        //}
     }
 }

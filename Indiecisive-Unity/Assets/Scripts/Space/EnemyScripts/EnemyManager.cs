@@ -47,6 +47,7 @@ public class EnemyManager : MonoBehaviour
             enemies[i].transform.position = spawnPosition;
 
             enemies[i].manager = this;
+            //enemies[i].IgnoreCollisionsWithEnemies(enemies[i].GetComponent<Collider2D>());
         }
     }
 
