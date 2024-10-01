@@ -1,0 +1,14 @@
+NPC1
+Hey! I'm an NPC
+I guess thats kind of obvious :/
+If only the devs had more time to give me something to say!
+
+NPC2
+Hey!
+There's a shovel over by the ship...
+Could come in handy
+
+NPC3
+Hi!
+It's a nice day.
+Take care!

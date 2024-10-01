@@ -243,7 +243,9 @@ public class InputController : MonoBehaviour
             npcComponent.moveSpeed = 0;
         }
 
+        npcComponent.DialogueOutput(type);
         npcComponent.MenuInteraction();
+        
 
 
     }
