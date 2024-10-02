@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
+using static GameManager;
 
 public abstract class Enemy : MonoBehaviour
 {
@@ -27,6 +29,7 @@ public abstract class Enemy : MonoBehaviour
 
     protected Rigidbody2D enemyRB;
     protected Vector3 TotalForce = Vector3.zero;
+    protected float startDelay = 5.0f;
 
     public EnemyManager manager;
 
@@ -53,6 +56,7 @@ public abstract class Enemy : MonoBehaviour
         cameraSize.x = cameraSize.y * Camera.main.aspect;
         screenMin = new Vector3(-(cameraSize.x / 2), cameraSize.y / 2, 0);
         screenMax = new Vector3(cameraSize.x / 2, -(cameraSize.y / 2), 0);
+        //deadEnemies = 0;
     }
 
     // Update is called once per frame
@@ -72,6 +76,13 @@ public abstract class Enemy : MonoBehaviour
         {
             ShootBullets();
         }
+
+        // supposed to change state when no enemy bullets are left on screen
+        //if (GameObject.FindWithTag("EnemyBullet") == null && startDelay <= 0.0f)
+        //{
+        //    SceneManager.LoadScene("Planet");
+        //}
+        //startDelay -= Time.deltaTime;
     }
 
     protected abstract void CalcSteeringForces();
