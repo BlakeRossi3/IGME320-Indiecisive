@@ -247,7 +247,6 @@ public class InputController : MonoBehaviour
         {
             npcComponent.DialogueOutput(type);
         }
-        if (type )
         npcComponent.MenuInteraction();
     }
 }
