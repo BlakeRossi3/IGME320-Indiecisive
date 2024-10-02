@@ -8,9 +8,6 @@ public class EnemyType1 : Enemy
     protected GameObject bulletPrefab;
 
     [SerializeField]
-    protected GameObject wanderZone;
-
-    [SerializeField]
     protected Vector3 targetPos;
 
     [SerializeField]
@@ -22,12 +19,13 @@ public class EnemyType1 : Enemy
     protected override void CalcSteeringForces()
     {
         seekPointCooldown -= Time.deltaTime;
-        if (seekPointCooldown <= 0)
+        if (seekPointCooldown <= Random.Range(0f, 1f))
         {
             targetPos = WanderInZone();
             seekPointCooldown = seekPointDelay;
         }
         TotalForce += Seek(targetPos);
+        TotalForce += Separate();
         TotalForce += StayInBoundsForce() * boundsWeight;
         //IgnoreCollisionsWithEnemies(enemyRB.GetComponent<Collider2D>());
     }

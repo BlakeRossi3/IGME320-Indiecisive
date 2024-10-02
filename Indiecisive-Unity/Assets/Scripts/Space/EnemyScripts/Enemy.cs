@@ -1,32 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
+using static GameManager;
 
 public abstract class Enemy : MonoBehaviour
 {
     [SerializeField]
-    protected float maxSpeed = 5.0f;
+    protected float maxSpeed = 5.0f; // velocity
 
     [SerializeField]
-    protected float maxForce = 10.0f;
+    protected float maxForce = 10.0f; // acceleration
 
     [SerializeField]
-    protected float sperateRange = 1.0f;
+    protected float seperateRange = 1.0f;
 
     [SerializeField]
     protected bool shootsBullets;
 
     [SerializeField]
-    protected float fireDelay;
-    protected float fireCooldown = 0.5f;
+    protected float fireDelay; // delay between shots
+    protected float fireCooldown = 0.5f; // delay of initial shot
 
     [SerializeField]
-    protected float seekPointDelay;
-    protected float seekPointCooldown = 0.0f;
+    protected float seekPointDelay; // delay for finding a new random point to seek
+    protected float seekPointCooldown = 0.0f; // delay for initial point
 
     protected Rigidbody2D enemyRB;
     protected Vector3 TotalForce = Vector3.zero;
+    protected float stageTimer = 30.0f;
+    protected GameObject stageTimerObj/* = GameObject.Find("StageTimer")*/;
 
     public EnemyManager manager;
 
@@ -38,8 +42,8 @@ public abstract class Enemy : MonoBehaviour
     protected float currentHP = 1f;
     protected float maxHP = 2f;
 
+    public float FireDelay { get { return fireDelay; } set { fireDelay = value; } }
     public Vector3 ScreenMax { get { return screenMax; } }
-
     public Vector3 ScreenMin { get { return screenMin; } }
 
     // Start is called before the first frame update
@@ -72,12 +76,25 @@ public abstract class Enemy : MonoBehaviour
         {
             ShootBullets();
         }
+
+        if (stageTimer <= 0.0f)
+        {
+            SceneManager.LoadScene("Planet");
+        }
+        stageTimer -= Time.deltaTime;
+        //stageTimerObj.transform.position.x += Time.deltaTime;
     }
 
     protected abstract void CalcSteeringForces();
 
     protected abstract void ShootBullets();
 
+    /// <summary>
+    /// Sets the direction of the velocity to the direction of targetPos
+    /// relative to the enemy
+    /// </summary>
+    /// <param name="targetPos">Position of the point the enemy will go to</param>
+    /// <returns>The force required for the enemy to move to targetPos</returns>
     protected Vector3 Seek(Vector3 targetPos)
     {
         // Calculate desired velocity
@@ -98,6 +115,12 @@ public abstract class Enemy : MonoBehaviour
         return Seek(target.transform.position);
     }
 
+    /// <summary>
+    /// Sets the direction of the velocity opposite to the direction
+    /// of targetPos relative to the enemy
+    /// </summary>
+    /// <param name="targetPos">Position of the point the enemy will flee from</param>
+    /// <returns>The force required for the enemy to move away from targetPos</returns>
     protected Vector3 Flee(Vector3 targetPos)
     {
         // Calculate desired velocity
@@ -118,6 +141,36 @@ public abstract class Enemy : MonoBehaviour
         return Flee(target.transform.position);
     }
 
+    protected Vector3 Separate()
+    {
+        // Sum of all flee forces to separate
+        Vector3 separateForce = Vector3.zero;
+
+        // Go through all agents
+        foreach (Enemy enemy in manager.Enemies)
+        {
+            if(enemy.currentHP <= 0)
+            {
+                continue;
+            }
+            float dist = Vector3.Distance(transform.position, enemy.transform.position);
+
+            // Checking if an agent is on top of itself or another
+            if (Mathf.Epsilon < dist)
+            {
+                separateForce += Flee(enemy) * (seperateRange / dist);
+            }
+        }
+
+        return separateForce;
+    }
+
+    /// <summary>
+    /// Selects a random point in an area ahead of the enemy to Seek to
+    /// </summary>
+    /// <param name="time">How far ahead of the enemy the area will be</param>
+    /// <param name="radius">How big the area will be</param>
+    /// <returns>Seek to the random point calculated</returns>
     protected Vector3 Wander(float time, float radius)
     {
         Vector3 futurePos = CalcFuturePosition(time);
@@ -136,17 +189,16 @@ public abstract class Enemy : MonoBehaviour
         return enemyRB.velocity * time + enemyRB.position;
     }
 
-    public Vector3 WanderInZone(/*GameObject wanderZone*/)
+    /// <summary>
+    /// Finds a random point within the designated range
+    /// </summary>
+    /// <returns>The random point found</returns>
+    protected Vector3 WanderInZone()
     {
         Vector3 targetPos = Vector3.zero;
-        //Vector3 zonePos = wanderZone.transform.position;
-        //Vector3 zoneScale = wanderZone.transform.lossyScale;
 
-        //targetPos.x = Random.Range(zonePos.x - zoneScale.x / 2, zonePos.x + zoneScale.x / 2);
-        //targetPos.y = Random.Range(zonePos.y - zoneScale.y / 2, zonePos.y + zoneScale.y / 2);
-
-        targetPos.x = Random.Range(-6f, 6f);
-        targetPos.y = Random.Range(1f, 4f);
+        targetPos.x = Random.Range(screenMin.x, screenMax.x);
+        targetPos.y = Random.Range(1f, screenMin.y - 1.5f);
 
         return targetPos;
     }
@@ -180,7 +232,7 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-    public void IgnoreCollisionsWithEnemies(Collider2D collision)
+    protected void IgnoreCollisionsWithEnemies(Collider2D collision)
     {
         Physics2D.IgnoreCollision(collision, GetComponent<Collider2D>());
         //if (collision.gameObject.tag == "Enemy")

@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
@@ -48,6 +47,7 @@ public class EnemyManager : MonoBehaviour
 
             enemies[i].manager = this;
             //enemies[i].IgnoreCollisionsWithEnemies(enemies[i].GetComponent<Collider2D>());
+            enemies[i].FireDelay = Random.Range(0.8f, enemies[i].FireDelay);
         }
     }
 
