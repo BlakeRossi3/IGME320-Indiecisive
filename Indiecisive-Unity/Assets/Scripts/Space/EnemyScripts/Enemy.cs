@@ -29,7 +29,8 @@ public abstract class Enemy : MonoBehaviour
 
     protected Rigidbody2D enemyRB;
     protected Vector3 TotalForce = Vector3.zero;
-    protected float startDelay = 5.0f;
+    protected float stageTimer = 30.0f;
+    protected GameObject stageTimerObj/* = GameObject.Find("StageTimer")*/;
 
     public EnemyManager manager;
 
@@ -56,7 +57,6 @@ public abstract class Enemy : MonoBehaviour
         cameraSize.x = cameraSize.y * Camera.main.aspect;
         screenMin = new Vector3(-(cameraSize.x / 2), cameraSize.y / 2, 0);
         screenMax = new Vector3(cameraSize.x / 2, -(cameraSize.y / 2), 0);
-        //deadEnemies = 0;
     }
 
     // Update is called once per frame
@@ -77,12 +77,12 @@ public abstract class Enemy : MonoBehaviour
             ShootBullets();
         }
 
-        // supposed to change state when no enemy bullets are left on screen
-        //if (GameObject.FindWithTag("EnemyBullet") == null && startDelay <= 0.0f)
-        //{
-        //    SceneManager.LoadScene("Planet");
-        //}
-        //startDelay -= Time.deltaTime;
+        if (stageTimer <= 0.0f)
+        {
+            SceneManager.LoadScene("Planet");
+        }
+        stageTimer -= Time.deltaTime;
+        //stageTimerObj.transform.position.x += Time.deltaTime;
     }
 
     protected abstract void CalcSteeringForces();
@@ -197,8 +197,8 @@ public abstract class Enemy : MonoBehaviour
     {
         Vector3 targetPos = Vector3.zero;
 
-        targetPos.x = Random.Range(-10f, 10f);
-        targetPos.y = Random.Range(1f, 4f);
+        targetPos.x = Random.Range(screenMin.x, screenMax.x);
+        targetPos.y = Random.Range(1f, screenMin.y - 1.5f);
 
         return targetPos;
     }
