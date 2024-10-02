@@ -101,16 +101,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 2
   maxForce: 0.5
-  sperateRange: 1
+  seperateRange: 0.25
   shootsBullets: 1
-  fireDelay: 2
+  fireDelay: 1.5
   seekPointDelay: 2
   manager: {fileID: 0}
   bulletPrefab: {fileID: 1636891944895576526, guid: 48110731598ee5b46af035b9511ec78f, type: 3}
-  wanderZone: {fileID: 7721859869545744811, guid: 376173e705ad81c47b1ad77914886988, type: 3}
   targetPos: {x: 0, y: 0, z: 0}
   targetObject: {fileID: 0}
-  boundsWeight: 1
+  boundsWeight: 3
 --- !u!50 &-8339888383338116925
 Rigidbody2D:
   serializedVersion: 4
@@ -137,7 +136,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 0
 --- !u!61 &-3238441991092169651
 BoxCollider2D:
   m_ObjectHideFlags: 0

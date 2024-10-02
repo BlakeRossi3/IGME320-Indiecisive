@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de4c2cde181a8e64db5938fbc2331ebc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnCount: 3
+  spawnCount: 7
   enemyPrefab: {fileID: 6503120815084692272, guid: 6047828b514cd904797d2d1d09e326c2, type: 3}
   enemies: []
 --- !u!4 &44939683
@@ -199,7 +199,7 @@ GameObject:
   - component: {fileID: 301513859}
   - component: {fileID: 301513858}
   - component: {fileID: 301513857}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -316,7 +316,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.53, y: 1.99}
+  m_Size: {x: 2.25, y: 1.15}
   m_EdgeRadius: 0
 --- !u!50 &301513858
 Rigidbody2D:
