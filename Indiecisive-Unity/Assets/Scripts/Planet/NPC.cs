@@ -112,6 +112,7 @@ public class NPC : MonoBehaviour
 
     public void MenuInteraction()
     {
+        if (menu)
         if (!active)
         {
             menu.SetActive(true);
@@ -184,7 +185,6 @@ public class NPC : MonoBehaviour
         }
         else
         {
-            Debug.Log("Line Number: "+ lineNum + " - " + dialogue[lineNum, NPCnum]);
             npcText.text = dialogue[lineNum, NPCnum];
             lineNum++;
         }
