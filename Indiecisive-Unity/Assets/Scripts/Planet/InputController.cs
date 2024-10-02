@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InputController : MonoBehaviour
 {
@@ -24,10 +25,17 @@ public class InputController : MonoBehaviour
     public Sprite rightSprite;
 
     public bool shovel;
+    public int coins;
+    public Button myButton;
+    public GameObject uiPanel;
+    private bool uiToggle =false;
+
 
 
     void Start()
     {
+        uiPanel.SetActive(false);
+        coins = 0;
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -250,5 +258,25 @@ public class InputController : MonoBehaviour
             npcComponent.DialogueOutput(type);
         }
         npcComponent.MenuInteraction();
+    }
+
+    public void SideMenuToggle()
+    {
+        RectTransform rectTransform = myButton.GetComponent<RectTransform>();
+        // If the menu isnt already toggled
+        if (!uiToggle)
+        {
+            uiPanel.SetActive(true); // Set panel active
+            rectTransform.anchoredPosition += new Vector2(250, 0); // Move right 250
+            uiToggle = true;
+        }
+        else
+        {
+            uiPanel.SetActive(false);
+            rectTransform.anchoredPosition -= new Vector2(250, 0); // Move right 250
+            uiToggle=false;
+        }
+        
+
     }
 }

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class Item : MonoBehaviour
 {
@@ -11,11 +13,19 @@ public class Item : MonoBehaviour
     private Vector2 originalPosition;  // To store the original position of the item
     public GameObject uiPanel;  // The panel to display the item in
     public GameObject itemIconPrefab;  // Prefab of the item icon to display in the panel
+    public TextMeshProUGUI coinCount;
+    public bool isCoin;
+
 
     // Start is called before the first frame update
     void Start()
     {
+
         originalPosition = transform.position;
+        if (isCoin)
+        {
+            floatAmplitude = 0.2f;
+        }
     }
 
     // Update is called once per frame
@@ -27,7 +37,7 @@ public class Item : MonoBehaviour
     {
         float distanceToItem = Vector2.Distance(transform.position, astro.transform.position);
 
-        if (distanceToItem < pickUpRadius)
+        if (distanceToItem < pickUpRadius || isCoin)
         {
             // Animate the item using a sine wave for gentle floating
             float newY = originalPosition.y + Mathf.Sin(Time.time * floatSpeed) * floatAmplitude;
@@ -54,27 +64,39 @@ public class Item : MonoBehaviour
             {
                 gameObject.SetActive(false);
 
-                // Add the item icon to the UI panel
-                Debug.Log("Item in Bag");
-                GameObject itemIcon = Instantiate(itemIconPrefab);  // Create the icon from the prefab
-                itemIcon.transform.SetParent(uiPanel.transform, true);  // Set the parent to the panel
-
-
-                
-                RectTransform iconRectTransform = itemIcon.GetComponent<RectTransform>();
-
-                // Reset the local position and scale
-                iconRectTransform.localPosition = Vector3.zero;  // This places it in the middle of the panel
-                iconRectTransform.localScale = Vector3.one;      // Make sure the scale is correct
-                iconRectTransform.anchoredPosition = new Vector2(-30f, -120f);  // Adjust as needed based on your UI layout
-                iconRectTransform.sizeDelta = new Vector2(200, 200);
-                itemIcon.SetActive(true);
-                
-
                 InputController bag = astro.GetComponent<InputController>();
-                bag.shovel = true;
+
+                if (!isCoin)
+                {
+                    // Add the item icon to the UI panel
+                    GameObject itemIcon = Instantiate(itemIconPrefab);  // Create the icon from the prefab
+                    itemIcon.transform.SetParent(uiPanel.transform, true);  // Set the parent to the panel
+
+
+
+                    RectTransform iconRectTransform = itemIcon.GetComponent<RectTransform>();
+
+                    // Reset the local position and scale
+                    iconRectTransform.localPosition = Vector3.zero;  // This places it in the middle of the panel
+                    iconRectTransform.localScale = Vector3.one;      // Make sure the scale is correct
+                    iconRectTransform.anchoredPosition = new Vector2(-30f, -120f);  // Adjust as needed based on your UI layout
+                    iconRectTransform.sizeDelta = new Vector2(200, 200);
+                    itemIcon.SetActive(true);
+
+
+                    
+                    bag.shovel = true;
+                }
+                else
+                {
+                    bag.coins += 12;
+                    coinCount.text = (" : " + bag.coins);
+                }
+                
 
             }
         }
     }
+
+    
 }
