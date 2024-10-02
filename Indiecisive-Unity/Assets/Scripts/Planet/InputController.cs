@@ -23,6 +23,8 @@ public class InputController : MonoBehaviour
     public Sprite leftSprite;
     public Sprite rightSprite;
 
+    public bool shovel;
+
 
     void Start()
     {

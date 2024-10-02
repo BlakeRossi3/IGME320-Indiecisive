@@ -12,12 +12,12 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Path
   - Water
   - UI
   - NPC
   - Player
-  - Path
+  - 
   - 
   - 
   - 
