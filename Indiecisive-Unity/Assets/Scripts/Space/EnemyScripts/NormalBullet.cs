@@ -7,12 +7,10 @@ public class NormalBullet : MonoBehaviour
 {
     [SerializeField]
     protected float speed = 1f;
+
+    private Vector3 screenPosition;
     private Rigidbody2D rb;
     private BoxCollider2D collider;
-
-    private Vector3 cameraSize;
-    private Vector3 screenMax = Vector3.zero;
-    private Vector3 screenMin = Vector3.zero;
 
     void Start()
     {
@@ -26,11 +24,6 @@ public class NormalBullet : MonoBehaviour
 
         //Sets gravity scale to 0
         rb.gravityScale = 0;
-
-        cameraSize.y = Camera.main.orthographicSize * 2f;
-        cameraSize.x = cameraSize.y * Camera.main.aspect;
-        screenMin = new Vector3(-(cameraSize.x / 2), cameraSize.y / 2, 0);
-        screenMax = new Vector3(cameraSize.x / 2, -(cameraSize.y / 2), 0);
     }
 
     // Update is called once per frame
@@ -40,14 +33,10 @@ public class NormalBullet : MonoBehaviour
         transform.Translate(Vector2.down * speed * Time.fixedDeltaTime);
 
         // destroy when off screen--translate position to pixels, compare to screen height
-        if (transform.position.x <= screenMin.x ||
-            transform.position.x >= screenMax.x ||
-            transform.position.y >= screenMin.y ||
-            transform.position.y <= screenMax.y)
+        screenPosition = Camera.main.WorldToScreenPoint(transform.position);
+        if (screenPosition.y < -Screen.height)
         {
             Destroy(gameObject);
         }
-
-        // TODO: make the bullet follow the rotation of the enemy
     }
 }

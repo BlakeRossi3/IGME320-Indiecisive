@@ -29,8 +29,6 @@ public abstract class Enemy : MonoBehaviour
 
     protected Rigidbody2D enemyRB;
     protected Vector3 TotalForce = Vector3.zero;
-    protected float stageTimer = 30.0f;
-    protected GameObject stageTimerObj/* = GameObject.Find("StageTimer")*/;
 
     public EnemyManager manager;
 
@@ -76,13 +74,6 @@ public abstract class Enemy : MonoBehaviour
         {
             ShootBullets();
         }
-
-        if (stageTimer <= 0.0f)
-        {
-            SceneManager.LoadScene("Planet");
-        }
-        stageTimer -= Time.deltaTime;
-        //stageTimerObj.transform.position.x += Time.deltaTime;
     }
 
     protected abstract void CalcSteeringForces();
@@ -197,8 +188,8 @@ public abstract class Enemy : MonoBehaviour
     {
         Vector3 targetPos = Vector3.zero;
 
-        targetPos.x = Random.Range(screenMin.x, screenMax.x);
-        targetPos.y = Random.Range(1f, screenMin.y - 1.5f);
+        targetPos.x = Random.Range(screenMin.x + 0.5f, screenMax.x - 0.5f);
+        targetPos.y = Random.Range(0.5f, screenMin.y - 1.5f);
 
         return targetPos;
     }
