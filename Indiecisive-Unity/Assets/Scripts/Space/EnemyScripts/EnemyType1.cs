@@ -5,21 +5,23 @@ using UnityEngine;
 public class EnemyType1 : Enemy
 {
     [SerializeField]
-    protected GameObject bulletPrefab;
+    protected GameObject bulletPrefab; // sprite for bullets
 
     [SerializeField]
-    protected Vector3 targetPos;
+    protected Vector3 targetPos; // randomized position to wander from WanderInZone
 
     [SerializeField]
-    protected GameObject targetObject;
+    protected GameObject targetObject; // object to seek
 
     [SerializeField]
-    protected float boundsWeight;
+    protected float boundsWeight; // how strong the force of the screen bounds is
 
     protected override void CalcSteeringForces()
     {
         seekPointCooldown -= Time.fixedDeltaTime;
-        if (seekPointCooldown <= Random.Range(0f, 1f))
+
+        // slightly randomizes the time it takes for enemies to change where they are going
+        if (seekPointCooldown <= Random.Range(0f, 5f))
         {
             targetPos = WanderInZone();
             seekPointCooldown = seekPointDelay;

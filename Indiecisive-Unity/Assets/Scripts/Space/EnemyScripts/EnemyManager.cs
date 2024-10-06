@@ -47,7 +47,7 @@ public class EnemyManager : MonoBehaviour
 
             enemies[i].manager = this;
             //enemies[i].IgnoreCollisionsWithEnemies(enemies[i].GetComponent<Collider2D>());
-            enemies[i].FireDelay = Random.Range(0.8f, enemies[i].FireDelay);
+            enemies[i].FireDelay = Random.Range(10.0f, enemies[i].FireDelay);
         }
     }
 
