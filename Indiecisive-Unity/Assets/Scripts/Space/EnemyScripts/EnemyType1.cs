@@ -18,7 +18,7 @@ public class EnemyType1 : Enemy
 
     protected override void CalcSteeringForces()
     {
-        seekPointCooldown -= Time.deltaTime;
+        seekPointCooldown -= Time.fixedDeltaTime;
         if (seekPointCooldown <= Random.Range(0f, 1f))
         {
             targetPos = WanderInZone();
@@ -32,7 +32,7 @@ public class EnemyType1 : Enemy
 
     protected override void ShootBullets()
     {
-        fireCooldown -= Time.deltaTime;
+        fireCooldown -= Time.fixedDeltaTime;
 
         if (fireCooldown <= 0)
         {
