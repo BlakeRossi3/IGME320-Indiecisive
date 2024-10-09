@@ -16,25 +16,65 @@ public class EnemyType1 : Enemy
     [SerializeField]
     protected float boundsWeight; // how strong the force of the screen bounds is
 
+    [SerializeField]
+    protected bool firingEnabled = false;
+
     protected override void CalcSteeringForces()
     {
-        seekPointCooldown -= Time.fixedDeltaTime;
-
-        // slightly randomizes the time it takes for enemies to change where they are going
-        if (seekPointCooldown <= Random.Range(0f, 5f))
+        // make enable things when the enemy is inside the screen
+        if(transform.position.x >= ScreenMin.x &&
+           transform.position.x <= ScreenMax.x &&
+           transform.position.y <= ScreenMin.y &&
+           transform.position.y >= ScreenMax.y)
         {
-            targetPos = WanderInZone();
-            seekPointCooldown = seekPointDelay;
+            firingEnabled = true;
         }
-        TotalForce += Seek(targetPos);
-        TotalForce += Separate();
-        TotalForce += StayInBoundsForce() * boundsWeight;
-        //IgnoreCollisionsWithEnemies(enemyRB.GetComponent<Collider2D>());
+        else
+        {
+            firingEnabled = false;
+        }
+
+        if(stayOnScreenCooldown > 0)
+        {
+            seekPointCooldown -= Time.fixedDeltaTime;
+
+            // slightly randomizes the time it takes for enemies to change where they are going
+            if (seekPointCooldown <= Random.Range(0f, 10f))
+            {
+                targetPos = WanderInZone();
+                seekPointCooldown = seekPointDelay;
+                stayOnScreenCooldown--;
+            }
+            TotalForce += Seek(targetPos);
+            TotalForce += Separate();
+            //TotalForce += StayInBoundsForce() * boundsWeight;
+            //IgnoreCollisionsWithEnemies(enemyRB.GetComponent<Collider2D>());
+        }
+        else
+        {
+            Vector3 exitPoint = new Vector3(0.0f, 5.0f, 0.0f);
+            TotalForce = Flee(exitPoint);
+            maxSpeed += 0.5f;
+            firingEnabled = false;
+
+            // once the enemy gets far enough off screen, destroy
+            if (transform.position.x < ScreenMin.x * 1.2f ||
+               transform.position.x > ScreenMax.x * 1.2f ||
+               transform.position.y > ScreenMin.y * 1.2f ||
+               transform.position.y < ScreenMax.y * 1.2f)
+            {
+                Destroy(gameObject);
+                manager.Enemies.Remove(this);
+            }
+        }
     }
 
     protected override void ShootBullets()
     {
-        fireCooldown -= Time.fixedDeltaTime;
+        if(firingEnabled == true)
+        {
+            fireCooldown -= Time.fixedDeltaTime;
+        }
 
         if (fireCooldown <= 0)
         {

@@ -22,6 +22,8 @@ public class StageTimer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        stageTime *= 10; // account for editor input
+
         // moves the timer to the top right corner of the screen
         timerPosition = new Vector3(-Camera.main.orthographicSize * Camera.main.aspect, Camera.main.orthographicSize, 0.0f);
         transform.position = timerPosition;
@@ -49,6 +51,6 @@ public class StageTimer : MonoBehaviour
         transform.localScale = new Vector3(stageClock * ((Camera.main.orthographicSize * Camera.main.aspect * 2) / stageTime) * 2, 0.5f, 0.0f);
 
         // shows the time passed in the level in text
-        timerText.text = stageClock.ToString();
+        timerText.text = (stageClock / 10.0f).ToString();
     }
 }

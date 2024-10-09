@@ -34,7 +34,7 @@ public class NormalBullet : MonoBehaviour
 
         // destroy when off screen--translate position to pixels, compare to screen height
         screenPosition = Camera.main.WorldToScreenPoint(transform.position);
-        if (screenPosition.y < -Screen.height)
+        if (screenPosition.y < -Screen.height / 50)
         {
             Destroy(gameObject);
         }

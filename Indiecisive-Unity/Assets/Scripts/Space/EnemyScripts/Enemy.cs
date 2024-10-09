@@ -21,11 +21,15 @@ public abstract class Enemy : MonoBehaviour
 
     [SerializeField]
     protected float fireDelay; // delay between shots
-    protected float fireCooldown = 0.5f; // delay of initial shot
+    protected float fireCooldown = 5.0f; // delay of initial shot
 
     [SerializeField]
     protected float seekPointDelay; // delay for finding a new random point to seek
     protected float seekPointCooldown = 0.0f; // delay for initial point
+
+    [SerializeField]
+    protected float stayOnScreenCooldown; // how many points to wander to before leaving the screen
+    protected float inStayCooldown;
 
     protected Rigidbody2D enemyRB;
     protected Vector3 TotalForce = Vector3.zero;
@@ -50,6 +54,8 @@ public abstract class Enemy : MonoBehaviour
         enemyRB = GetComponent<Rigidbody2D>();
         // temporary comment out since the movement code doesn't work with kinematic
         //enemyRB.isKinematic = true;
+
+        inStayCooldown = stayOnScreenCooldown;
 
         cameraSize.y = Camera.main.orthographicSize * 2f;
         cameraSize.x = cameraSize.y * Camera.main.aspect;
@@ -137,19 +143,18 @@ public abstract class Enemy : MonoBehaviour
         // Sum of all flee forces to separate
         Vector3 separateForce = Vector3.zero;
 
-        // Go through all agents
-        foreach (Enemy enemy in manager.Enemies)
+        if(manager.Enemies.Count > 1)
         {
-            if(enemy.currentHP <= 0)
+            // Go through all agents
+            foreach (Enemy enemy in manager.Enemies)
             {
-                continue;
-            }
-            float dist = Vector3.Distance(transform.position, enemy.transform.position);
+                float dist = Vector3.Distance(transform.position, enemy.transform.position);
 
-            // Checking if an agent is on top of itself or another
-            if (Mathf.Epsilon < dist)
-            {
-                separateForce += Flee(enemy) * (seperateRange / dist);
+                // Checking if an agent is on top of itself or another
+                if (Mathf.Epsilon < dist)
+                {
+                    separateForce += Flee(enemy) * (seperateRange / dist);
+                }
             }
         }
 
@@ -219,6 +224,7 @@ public abstract class Enemy : MonoBehaviour
             if (currentHP <= 0)
             {
                 Destroy(gameObject);
+                manager.Enemies.Remove(this);
             }
         }
     }
