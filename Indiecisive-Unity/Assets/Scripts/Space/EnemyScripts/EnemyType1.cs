@@ -56,6 +56,7 @@ public class EnemyType1 : Enemy
             TotalForce = Flee(exitPoint);
             maxSpeed += 0.5f;
             firingEnabled = false;
+            transform.localScale += new Vector3(-0.0005f, -0.0005f, 0.0f);
 
             // once the enemy gets far enough off screen, destroy
             if (transform.position.x < ScreenMin.x * 1.2f ||
