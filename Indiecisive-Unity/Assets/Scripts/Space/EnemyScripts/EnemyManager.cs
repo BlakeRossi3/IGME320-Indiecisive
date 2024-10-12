@@ -9,7 +9,8 @@ public class EnemyManager : MonoBehaviour
 
     [SerializeField]
     protected float spawnDelay; // how long to wait between batches of enemies
-    private float inSpawnDelay; // save the input spawnDelay
+    private float tempSpawnDelay; // save the input spawnDelay
+    private float initialSpawnDelay; // how long it takes for the first set of enemies to spawn
 
     [SerializeField]
     protected Enemy enemyPrefab;
@@ -19,27 +20,30 @@ public class EnemyManager : MonoBehaviour
     protected List<Enemy> enemies;
 
     public List<Enemy> Enemies { get { return enemies; } set { enemies = value; } }
+    public float InitialSpawnDelay { get { return initialSpawnDelay; } set { initialSpawnDelay = value; } }
 
 
     // Start is called before the first frame update
     void Start()
     {
-        // Spawn initial enemies
-        Spawn();
         spawnDelay *= 10; // account for editor input
-        inSpawnDelay = spawnDelay;
+        tempSpawnDelay = spawnDelay;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (spawnDelay <= 0.0f || enemies.Count <= 1)
+        if(initialSpawnDelay <= 0.0f)
         {
-            // Spawn in some enemies
-            Spawn();
-            spawnDelay = inSpawnDelay;
+            if (spawnDelay <= 0.0f || enemies.Count <= 1)
+            {
+                // Spawn in some enemies
+                Spawn();
+                spawnDelay = tempSpawnDelay;
+            }
+            spawnDelay -= Time.fixedDeltaTime;
         }
-        spawnDelay -= Time.fixedDeltaTime;
+        initialSpawnDelay -= Time.fixedDeltaTime;
     }
 
     // Spawn methods
@@ -69,7 +73,7 @@ public class EnemyManager : MonoBehaviour
 
             enemies[i].manager = this;
             //enemies[i].IgnoreCollisionsWithEnemies(enemies[i].GetComponent<Collider2D>());
-            enemies[i].FireDelay = Random.Range(10.0f, enemies[i].FireDelay);
+            enemies[i].FireDelay = Random.Range(1.0f, enemies[i].FireDelay);
         }
         spawnCount = tempSpawnCount;
     }

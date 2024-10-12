@@ -19,6 +19,10 @@ public class StageTimer : MonoBehaviour
     private float stageClock = 0.0f; // increments each frame until it equals stageTime
     private Vector3 timerPosition; // the starting position of the progress bar
 
+    private float initialStartDelay; // how long it takes for the timer to start
+
+    public float InitialStartDelay { get { return initialStartDelay; } set { initialStartDelay = value; } }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,19 +42,23 @@ public class StageTimer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // if the time in the level has reached the set time, send the player back to the planet
-        if(stageClock >= stageTime)
+        if(initialStartDelay <= 0.0f)
         {
-            SceneManager.LoadScene("Planet");
+            // if the time in the level has reached the set time, send the player back to the planet
+            if (stageClock >= stageTime)
+            {
+                SceneManager.LoadScene("Planet");
+            }
+
+            // increment the stage clock
+            stageClock += Time.fixedDeltaTime;
+
+            // moves the progress bar across the screen
+            transform.localScale = new Vector3(stageClock * ((Camera.main.orthographicSize * Camera.main.aspect * 2) / stageTime) * 2, 0.5f, 0.0f);
+
+            // shows the time passed in the level in text
+            timerText.text = (stageClock / 10.0f).ToString();
         }
-
-        // increment the stage clock
-        stageClock += Time.fixedDeltaTime;
-
-        // moves the progress bar across the screen
-        transform.localScale = new Vector3(stageClock * ((Camera.main.orthographicSize * Camera.main.aspect * 2) / stageTime) * 2, 0.5f, 0.0f);
-
-        // shows the time passed in the level in text
-        timerText.text = (stageClock / 10.0f).ToString();
+        initialStartDelay -= Time.fixedDeltaTime;
     }
 }

@@ -7,10 +7,20 @@ public class Manager : MonoBehaviour
     [SerializeField]
     Player playerClass;
 
+    [SerializeField]
+    EnemyManager enemies;
+
+    [SerializeField]
+    StageTimer timer;
+
+    [SerializeField]
+    protected float startDelay;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        enemies.InitialSpawnDelay = startDelay;
+        timer.InitialStartDelay = startDelay;
     }
 
     // Update is called once per frame

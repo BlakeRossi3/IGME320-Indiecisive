@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class EnemyType1 : Enemy
@@ -22,9 +24,9 @@ public class EnemyType1 : Enemy
     protected override void CalcSteeringForces()
     {
         // make enable things when the enemy is inside the screen
-        if(transform.position.x >= ScreenMin.x &&
+        if (transform.position.x >= ScreenMin.x &&
            transform.position.x <= ScreenMax.x &&
-           transform.position.y <= ScreenMin.y &&
+           transform.position.y <= ScreenMin.y + 0.25f &&
            transform.position.y >= ScreenMax.y)
         {
             firingEnabled = true;
@@ -32,6 +34,7 @@ public class EnemyType1 : Enemy
         else
         {
             firingEnabled = false;
+            TotalForce += Vector3.down * 0.1f;
         }
 
         if(stayOnScreenCooldown > 0)

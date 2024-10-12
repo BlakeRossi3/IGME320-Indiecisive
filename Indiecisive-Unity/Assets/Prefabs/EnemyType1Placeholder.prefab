@@ -103,8 +103,8 @@ MonoBehaviour:
   maxForce: 1
   seperateRange: 0.25
   shootsBullets: 1
-  fireDelay: 20
-  seekPointDelay: 30
+  fireDelay: 2
+  seekPointDelay: 3
   stayOnScreenCooldown: 7
   manager: {fileID: 0}
   bulletPrefab: {fileID: 1636891944895576526, guid: 48110731598ee5b46af035b9511ec78f, type: 3}
