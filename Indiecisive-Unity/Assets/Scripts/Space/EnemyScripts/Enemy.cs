@@ -32,6 +32,7 @@ public abstract class Enemy : MonoBehaviour
     protected float inStayCooldown;
 
     protected Rigidbody2D enemyRB;
+    protected BoxCollider2D enemyBoxCollider;
     protected Vector3 TotalForce = Vector3.zero;
 
     public EnemyManager manager;
@@ -52,10 +53,12 @@ public abstract class Enemy : MonoBehaviour
     void Start()
     {
         enemyRB = GetComponent<Rigidbody2D>();
+        enemyBoxCollider = GetComponent<BoxCollider2D>();
         // temporary comment out since the movement code doesn't work with kinematic
         //enemyRB.isKinematic = true;
+        enemyBoxCollider.isTrigger = true;
 
-        fireDelay *= 10; // account for editor input
+        fireDelay *= 10; // account for editor input (convert from seconds)
         seekPointDelay *= 10; // account for editor input
 
         inStayCooldown = stayOnScreenCooldown;
@@ -110,7 +113,7 @@ public abstract class Enemy : MonoBehaviour
         return seekingForce;
     }
 
-    protected Vector3 Seek(Enemy target)
+    protected Vector3 Seek(GameObject target)
     {
         return Seek(target.transform.position);
     }
