@@ -33,7 +33,7 @@ public class PlayerBullet : MonoBehaviour
     {
 
         //moves bullet upwards each frame
-        transform.Translate(Vector2.up * speed * Time.fixedDeltaTime);
+        transform.Translate(Vector2.up * speed * Time.deltaTime);
 
         //gets current position in pixels
         screenPosition = Camera.main.WorldToScreenPoint(transform.position);

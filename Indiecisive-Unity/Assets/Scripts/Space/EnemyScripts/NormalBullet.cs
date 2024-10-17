@@ -6,7 +6,7 @@ using UnityEngine;
 public class NormalBullet : MonoBehaviour
 {
     [SerializeField]
-    protected float speed = 1.0f;
+    protected float speed = 3.0f;
 
     private Vector3 screenPosition;
     private Rigidbody2D rb;
@@ -30,7 +30,7 @@ public class NormalBullet : MonoBehaviour
     void Update()
     {
         // shoots the bullet straight down
-        transform.Translate(Vector2.down * speed * Time.fixedDeltaTime);
+        transform.Translate(Vector2.down * speed * Time.deltaTime);
 
         // destroy when off screen--translate position to pixels, compare to screen height
         screenPosition = Camera.main.WorldToScreenPoint(transform.position);

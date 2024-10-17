@@ -216,7 +216,7 @@ public class Player : MonoBehaviour
         //handles shield timers
         if (shieldActive)
         {
-            shieldTime += Time.deltaTime;
+            shieldTime += (1 * Time.deltaTime);
 
             //deactivates shield when time is up
             if (shieldTime >= shieldDuration)
@@ -230,7 +230,7 @@ public class Player : MonoBehaviour
         //decreases cooldown timer for shield
         if (shieldCDTimer > 0)
         {
-            shieldCDTimer -= Time.deltaTime;
+            shieldCDTimer -= ( 1* Time.deltaTime);
             Debug.Log(shieldCDTimer);
         }
     }
