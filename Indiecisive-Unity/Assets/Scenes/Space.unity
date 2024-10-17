@@ -929,7 +929,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stageTime: 30
-  showTime: 1
+  showTime: 0
   timerText: {fileID: 913341656}
 --- !u!1 &1415262258
 GameObject:

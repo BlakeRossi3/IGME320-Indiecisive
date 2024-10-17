@@ -53,13 +53,19 @@ public class EnemyType1 : Enemy
             //TotalForce += StayInBoundsForce() * boundsWeight;
             //IgnoreCollisionsWithEnemies(enemyRB.GetComponent<Collider2D>());
         }
+
+        // Leave the screen after a bit so the enemies don't overflow the screen
         else
         {
             Vector3 exitPoint = new Vector3(0.0f, 5.0f, 0.0f);
             TotalForce = Flee(exitPoint);
             maxSpeed += 0.5f;
+            enemyRB.freezeRotation = false;
             firingEnabled = false;
             transform.localScale += new Vector3(-0.0005f, -0.0005f, 0.0f);
+
+            // attempt at a rotation change will look at later
+            enemyRB.rotation = Mathf.Atan(Vector3.Normalize(TotalForce).x / Vector3.Normalize(TotalForce).y);
 
             // once the enemy gets far enough off screen, destroy
             if (transform.position.x < ScreenMin.x * 1.2f ||

@@ -6,7 +6,7 @@ using UnityEngine;
 public class NormalBullet : MonoBehaviour
 {
     [SerializeField]
-    protected float speed = 0.5f;
+    protected float speed = 1.0f;
 
     private Vector3 screenPosition;
     private Rigidbody2D rb;
