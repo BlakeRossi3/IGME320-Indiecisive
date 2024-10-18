@@ -21,7 +21,7 @@ public abstract class Enemy : MonoBehaviour
 
     [SerializeField]
     protected float fireDelay; // delay between shots
-    protected float fireCooldown = 5.0f; // delay of initial shot
+    protected float fireCooldown = 0.0f; // delay of initial shot
 
     [SerializeField]
     protected float seekPointDelay; // delay for finding a new random point to seek
@@ -57,9 +57,6 @@ public abstract class Enemy : MonoBehaviour
         // temporary comment out since the movement code doesn't work with kinematic
         //enemyRB.isKinematic = true;
         enemyBoxCollider.isTrigger = true;
-
-        fireDelay *= 10; // account for editor input (convert from seconds)
-        seekPointDelay *= 10; // account for editor input
 
         inStayCooldown = stayOnScreenCooldown;
 

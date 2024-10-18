@@ -26,7 +26,6 @@ public class EnemyManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        spawnDelay *= 10; // account for editor input
         tempSpawnDelay = spawnDelay;
     }
 
@@ -41,9 +40,9 @@ public class EnemyManager : MonoBehaviour
                 Spawn();
                 spawnDelay = tempSpawnDelay;
             }
-            spawnDelay -= Time.fixedDeltaTime;
+            spawnDelay -= Time.deltaTime;
         }
-        initialSpawnDelay -= Time.fixedDeltaTime;
+        initialSpawnDelay -= Time.deltaTime;
     }
 
     // Spawn methods

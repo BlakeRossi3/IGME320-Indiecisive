@@ -39,10 +39,10 @@ public class EnemyType1 : Enemy
 
         if(stayOnScreenCooldown > 0)
         {
-            seekPointCooldown -= Time.fixedDeltaTime;
+            seekPointCooldown -= Time.deltaTime;
 
             // slightly randomizes the time it takes for enemies to change where they are going
-            if (seekPointCooldown <= Random.Range(0f, 10f))
+            if (seekPointCooldown <= Random.Range(0f, 1f))
             {
                 targetPos = WanderInZone();
                 seekPointCooldown = seekPointDelay;
@@ -83,7 +83,7 @@ public class EnemyType1 : Enemy
     {
         if(firingEnabled == true)
         {
-            fireCooldown -= Time.fixedDeltaTime;
+            fireCooldown -= Time.deltaTime;
         }
 
         if (fireCooldown <= 0)
