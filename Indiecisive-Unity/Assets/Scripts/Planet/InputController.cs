@@ -60,7 +60,7 @@ public class InputController : MonoBehaviour
     void HandleMovementInput()
     {
         // Handle directional inputs, prioritize first pressed, and queue secondary direction
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             if (currentDirection == null)
             {
@@ -73,7 +73,7 @@ public class InputController : MonoBehaviour
                 queuedDirection = "up";
             }
         }
-        else if (Input.GetKeyDown(KeyCode.A))
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             if (currentDirection == null)
             {
@@ -86,7 +86,7 @@ public class InputController : MonoBehaviour
                 queuedDirection = "left";
             }
         }
-        else if (Input.GetKeyDown(KeyCode.S))
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             if (currentDirection == null)
             {
@@ -99,7 +99,7 @@ public class InputController : MonoBehaviour
                 queuedDirection = "down";
             }
         }
-        else if (Input.GetKeyDown(KeyCode.D))
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             if (currentDirection == null)
             {
@@ -114,25 +114,25 @@ public class InputController : MonoBehaviour
         }
 
         // Handle key releases and switch to queued direction if needed
-        if (Input.GetKeyUp(KeyCode.W) && currentDirection == "up")
+        if (Input.GetKeyUp(KeyCode.UpArrow) && currentDirection == "up")
         {
             HandleDirectionRelease("up");
         }
-        else if (Input.GetKeyUp(KeyCode.A) && currentDirection == "left")
+        else if (Input.GetKeyUp(KeyCode.LeftArrow) && currentDirection == "left")
         {
             HandleDirectionRelease("left");
         }
-        else if (Input.GetKeyUp(KeyCode.S) && currentDirection == "down")
+        else if (Input.GetKeyUp(KeyCode.DownArrow) && currentDirection == "down")
         {
             HandleDirectionRelease("down");
         }
-        else if (Input.GetKeyUp(KeyCode.D) && currentDirection == "right")
+        else if (Input.GetKeyUp(KeyCode.RightArrow) && currentDirection == "right")
         {
             HandleDirectionRelease("right");
         }
 
         // If no direction key is held, stop the player
-        if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D))
+        if (!Input.GetKey(KeyCode.UpArrow) && !Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.DownArrow) && !Input.GetKey(KeyCode.RightArrow))
         {
             moveInput = Vector2.zero;
             rb.velocity = Vector2.zero;
@@ -150,25 +150,25 @@ public class InputController : MonoBehaviour
             // If a direction is queued and the corresponding key is still held, switch to that direction
             if (queuedDirection != null)
             {
-                if (queuedDirection == "up" && Input.GetKey(KeyCode.W))
+                if (queuedDirection == "up" && Input.GetKey(KeyCode.UpArrow))
                 {
                     moveInput = Vector2.up;
                     currentDirection = "up";
                     spriteRenderer.sprite = upSprite;
                 }
-                else if (queuedDirection == "left" && Input.GetKey(KeyCode.A))
+                else if (queuedDirection == "left" && Input.GetKey(KeyCode.LeftArrow))
                 {
                     moveInput = Vector2.left;
                     currentDirection = "left";
                     spriteRenderer.sprite = leftSprite;
                 }
-                else if (queuedDirection == "down" && Input.GetKey(KeyCode.S))
+                else if (queuedDirection == "down" && Input.GetKey(KeyCode.DownArrow))
                 {
                     moveInput = Vector2.down; 
                     currentDirection = "down";
                     spriteRenderer.sprite = downSprite;
                 }
-                else if (queuedDirection == "right" && Input.GetKey(KeyCode.D))
+                else if (queuedDirection == "right" && Input.GetKey(KeyCode.RightArrow))
                 {
                     moveInput = Vector2.right;
                     currentDirection = "right";
@@ -206,7 +206,7 @@ public class InputController : MonoBehaviour
                 {
                     // Show the interaction prompt and move it above the player's head
                     interactionText.gameObject.SetActive(true);
-                    interactionText.text = "Press E to Interact";
+                    interactionText.text = "C to Interact";
                     textSwitch = true;
                    
                     break;                    
@@ -218,7 +218,7 @@ public class InputController : MonoBehaviour
 
         float distanceToObject2 = Vector2.Distance(transform.position, interactables[objectNum].transform.position);
 
-        if (Input.GetKeyDown(KeyCode.E) && distanceToObject2 < interactionRadius)
+        if (Input.GetKeyDown(KeyCode.C) && distanceToObject2 < interactionRadius)
         {
             Interact(objectNum);
         }

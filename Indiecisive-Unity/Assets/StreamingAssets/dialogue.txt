@@ -1,7 +1,9 @@
 NPC1
-Hey! I'm an NPC
-I guess thats kind of obvious :/
-If only the devs had more time to give me something to say!
+That blue building up there is a shop!
+You should be able to upgrade your ship there
+However the prices have gotten really high
+although there might be some loose change lying around...
+
 
 NPC2
 Hey!

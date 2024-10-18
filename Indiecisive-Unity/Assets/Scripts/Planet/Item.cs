@@ -55,12 +55,8 @@ public class Item : MonoBehaviour
 
         // Get distance of astro to item. then check if mouse is on item and left mouse button is down.
         float distanceToItem = Vector2.Distance(transform.position, astro.transform.position);
-        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        float MouseDistanceToItem = Vector2.Distance(transform.position, mousePos);
 
-        if (distanceToItem < pickUpRadius )
-        {
-            if (Input.GetMouseButtonDown(0) && MouseDistanceToItem < 2)  // Left mouse button clicked and on shovel
+            if (Input.GetKeyDown(KeyCode.C) && distanceToItem < pickUpRadius)  // Left mouse button clicked and on shovel
             {
                 gameObject.SetActive(false);
 
@@ -95,7 +91,7 @@ public class Item : MonoBehaviour
                 
 
             }
-        }
+        
     }
 
     
