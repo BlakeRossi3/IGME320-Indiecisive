@@ -15,6 +15,8 @@ public class Item : MonoBehaviour
     public GameObject itemIconPrefab;  // Prefab of the item icon to display in the panel
     public TextMeshProUGUI coinCount;
     public bool isCoin;
+    public bool isCharge;
+
 
 
     // Start is called before the first frame update
@@ -62,7 +64,7 @@ public class Item : MonoBehaviour
 
                 InputController bag = astro.GetComponent<InputController>();
 
-                if (!isCoin)
+                if (!isCoin && !isCharge)
                 {
                     // Add the item icon to the UI panel
                     GameObject itemIcon = Instantiate(itemIconPrefab);  // Create the icon from the prefab
@@ -83,12 +85,18 @@ public class Item : MonoBehaviour
                     
                     bag.shovel = true;
                 }
-                else
+                else if (isCoin)
                 {
                     bag.coins += 12;
                     coinCount.text = (" : " + bag.coins);
                 }
-                
+                else 
+                {
+
+                bag.charge += 500;
+
+                }
+                 
 
             }
         

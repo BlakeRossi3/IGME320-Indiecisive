@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     private RectTransform ship;
     public GameObject player;
     public TextMeshProUGUI coinsText;
+    public TextMeshProUGUI chargeText;
 
     public TextMeshProUGUI shieldText;
     public TextMeshProUGUI specialText;
@@ -31,30 +32,62 @@ public class GameManager : MonoBehaviour
     private int healthPrice = 20;
     private int specialPrice = 20;
 
+    public int Charge;
+
+    public int Coins;
+
+    public TextMeshProUGUI coinCount;
+
+
 
     // Start is called before the first frame update
     void Start()
     {
-        ship = Ship.GetComponent<RectTransform>();
+        DontDestroyOnLoad(gameObject);
+        if (Ship != null)
+        {
+            ship = Ship.GetComponent<RectTransform>();
+            
+        }
         
+        if (shieldText!= null)
+        {
+            shieldText.text = (" Shield: " + shieldPrice);
+            specialText.text = ("Special: " + specialPrice);
+            laserText.text = ("Laser: " + laserPrice);
+            healthText.text = ("Health: " + healthPrice);
+        }
+        
+
     }
 
     // Update is called once per frame
     void Update()
     {
         Canvas.ForceUpdateCanvases();
-        InputController Player = player.GetComponent<InputController>();
-        int coins = Player.coins;
 
-        shieldText.text = (" Shield: " + shieldPrice);
-        specialText.text = ("Special: " + specialPrice);
-        laserText.text = ("Laser: " + laserPrice);
-        healthText.text = ("Health: " + healthPrice);
-                
+        if(currentState == GameState.Planet)
+        {
+            ship.localEulerAngles = new Vector3(0, 0, ship.localEulerAngles.z + 30 * Time.deltaTime);
 
-        coinsText.text = coins.ToString();
+            InputController Player = player.GetComponent<InputController>();
+            Coins = Player.coins;
+            Charge = Player.charge;
+            coinsText.text = (" : " + Coins);
+            coinCount.text = (" : " + Coins);
+            chargeText.text = (" : " + Charge);
 
-        ship.localEulerAngles = new Vector3(0, 0, ship.localEulerAngles.z + 30 * Time.deltaTime);
+        }
+        else if (currentState == GameState.Space)
+        {
+
+            StartCoroutine(UpdateUILate());
+            
+        }
+         
+
+
+
     }
 
     // Enum to hold different game states
@@ -63,6 +96,19 @@ public class GameManager : MonoBehaviour
         GameStart,
         Planet,
         Space
+    }
+
+    IEnumerator  UpdateUILate()
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        Canvas canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+
+        coinCount = GameObject.Find("CoinText").GetComponent<TextMeshProUGUI>();
+        coinCount.text = (" : " + Coins);
+
+        chargeText = GameObject.Find("ChargeText").GetComponent<TextMeshProUGUI>();
+        chargeText.text = (" : " + Charge);
     }
 
     // The current game state
@@ -81,6 +127,8 @@ public class GameManager : MonoBehaviour
         InputController Player = player.GetComponent<InputController>();
         int coins = Player.coins;
 
+        coinsText.text = coins.ToString();
+
         switch (type)
         {
             case "Shield":
@@ -97,7 +145,7 @@ public class GameManager : MonoBehaviour
                     
                 }
                 
-                break;
+            break;
 
             case "Laser":
                 laserLevel++;
@@ -112,7 +160,7 @@ public class GameManager : MonoBehaviour
                     laserPrice *= 2;
                     
                 }
-                break;
+            break;
 
             case "Special":
                 specialLevel++;
@@ -127,7 +175,7 @@ public class GameManager : MonoBehaviour
                     
                 }
                 
-                break;
+            break;
 
             case "Health":
                 healthLevel++;
@@ -143,8 +191,13 @@ public class GameManager : MonoBehaviour
                     
                 }
                 
-                break;
+            break;
         }
+
+        shieldText.text = (" Shield: " + shieldPrice);
+        specialText.text = ("Special: " + specialPrice);
+        laserText.text = ("Laser: " + laserPrice);
+        healthText.text = ("Health: " + healthPrice);
     }
 
 

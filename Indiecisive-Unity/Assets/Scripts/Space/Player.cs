@@ -191,6 +191,11 @@ public class Player : MonoBehaviour
         //Checks for if player has pressed the fire button
         if (Input.GetKeyUp(KeyCode.Space))
         {
+            // BLAKE CODE - adding charge functionality
+            GameManager gameManager = GameObject.Find("EventSystem").GetComponent<GameManager>();
+
+            gameManager.Charge -= 100;
+
             //creates a new bullet at the player's position TODO: update this based on how it looks with ship sprite
             var newBullet = Instantiate(bulletPrefab, playerRB.position, Quaternion.identity);
 

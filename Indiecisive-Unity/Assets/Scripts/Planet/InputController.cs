@@ -29,6 +29,7 @@ public class InputController : MonoBehaviour
     public Button myButton;
     public GameObject uiPanel;
     private bool uiToggle =false;
+    public int charge;
 
 
 
@@ -36,6 +37,7 @@ public class InputController : MonoBehaviour
     {
         uiPanel.SetActive(false);
         coins = 0;
+        charge = 0;
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
