@@ -58,47 +58,44 @@ public class Item : MonoBehaviour
         // Get distance of astro to item. then check if mouse is on item and left mouse button is down.
         float distanceToItem = Vector2.Distance(transform.position, astro.transform.position);
 
-            if (Input.GetKeyDown(KeyCode.C) && distanceToItem < pickUpRadius)  // Left mouse button clicked and on shovel
+        if (Input.GetKeyDown(KeyCode.C) && distanceToItem < pickUpRadius && !isCoin && !isCharge)  // Left mouse button clicked and on shovel
+        {
+            gameObject.SetActive(false);
+
+            InputController bag = astro.GetComponent<InputController>();
+
+
+            // Add the item icon to the UI panel
+            GameObject itemIcon = Instantiate(itemIconPrefab);  // Create the icon from the prefab
+            itemIcon.transform.SetParent(uiPanel.transform, true);  // Set the parent to the panel
+            RectTransform iconRectTransform = itemIcon.GetComponent<RectTransform>();
+
+            // Reset the local position and scale
+            iconRectTransform.localPosition = Vector3.zero;  // This places it in the middle of the panel
+            iconRectTransform.localScale = Vector3.one;      // Make sure the scale is correct
+            iconRectTransform.anchoredPosition = new Vector2(-30f, -120f);  // Adjust as needed based on your UI layout
+            iconRectTransform.sizeDelta = new Vector2(200, 200);
+            itemIcon.SetActive(true);
+            bag.shovel = true;
+        }
+
+
+        else if (distanceToItem < pickUpRadius - 1.5)
+        {
+            gameObject.SetActive(false);
+
+            InputController bag = astro.GetComponent<InputController>();
+            if (isCoin)
             {
-                gameObject.SetActive(false);
-
-                InputController bag = astro.GetComponent<InputController>();
-
-                if (!isCoin && !isCharge)
-                {
-                    // Add the item icon to the UI panel
-                    GameObject itemIcon = Instantiate(itemIconPrefab);  // Create the icon from the prefab
-                    itemIcon.transform.SetParent(uiPanel.transform, true);  // Set the parent to the panel
-
-
-
-                    RectTransform iconRectTransform = itemIcon.GetComponent<RectTransform>();
-
-                    // Reset the local position and scale
-                    iconRectTransform.localPosition = Vector3.zero;  // This places it in the middle of the panel
-                    iconRectTransform.localScale = Vector3.one;      // Make sure the scale is correct
-                    iconRectTransform.anchoredPosition = new Vector2(-30f, -120f);  // Adjust as needed based on your UI layout
-                    iconRectTransform.sizeDelta = new Vector2(200, 200);
-                    itemIcon.SetActive(true);
-
-
-                    
-                    bag.shovel = true;
-                }
-                else if (isCoin)
-                {
-                    bag.coins += 12;
-                    coinCount.text = (" : " + bag.coins);
-                }
-                else 
-                {
-
-                bag.charge += 500;
-
-                }
-                 
-
+                bag.coins += 12;
+                coinCount.text = (" : " + bag.coins);
             }
+            else if (isCharge)
+            {
+                bag.charge += 500;
+            }
+
+        }
         
     }
 
