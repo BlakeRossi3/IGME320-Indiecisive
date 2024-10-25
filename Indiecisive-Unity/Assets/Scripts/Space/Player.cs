@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Threading;
+using TMPro;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -11,6 +12,10 @@ public class Player : MonoBehaviour
     private float moveSpeed = 7f;
     public float currentHealth = 5f;
     private float maxHealth = 5f;
+
+    //TODO: temp variables until eventSystem is fixed
+    private float bulletCount = 50; //REMOVE LATER
+    public TextMeshProUGUI chargeText; //REMOVE LATER
 
     //variables for handling player game over status
     [HideInInspector]
@@ -76,6 +81,11 @@ public class Player : MonoBehaviour
         //gets the screen size in world points
         screenPixels = new Vector3 (screenWidth, screenHeight, 0);
         screenWorld = Camera.main.ScreenToWorldPoint(screenPixels);
+
+        //TODO: TEMP TEMP TEMP REMOVE LATER
+        chargeText.text = ("Bullets: " + bulletCount);
+        Vector3 position = new Vector3(-4, -2, 0);
+        chargeText.transform.position = position;
     }
 
     // Update is called once per frame
@@ -191,18 +201,27 @@ public class Player : MonoBehaviour
         //Checks for if player has pressed the fire button
         if (Input.GetKeyUp(KeyCode.Space))
         {
-            // BLAKE CODE - adding charge functionality
-            GameManager gameManager = GameObject.Find("EventSystem").GetComponent<GameManager>();
+            // BLAKE CODE - adding charge functionality TODO: COMMENTED OUT FOR BUGS RN
+            //GameManager gameManager = GameObject.Find("EventSystem").GetComponent<GameManager>();
 
-            gameManager.Charge -= 100;
+            //gameManager.Charge -= 100;
 
-            //creates a new bullet at the player's position TODO: update this based on how it looks with ship sprite
-            var newBullet = Instantiate(bulletPrefab, playerRB.position, Quaternion.identity);
+            //TODO: update with gameManager data when available
+            if (bulletCount > 0)
+            {
+                //creates a new bullet at the player's position TODO: update this based on how it looks with ship sprite
+                var newBullet = Instantiate(bulletPrefab, playerRB.position, Quaternion.identity);
 
-            //attaches components to newly created bullet
-            newBullet.AddComponent<PlayerBullet>();
-            newBullet.AddComponent<BoxCollider2D>();
-            newBullet.AddComponent<Rigidbody2D>();
+                //attaches components to newly created bullet
+                newBullet.AddComponent<PlayerBullet>();
+                newBullet.AddComponent<BoxCollider2D>();
+                newBullet.AddComponent<Rigidbody2D>();
+
+                //TODO: update this with gamemanager stuff later
+                bulletCount--;
+                chargeText.text = ("Bullets: " + bulletCount); 
+            }
+
         }
     }
 

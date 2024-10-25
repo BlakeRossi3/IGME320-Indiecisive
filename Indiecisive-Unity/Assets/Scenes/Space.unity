@@ -377,6 +377,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 5
+  chargeText: {fileID: 1769393023}
   isGameOver: 0
   playerSprite: {fileID: 483461483}
   bulletPrefab: {fileID: 1636891944895576526, guid: f73bed8337a435a4fb8f0957d5011b3b, type: 3}
