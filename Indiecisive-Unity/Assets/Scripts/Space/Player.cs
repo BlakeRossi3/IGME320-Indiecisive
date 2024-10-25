@@ -83,9 +83,10 @@ public class Player : MonoBehaviour
         screenWorld = Camera.main.ScreenToWorldPoint(screenPixels);
 
         //TODO: TEMP TEMP TEMP REMOVE LATER
-        chargeText.text = ("Bullets: " + bulletCount);
-        Vector3 position = new Vector3(-4, -2, 0);
-        chargeText.transform.position = position;
+        chargeText.text = (": " + bulletCount);
+        //Vector3 position = new Vector3(-4, -4, 0);
+        //chargeText.transform.position = position;
+        
     }
 
     // Update is called once per frame
@@ -104,7 +105,7 @@ public class Player : MonoBehaviour
             playerFire();
 
             //player special abilities
-            playerSpecial();
+            playerShield();
         }
 
         //player feedback for gameover state
@@ -219,14 +220,19 @@ public class Player : MonoBehaviour
 
                 //TODO: update this with gamemanager stuff later
                 bulletCount--;
-                chargeText.text = ("Bullets: " + bulletCount); 
+                chargeText.text = (": " + bulletCount); 
             }
-
         }
     }
 
-    //player special abilities
+    //Player special abilities. Uses a switch to determine which is active.
     private void playerSpecial()
+    {
+
+    }
+
+    //player shield--nullifies damage for a set amount of time
+    private void playerShield()
     {
         //Press C for shield when cd is zero
         if (Input.GetKeyDown(KeyCode.C) && shieldCDTimer <= 0)
