@@ -233,6 +233,23 @@ public abstract class Enemy : MonoBehaviour
                 manager.Enemies.Remove(this);
             }
         }
+
+        //hi this is Julia adding code to enemy again
+        //Handling for special attack collision
+        //This is separate in case we change damage dealt by special (can also be split further if different specials deal different amounts of damage)
+        if (collision.gameObject.CompareTag("PlayerSpecial"))
+        {
+            currentHP -= 1;
+            //destroys bullet that hit the enemy
+            Destroy(collision.gameObject);
+
+            //destroys the enemy if health is at 0
+            if (currentHP <= 0)
+            {
+                Destroy(gameObject);
+                manager.Enemies.Remove(this);
+            }
+        }
     }
 
     protected void IgnoreCollisionsWithEnemies(Collider2D collision)
