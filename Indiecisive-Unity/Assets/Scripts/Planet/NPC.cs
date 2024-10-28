@@ -14,7 +14,7 @@ public class NPC : MonoBehaviour
     public GameObject menu; // Menu for interacting with ship
     public bool active = false;
     public string[,] dialogue = null; //2D Array of dialogue lines
-    private string filePath = "Assets/dialogue.txt";
+    private string filePath = Path.Combine(Application.streamingAssetsPath, "dialogue.txt");
     public TextMeshProUGUI npcText;
     private int lineNum =0;
 
@@ -112,7 +112,6 @@ public class NPC : MonoBehaviour
 
     public void MenuInteraction()
     {
-        if (menu)
         if (!active)
         {
             menu.SetActive(true);

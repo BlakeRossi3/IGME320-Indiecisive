@@ -1,0 +1,16 @@
+NPC1
+That blue building up there is a shop!
+You should be able to upgrade your ship there
+However the prices have gotten really high
+although there might be some loose change lying around...
+
+
+NPC2
+Hey!
+There's a shovel over by the ship...
+Could come in handy
+
+NPC3
+Hi!
+It's a nice day.
+Take care!

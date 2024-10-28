@@ -10,7 +10,7 @@ public class PlayerBullet : MonoBehaviour
 {
     
     //Bullet stats TODO: tune these as necessary
-    private float speed = 1f;
+    private float speed = 3f;
     private Vector3 screenPosition;
     private BoxCollider2D collider;
     private Rigidbody2D rb;
@@ -33,7 +33,7 @@ public class PlayerBullet : MonoBehaviour
     {
 
         //moves bullet upwards each frame
-        transform.Translate(Vector2.up * speed * Time.fixedDeltaTime);
+        transform.Translate(Vector2.up * speed * Time.deltaTime);
 
         //gets current position in pixels
         screenPosition = Camera.main.WorldToScreenPoint(transform.position);
