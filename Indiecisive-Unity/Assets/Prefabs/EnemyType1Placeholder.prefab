@@ -99,19 +99,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 446767f3e75f3cf4898619e2301c81b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 2
-  maxForce: 1
+  maxSpeed: 3
+  maxForce: 0.5
   seperateRange: 0.25
   shootsBullets: 1
   fireDelay: 2
   seekPointDelay: 3
   stayOnScreenCooldown: 7
   manager: {fileID: 0}
-  bulletPrefab: {fileID: 1636891944895576526, guid: 48110731598ee5b46af035b9511ec78f, type: 3}
+  bulletPrefab: {fileID: 8259664165903907130, guid: b4975a30c01af71468310f293ae3d319, type: 3}
   targetPos: {x: 0, y: 0, z: 0}
   targetObject: {fileID: 0}
   boundsWeight: 3
   firingEnabled: 1
+  seekWeight: 0.5
 --- !u!50 &-8339888383338116925
 Rigidbody2D:
   serializedVersion: 4

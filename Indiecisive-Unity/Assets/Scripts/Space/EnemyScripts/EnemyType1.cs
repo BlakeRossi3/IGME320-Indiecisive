@@ -21,6 +21,9 @@ public class EnemyType1 : Enemy
     [SerializeField]
     protected bool firingEnabled = false;
 
+    [SerializeField]
+    protected float seekWeight; // how strong the force of the screen bounds is
+
     protected override void CalcSteeringForces()
     {
         // make enable things when the enemy is inside the screen
@@ -48,7 +51,7 @@ public class EnemyType1 : Enemy
                 seekPointCooldown = seekPointDelay;
                 stayOnScreenCooldown--;
             }
-            TotalForce += Seek(targetPos);
+            TotalForce += Seek(targetPos) * seekWeight;
             TotalForce += Separate();
             //TotalForce += StayInBoundsForce() * boundsWeight;
             //IgnoreCollisionsWithEnemies(enemyRB.GetComponent<Collider2D>());
@@ -60,7 +63,9 @@ public class EnemyType1 : Enemy
             Vector3 exitPoint = new Vector3(0.0f, 5.0f, 0.0f);
             TotalForce = Flee(exitPoint);
             maxSpeed += 0.5f;
+            maxForce = 1.0f;
             enemyRB.freezeRotation = false;
+            //transform.rotation = Quaternion.identity;
             firingEnabled = false;
             transform.localScale += new Vector3(-0.0005f, -0.0005f, 0.0f);
 

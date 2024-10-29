@@ -31,6 +31,7 @@ public class SeekingBullet : MonoBehaviour
     {
         // shoots the bullet straight down
         transform.Translate(Vector2.down * speed * Time.fixedDeltaTime);
+        // try using the player transform for the seek
 
         // destroy when off screen--translate position to pixels, compare to screen height
         screenPosition = Camera.main.WorldToScreenPoint(transform.position);
