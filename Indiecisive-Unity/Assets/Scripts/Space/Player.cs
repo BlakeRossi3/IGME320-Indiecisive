@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Threading;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Android;
 
 public class Player : MonoBehaviour
 {
@@ -11,6 +13,10 @@ public class Player : MonoBehaviour
     private float moveSpeed = 7f;
     public float currentHealth = 5f;
     private float maxHealth = 5f;
+
+    //TODO: temp variables until eventSystem is fixed
+    private float bulletCount = 50; //REMOVE LATER
+    public TextMeshProUGUI chargeText; //REMOVE LATER
 
     //variables for handling player game over status
     [HideInInspector]
@@ -46,6 +52,21 @@ public class Player : MonoBehaviour
     private float shieldCDTimer = 0;
     private bool shieldActive = false;
 
+    //Variable for determining active special TODO: retrieve this data from planetside
+    [SerializeField]
+    private int special = 0;
+
+    //Other variables for handling special TODO: tune this
+    private float specialDuration = 3;
+    private float specialTime = 0;
+    private float specialCD = 7;
+    private float specialCDTimer = 0;
+    private bool specialActive = false;
+
+    //Prefabs for special gameObjects
+    public GameObject special0;
+    public GameObject special1;
+
     //list of health display objects
     private List<GameObject> health = new List<GameObject>();
 
@@ -76,6 +97,12 @@ public class Player : MonoBehaviour
         //gets the screen size in world points
         screenPixels = new Vector3 (screenWidth, screenHeight, 0);
         screenWorld = Camera.main.ScreenToWorldPoint(screenPixels);
+
+        //TODO: TEMP TEMP TEMP REMOVE LATER
+        chargeText.text = (": " + bulletCount);
+        //Vector3 position = new Vector3(-4, -4, 0);
+        //chargeText.transform.position = position;
+        
     }
 
     // Update is called once per frame
@@ -94,7 +121,7 @@ public class Player : MonoBehaviour
             playerFire();
 
             //player special abilities
-            playerSpecial();
+            playerShield();
         }
 
         //player feedback for gameover state
@@ -191,23 +218,84 @@ public class Player : MonoBehaviour
         //Checks for if player has pressed the fire button
         if (Input.GetKeyUp(KeyCode.Space))
         {
-            // BLAKE CODE - adding charge functionality
-            GameManager gameManager = GameObject.Find("EventSystem").GetComponent<GameManager>();
+            // BLAKE CODE - adding charge functionality TODO: COMMENTED OUT FOR BUGS RN
+            //GameManager gameManager = GameObject.Find("EventSystem").GetComponent<GameManager>();
 
-            gameManager.Charge -= 100;
+            //gameManager.Charge -= 100;
 
-            //creates a new bullet at the player's position TODO: update this based on how it looks with ship sprite
-            var newBullet = Instantiate(bulletPrefab, playerRB.position, Quaternion.identity);
+            //TODO: update with gameManager data when available
+            if (bulletCount > 0)
+            {
+                //creates a new bullet at the player's position TODO: update this based on how it looks with ship sprite
+                var newBullet = Instantiate(bulletPrefab, playerRB.position, Quaternion.identity);
 
-            //attaches components to newly created bullet
-            newBullet.AddComponent<PlayerBullet>();
-            newBullet.AddComponent<BoxCollider2D>();
-            newBullet.AddComponent<Rigidbody2D>();
+                //attaches components to newly created bullet
+                newBullet.AddComponent<PlayerBullet>();
+                newBullet.AddComponent<BoxCollider2D>();
+                newBullet.AddComponent<Rigidbody2D>();
+
+                //TODO: update this with gamemanager stuff later
+                bulletCount--;
+                chargeText.text = (": " + bulletCount); 
+            }
         }
     }
 
-    //player special abilities
+    //Player special abilities. Uses a switch to determine which is active.
     private void playerSpecial()
+    {
+        //GameObject array for specials generated
+        //This is used as a workaround to check if a gameObject exists or not to delete when
+        //the special is over, instead of having to check for each special individually.
+        GameObject[] specialObject = new GameObject[1];
+
+        //TODO: add this to update bc i forgor to do that with shield initially and was VERY CONFUSED
+        //TODO: this needs a key input??? I dunno why I forgot to add one when writing this to begin with tbh
+        switch (special)
+        {
+            //Damaging barrier around player
+            case 0:
+                //Generates special gameObject 
+                var special = Instantiate(special0, playerRB.position, Quaternion.identity);
+
+                //Adds collision tag to gameObject 
+                special.gameObject.tag = "PlayerSpecial"; //TODO: seems to be bugging out if I do what I did for bullets. Will check this later, may not have updated tags properly in editor.
+
+                //Sets special status to active
+                specialActive = true;
+                specialCDTimer = specialCD;
+                break;
+        }
+
+        //Handles special timers if special is active
+        if (specialActive)
+        {
+            //increments timer up
+            specialTime += (1 * Time.deltaTime);
+
+            //checks if time is up for special 
+            if (specialTime >= specialDuration)
+            {
+                //deactivates special
+                specialActive = false;
+
+                //deletes special gameObject if applicable 
+                if (specialObject[0] != null)
+                {
+                    Destroy(specialObject[0]);
+                }
+            }
+        }
+
+        //Handles tracking cooldown if special is inactive
+        if (specialCDTimer > 0)
+        {
+            specialCDTimer -= (1 * Time.deltaTime);
+        }
+    }
+
+    //player shield--nullifies damage for a set amount of time
+    private void playerShield()
     {
         //Press C for shield when cd is zero
         if (Input.GetKeyDown(KeyCode.C) && shieldCDTimer <= 0)
@@ -236,7 +324,6 @@ public class Player : MonoBehaviour
         if (shieldCDTimer > 0)
         {
             shieldCDTimer -= ( 1* Time.deltaTime);
-            Debug.Log(shieldCDTimer);
         }
     }
 
