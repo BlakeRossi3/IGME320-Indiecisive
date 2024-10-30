@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Threading;
 using TMPro;
@@ -57,6 +58,7 @@ public class Player : MonoBehaviour
     private int special = 0;
 
     //Other variables for handling special TODO: tune this
+    //TODO: could read active special in start and adjust values based on that?
     private float specialDuration = 3;
     private float specialTime = 0;
     private float specialCD = 7;
@@ -100,8 +102,8 @@ public class Player : MonoBehaviour
 
         //TODO: TEMP TEMP TEMP REMOVE LATER
         chargeText.text = (": " + bulletCount);
-        //Vector3 position = new Vector3(-4, -4, 0);
-        //chargeText.transform.position = position;
+        
+        //TODO: check active special and adjust timers/duration as needed
         
     }
 
@@ -120,8 +122,11 @@ public class Player : MonoBehaviour
             //basic player fire
             playerFire();
 
-            //player special abilities
+            //player shield
             playerShield();
+
+            //player special
+            playerSpecial();
         }
 
         //player feedback for gameover state
@@ -247,50 +252,59 @@ public class Player : MonoBehaviour
         //GameObject array for specials generated
         //This is used as a workaround to check if a gameObject exists or not to delete when
         //the special is over, instead of having to check for each special individually.
-        GameObject[] specialObject = new GameObject[1];
 
-        //TODO: add this to update bc i forgor to do that with shield initially and was VERY CONFUSED
-        //TODO: this needs a key input??? I dunno why I forgot to add one when writing this to begin with tbh
-        switch (special)
-        {
-            //Damaging barrier around player
-            case 0:
-                //Generates special gameObject 
-                var special = Instantiate(special0, playerRB.position, Quaternion.identity);
-
-                //Adds collision tag to gameObject 
-                special.gameObject.tag = "PlayerSpecial"; //TODO: seems to be bugging out if I do what I did for bullets. Will check this later, may not have updated tags properly in editor.
-
-                //Sets special status to active
-                specialActive = true;
-                specialCDTimer = specialCD;
-                break;
-        }
-
-        //Handles special timers if special is active
-        if (specialActive)
-        {
-            //increments timer up
-            specialTime += (1 * Time.deltaTime);
-
-            //checks if time is up for special 
-            if (specialTime >= specialDuration)
+        //Special is activated when X is pressed and not on cooldown
+            switch (special)
             {
-                //deactivates special
-                specialActive = false;
+                //Damaging barrier around player
+                case 0:
+                    //Generates special gameObject when key is pressed if valid
+                    //Adds collision tag to gameObject 
+                    //specialObject[0].gameObject.tag = "PlayerSpecial"; //TODO: seems to be bugging out if I do what I did for bullets. Will check this later, may not have updated tags properly in editor.
 
-                //deletes special gameObject if applicable 
-                if (specialObject[0] != null)
-                {
-                    Destroy(specialObject[0]);
-                }
+                    //Sets special status to active
+                    //specialActive = true;
+                    //specialCDTimer = specialCD;
+
+
+                    //IF ACTIVE: call timer handling
+                    if (specialActive)
+                    {
+                    }
+                    break;
             }
-        }
 
         //Handles tracking cooldown if special is inactive
         if (specialCDTimer > 0)
         {
             specialCDTimer -= (1 * Time.deltaTime);
+        }
+    }
+
+    //Method for special timers, to be called in the switch
+    private void specialTimers(GameObject prefab)
+    {
+        //increments timer up
+        specialTime += (1 * Time.deltaTime);
+
+        //if there's an object that needs to be moved (ie barrier, beam), updates its position
+        if (prefab != null)
+        {
+            //logic here
+        }
+
+
+        //checks if time is up for special 
+        if (specialTime >= specialDuration)
+        {
+            //deactivates special
+            specialActive = false;
+
+            //deletes special gameObject if applicable 
+            if (prefab != null)
+            {
+                Destroy(prefab);
+            }
         }
     }
 
