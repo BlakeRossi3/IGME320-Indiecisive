@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -65,9 +66,8 @@ public class Player : MonoBehaviour
     private float specialCDTimer = 0;
     private bool specialActive = false;
 
-    //Prefabs for special gameObjects
-    public GameObject special0;
-    public GameObject special1;
+    //Holds a reference to the active special (not instantiated by script)
+    private GameObject currentSpecial;
 
     //list of health display objects
     private List<GameObject> health = new List<GameObject>();
@@ -102,9 +102,22 @@ public class Player : MonoBehaviour
 
         //TODO: TEMP TEMP TEMP REMOVE LATER
         chargeText.text = (": " + bulletCount);
-        
+
         //TODO: check active special and adjust timers/duration as needed
-        
+
+        //Reads what the active special is and assigns the correct item
+        switch (special)
+        {
+            //TODO: change name later
+            case 0:
+                currentSpecial = GameObject.Find("barrierPlaceholder");
+                break;
+        }
+
+        //Hides the special
+        currentSpecial.SetActive(false);
+        Debug.Log(currentSpecial);
+
     }
 
     // Update is called once per frame
@@ -249,63 +262,46 @@ public class Player : MonoBehaviour
     //Player special abilities. Uses a switch to determine which is active.
     private void playerSpecial()
     {
-        //GameObject array for specials generated
-        //This is used as a workaround to check if a gameObject exists or not to delete when
-        //the special is over, instead of having to check for each special individually.
-
         //Special is activated when X is pressed and not on cooldown
+        //While the current specials have similar mechanics, this switch is for future proofing with other specials that may act differently.
             switch (special)
             {
                 //Damaging barrier around player
                 case 0:
-                    //Generates special gameObject when key is pressed if valid
-                    //Adds collision tag to gameObject 
-                    //specialObject[0].gameObject.tag = "PlayerSpecial"; //TODO: seems to be bugging out if I do what I did for bullets. Will check this later, may not have updated tags properly in editor.
 
-                    //Sets special status to active
-                    //specialActive = true;
-                    //specialCDTimer = specialCD;
+                    if (Input.GetKeyDown(KeyCode.X) && specialCDTimer <= 0)
+                    {
+                        //Makes the special object active
+                        currentSpecial.SetActive(true);
 
+                        //Sets use status to active
+                        specialActive = true;
+                        specialCDTimer = specialCD;
+                    }
 
-                    //IF ACTIVE: call timer handling
                     if (specialActive)
                     {
+                        //Updates the object position
+                        currentSpecial.transform.position = transform.position;
+                        specialTime += (1 * Time.deltaTime);
+
+                        //Checks if time is up
+                        if (specialTime >= specialDuration)
+                        {
+                            specialActive = false;
+                            currentSpecial.SetActive(false);
+                        }
                     }
-                    break;
+
+                    //Decreases cooldown if needed
+                    if (specialCDTimer > 0)
+                    {
+                        specialCDTimer -= 1 * Time.deltaTime;
+                    }
+
+                break;
             }
 
-        //Handles tracking cooldown if special is inactive
-        if (specialCDTimer > 0)
-        {
-            specialCDTimer -= (1 * Time.deltaTime);
-        }
-    }
-
-    //Method for special timers, to be called in the switch
-    private void specialTimers(GameObject prefab)
-    {
-        //increments timer up
-        specialTime += (1 * Time.deltaTime);
-
-        //if there's an object that needs to be moved (ie barrier, beam), updates its position
-        if (prefab != null)
-        {
-            //logic here
-        }
-
-
-        //checks if time is up for special 
-        if (specialTime >= specialDuration)
-        {
-            //deactivates special
-            specialActive = false;
-
-            //deletes special gameObject if applicable 
-            if (prefab != null)
-            {
-                Destroy(prefab);
-            }
-        }
     }
 
     //player shield--nullifies damage for a set amount of time
