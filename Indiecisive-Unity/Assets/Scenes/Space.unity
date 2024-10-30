@@ -38,6 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -380,6 +381,9 @@ MonoBehaviour:
   isGameOver: 0
   playerSprite: {fileID: 483461483}
   bulletPrefab: {fileID: 1636891944895576526, guid: f73bed8337a435a4fb8f0957d5011b3b, type: 3}
+  special: 0
+  special0: {fileID: 0}
+  special1: {fileID: 0}
 --- !u!212 &483461483
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -972,6 +976,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1080302709}
   - component: {fileID: 1080302708}
+  - component: {fileID: 1080302710}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -1010,6 +1015,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1080302710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1080302707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3300171001c69d49a1e34b8f407d009, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 8259664165903907130, guid: b4975a30c01af71468310f293ae3d319, type: 3}
+  objects: []
+  countToPool: 20
 --- !u!1 &1192453953
 GameObject:
   m_ObjectHideFlags: 0
@@ -1557,12 +1577,12 @@ MonoBehaviour:
   m_RequiresColorTexture: 0
   m_Version: 2
   m_TaaSettings:
-    m_Quality: 3
-    m_FrameInfluence: 0.1
-    m_JitterScale: 1
-    m_MipBias: 0
-    m_VarianceClampScale: 0.9
-    m_ContrastAdaptiveSharpening: 0
+    quality: 3
+    frameInfluence: 0.1
+    jitterScale: 1
+    mipBias: 0
+    varianceClampScale: 0.9
+    contrastAdaptiveSharpening: 0
 --- !u!1 &1600593321
 GameObject:
   m_ObjectHideFlags: 0

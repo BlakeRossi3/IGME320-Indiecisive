@@ -94,7 +94,14 @@ public class EnemyType1 : Enemy
         if (fireCooldown <= 0)
         {
             //creates a new bullet at the enemy's position TODO: update this based on how it looks with enemy sprite
-            var newBullet = Instantiate(bulletPrefab, enemyRB.position, Quaternion.identity);
+            //var newBullet = Instantiate(bulletPrefab, enemyRB.position, Quaternion.identity);
+            var newBullet = ObjectPool.instance.GetPooledObject();
+            if(newBullet == null)
+            {
+                return;
+            }
+            newBullet.transform.position = enemyRB.position;
+            newBullet.SetActive(true);
 
             //attaches bullet movement script to newly created bullet
             newBullet.AddComponent<NormalBullet>();
