@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour
             Charge = Player.charge;
             coinsText.text = (" : " + Coins);
             coinCount.text = (" : " + Coins);
-            chargeText.text = (" : " + Charge);
+            //chargeText.text = (" : " + Charge); TODO: temp commented out until bugs are fixed.
 
         }
         else if (currentState == GameState.Space)
@@ -108,7 +108,7 @@ public class GameManager : MonoBehaviour
         coinCount.text = (" : " + Coins);
 
         chargeText = GameObject.Find("ChargeText").GetComponent<TextMeshProUGUI>();
-        chargeText.text = (" : " + Charge);
+        //chargeText.text = (" : " + Charge); TODO: temp commented this out until bugs are fixed.
     }
 
     // The current game state
