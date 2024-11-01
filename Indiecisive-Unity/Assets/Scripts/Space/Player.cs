@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Threading;
 using TMPro;
@@ -57,15 +59,21 @@ public class Player : MonoBehaviour
     private int special = 0;
 
     //Other variables for handling special TODO: tune this
+    //TODO: could read active special in start and adjust values based on that?
     private float specialDuration = 3;
     private float specialTime = 0;
     private float specialCD = 7;
     private float specialCDTimer = 0;
     private bool specialActive = false;
 
-    //Prefabs for special gameObjects
-    public GameObject special0;
-    public GameObject special1;
+    //Holds a reference to the active special (not instantiated by script)
+    private GameObject currentSpecial;
+
+    //Objects that display status for special and shield
+    [SerializeField]
+    private GameObject specialStatus;
+    [SerializeField]
+    private GameObject shieldStatus;
 
     //list of health display objects
     private List<GameObject> health = new List<GameObject>();
@@ -100,9 +108,23 @@ public class Player : MonoBehaviour
 
         //TODO: TEMP TEMP TEMP REMOVE LATER
         chargeText.text = (": " + bulletCount);
-        //Vector3 position = new Vector3(-4, -4, 0);
-        //chargeText.transform.position = position;
-        
+
+        //TODO: check active special and adjust timers/duration as needed
+
+        //Reads what the active special is and assigns the correct item
+        switch (special)
+        {
+            case 0:
+                currentSpecial = GameObject.Find("barrierSpecial");
+                break;
+
+            case 1:
+                currentSpecial = GameObject.Find("beamSpecial");
+                break;
+        }
+
+        //Hides the special
+        currentSpecial.SetActive(false);
     }
 
     // Update is called once per frame
@@ -120,8 +142,11 @@ public class Player : MonoBehaviour
             //basic player fire
             playerFire();
 
-            //player special abilities
+            //player shield
             playerShield();
+
+            //player special
+            playerSpecial();
         }
 
         //player feedback for gameover state
@@ -244,53 +269,88 @@ public class Player : MonoBehaviour
     //Player special abilities. Uses a switch to determine which is active.
     private void playerSpecial()
     {
-        //GameObject array for specials generated
-        //This is used as a workaround to check if a gameObject exists or not to delete when
-        //the special is over, instead of having to check for each special individually.
-        GameObject[] specialObject = new GameObject[1];
+        //Special is activated when X is pressed and not on cooldown
+        //While the current specials have similar mechanics, this switch is for future proofing with other specials that may act differently.
+            switch (special)
+            {
+                //Damaging barrier around player
+                case 0:
 
-        //TODO: add this to update bc i forgor to do that with shield initially and was VERY CONFUSED
-        //TODO: this needs a key input??? I dunno why I forgot to add one when writing this to begin with tbh
-        switch (special)
-        {
-            //Damaging barrier around player
-            case 0:
-                //Generates special gameObject 
-                var special = Instantiate(special0, playerRB.position, Quaternion.identity);
+                    if (Input.GetKeyDown(KeyCode.X) && specialCDTimer <= 0)
+                    {
+                        //Makes the special object active
+                        currentSpecial.SetActive(true);
 
-                //Adds collision tag to gameObject 
-                special.gameObject.tag = "PlayerSpecial"; //TODO: seems to be bugging out if I do what I did for bullets. Will check this later, may not have updated tags properly in editor.
+                        //Sets use status to active
+                        specialActive = true;
+                        specialCDTimer = specialCD;
 
-                //Sets special status to active
-                specialActive = true;
-                specialCDTimer = specialCD;
+                        //Deactivates "ready" indicator
+                        specialStatus.SetActive(false);
+                    }
+
+                    //updates object position
+                    if (specialActive)
+                    {
+                        currentSpecial.transform.position = transform.position;
+                    }
+
+                    //Handles timers and deactivation
+                    objectSpecialTimers();
                 break;
-        }
 
-        //Handles special timers if special is active
+                //Straight beam in front of player
+                case 1:
+
+                    if (Input.GetKeyDown(KeyCode.X) && specialCDTimer <= 0)
+                    {
+                        //Makes the special object active
+                        currentSpecial.SetActive(true);
+
+                        //Sets use status to active
+                        specialActive = true;
+                        specialCDTimer = specialCD;
+                    }
+
+                    if (specialActive)
+                    {
+                        currentSpecial.transform.position = new Vector3(transform.position.x, transform.position.y + 1, 0);
+                    }
+
+                    //Handles timers and deactivation
+                    objectSpecialTimers();
+
+                break;
+            }
+
+    }
+
+    //Handles timer and activation for object-based specials
+    private void objectSpecialTimers()
+    {
         if (specialActive)
         {
-            //increments timer up
             specialTime += (1 * Time.deltaTime);
 
-            //checks if time is up for special 
+            //Checks if time is up
             if (specialTime >= specialDuration)
             {
-                //deactivates special
                 specialActive = false;
-
-                //deletes special gameObject if applicable 
-                if (specialObject[0] != null)
-                {
-                    Destroy(specialObject[0]);
-                }
+                currentSpecial.SetActive(false);
+                specialTime = 0;
             }
-        }
 
-        //Handles tracking cooldown if special is inactive
+        }
+        //Decreases cooldown if needed
         if (specialCDTimer > 0)
         {
-            specialCDTimer -= (1 * Time.deltaTime);
+            specialCDTimer -= 1 * Time.deltaTime;
+        }
+
+        //If special is available, activates indicator
+        if (specialCDTimer <= 0)
+        {
+            specialStatus.SetActive(true);
         }
     }
 
@@ -304,6 +364,9 @@ public class Player : MonoBehaviour
             shieldActive = true;
             playerSprite.color = Color.blue;
             shieldCDTimer = shieldCD;
+
+            //hides "ready" indicator
+            shieldStatus.SetActive(false);
         }
 
         //handles shield timers
@@ -324,6 +387,12 @@ public class Player : MonoBehaviour
         if (shieldCDTimer > 0)
         {
             shieldCDTimer -= ( 1* Time.deltaTime);
+        }
+
+        //if shield is available, displays "ready" indicator
+        if (shieldCDTimer <= 0)
+        {
+            shieldStatus.SetActive(true);
         }
     }
 

@@ -240,8 +240,6 @@ public abstract class Enemy : MonoBehaviour
         if (collision.gameObject.CompareTag("PlayerSpecial"))
         {
             currentHP -= 1;
-            //destroys bullet that hit the enemy
-            Destroy(collision.gameObject);
 
             //destroys the enemy if health is at 0
             if (currentHP <= 0)
