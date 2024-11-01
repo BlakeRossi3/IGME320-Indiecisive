@@ -17,6 +17,8 @@ public class Item : MonoBehaviour
     public bool isCoin;
     public bool isCharge;
 
+    public int value;
+
 
 
     // Start is called before the first frame update
@@ -97,7 +99,7 @@ public class Item : MonoBehaviour
             InputController bag = astro.GetComponent<InputController>();
             if (isCoin)
             {
-                bag.coins += 12;
+                bag.coins += value;
                 coinCount.text = (" : " + bag.coins);
             }
             else if (isCharge)

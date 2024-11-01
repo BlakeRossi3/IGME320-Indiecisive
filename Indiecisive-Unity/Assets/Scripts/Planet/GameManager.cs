@@ -41,15 +41,32 @@ public class GameManager : MonoBehaviour
     float scaleSpeed = 0.3f;  // Amount to scale per frame
     float maxScale = 675f;
     float minScale = 10f;
+    private string originalSceneName = "Planet"; // Replace with your original scene name
+    private bool hasSwitchedScenes = false;
 
-    // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
-        DontDestroyOnLoad(gameObject);
-
-        
-
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Check if returning to the original scene
+        if (scene.name == originalSceneName && hasSwitchedScenes)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            hasSwitchedScenes = true;
+        }
+    }
+
 
     // Update is called once per frame
     void Update()
@@ -151,10 +168,6 @@ public class GameManager : MonoBehaviour
 
 
             }
-
-
-
-
 
         }
         else if (currentState == GameState.Space)
