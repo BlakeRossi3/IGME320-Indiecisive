@@ -47,7 +47,7 @@ public class EnemyType2 : Enemy
             // slightly randomizes the time it takes for enemies to change where they are going
             if (seekPointCooldown <= Random.Range(0f, 1f))
             {
-                targetPos = WanderInZone(0.5f, 0.5f, 6.0f, 1.5f);
+                targetPos = WanderInZone(7.0f, 7.0f, 1.6f, 3.0f);
                 seekPointCooldown = seekPointDelay;
                 stayOnScreenCooldown--;
             }

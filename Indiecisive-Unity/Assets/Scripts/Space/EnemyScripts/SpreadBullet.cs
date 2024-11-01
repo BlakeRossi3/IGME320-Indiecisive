@@ -54,13 +54,14 @@ public class SpreadBullet : MonoBehaviour
 
         for (int i = 0; i < bulletList.Count; i++)
         {
+            // TODO:: Update this with manual screen bounds
             screenPosition = Camera.main.WorldToScreenPoint(bulletList[i].transform.position);
-            if (screenPosition.y < -Screen.height / 50 ||
-                screenPosition.y > Screen.height / 50 ||
-                screenPosition.x < -Screen.width / 50 ||
-                screenPosition.x < -Screen.width / 50)
+            if (screenPosition.y < -Screen.height ||
+                screenPosition.y > Screen.height ||
+                screenPosition.x < -Screen.width ||
+                screenPosition.x > Screen.width)
             {
-                Destroy(gameObject);
+                bulletList[i].gameObject.SetActive(false);
             }
         }
     }
@@ -69,7 +70,7 @@ public class SpreadBullet : MonoBehaviour
     {
         if (speed > 0)
         {
-            speed -= Random.Range(0.5f, 0.8f) * Time.fixedDeltaTime;
+            speed -= Random.Range(0.7f, 1.0f) * Time.fixedDeltaTime;
         }
         if (speed <= 0)
         {
@@ -97,10 +98,10 @@ public class SpreadBullet : MonoBehaviour
                 return;
             }
             newBullet.transform.position = position;
-            newBullet.SetActive(true);
 
             newBullet.GetComponent<NormalBullet>().FireAngle = projectileVector;
             newBullet.GetComponent<NormalBullet>().Speed = initSpeed;
+            newBullet.SetActive(true);
 
             bulletList.Add(newBullet);
         }

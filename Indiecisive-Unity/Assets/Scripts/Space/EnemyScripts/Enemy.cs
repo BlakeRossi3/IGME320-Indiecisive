@@ -21,7 +21,7 @@ public abstract class Enemy : MonoBehaviour
 
     [SerializeField]
     protected float fireDelay; // delay between shots
-    protected float fireCooldown = 0.0f; // delay of initial shot
+    protected float fireCooldown = 1.0f; // delay of initial shot
 
     [SerializeField]
     protected float seekPointDelay; // delay for finding a new random point to seek
@@ -198,8 +198,8 @@ public abstract class Enemy : MonoBehaviour
     {
         Vector3 targetPos = Vector3.zero;
 
-        targetPos.x = Random.Range(screenMin.x + 0.5f, screenMax.x - 0.5f);
-        targetPos.y = Random.Range(screenMax.y + 5.0f, screenMin.y - 1.5f);
+        targetPos.x = Random.Range(screenMin.x - screenMin.x / 3.0f, screenMax.x - screenMax.x / 3.0f);
+        targetPos.y = Random.Range(screenMax.y - screenMax.y * 1.3f, screenMin.y - screenMin.y / 1.8f);
 
         return targetPos;
     }
@@ -208,8 +208,8 @@ public abstract class Enemy : MonoBehaviour
     {
         Vector3 targetPos = Vector3.zero;
 
-        targetPos.x = Random.Range(screenMin.x + min_X, screenMax.x - max_X);
-        targetPos.y = Random.Range(screenMax.y + min_Y, screenMin.y - max_Y);
+        targetPos.x = Random.Range(screenMin.x - screenMin.x / min_X, screenMax.x - screenMax.x / max_X);
+        targetPos.y = Random.Range(screenMax.y - screenMax.y * min_Y, screenMin.y - screenMin.y / max_Y);
 
         return targetPos;
     }

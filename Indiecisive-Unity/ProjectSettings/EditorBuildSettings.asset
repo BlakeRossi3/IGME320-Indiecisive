@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Planet.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
@@ -17,7 +17,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/GameOver.unity
     guid: 5e7f1f9a56c4fa243b085fd24c1c9c0a
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Explore.unity
     guid: ce4d0352e877ce74bb7a836dc5e37835
   m_configObjects: {}
