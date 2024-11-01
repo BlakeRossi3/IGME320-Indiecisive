@@ -11,25 +11,19 @@ public class GameManager : MonoBehaviour
     public GameObject SpecialMeter;
     public GameObject LaserMeter;
     public Canvas Canvas;
-    public GameObject Ship;
-    private RectTransform ship;
     public GameObject player;
     public TextMeshProUGUI coinsText;
-    public TextMeshProUGUI chargeText;
 
-    public TextMeshProUGUI shieldText;
-    public TextMeshProUGUI specialText;
-    public TextMeshProUGUI laserText;
-    public TextMeshProUGUI healthText;
+    public TextMeshProUGUI purchaseText;
 
     private int shieldLevel = 0;
     private int specialLevel = 0;
     private int laserLevel = 0;
-    private int healthLevel = 0;
+    private int speedLevel = 0;
 
     private int shieldPrice = 20;
     private int laserPrice = 20;
-    private int healthPrice = 20;
+    private int speedPrice = 20;
     private int specialPrice = 20;
 
     public int Charge;
@@ -38,25 +32,21 @@ public class GameManager : MonoBehaviour
 
     public TextMeshProUGUI coinCount;
 
+    public GameObject Select;
 
+    public int selection = 1;
+
+    public GameObject upgrade;
+
+    float scaleSpeed = 0.3f;  // Amount to scale per frame
+    float maxScale = 675f;
+    float minScale = 10f;
 
     // Start is called before the first frame update
     void Start()
     {
         DontDestroyOnLoad(gameObject);
-        if (Ship != null)
-        {
-            ship = Ship.GetComponent<RectTransform>();
-            
-        }
-        
-        if (shieldText!= null)
-        {
-            shieldText.text = (" Shield: " + shieldPrice);
-            specialText.text = ("Special: " + specialPrice);
-            laserText.text = ("Laser: " + laserPrice);
-            healthText.text = ("Health: " + healthPrice);
-        }
+
         
 
     }
@@ -65,17 +55,106 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         Canvas.ForceUpdateCanvases();
+       
 
         if(currentState == GameState.Planet)
         {
-            ship.localEulerAngles = new Vector3(0, 0, ship.localEulerAngles.z + 30 * Time.deltaTime);
 
             InputController Player = player.GetComponent<InputController>();
             Coins = Player.coins;
             Charge = Player.charge;
             coinsText.text = (" : " + Coins);
             coinCount.text = (" : " + Coins);
-            chargeText.text = (" : " + Charge);
+
+            //shop menu logic
+            if (Select != null && Player.shopActive)
+            {
+                //move selection via arrow keys
+                if (Input.GetKeyDown(KeyCode.DownArrow) && selection < 4)
+                {
+                    selection++;
+                }
+                else if (Input.GetKeyDown(KeyCode.UpArrow) && selection > 1)
+                {
+                    selection--;
+                }
+                RectTransform Selector = Select.GetComponent<RectTransform>();
+                if (selection == 1) 
+                {
+                    Selector.localPosition = new Vector3(-700, 270, -2);
+                    coinsText.text = (Coins + " / " + laserPrice);
+                }
+                else if (selection == 2)
+                {
+                    Selector.localPosition = new Vector3(-700, 115, -2);
+                    coinsText.text = (Coins + " / " + shieldPrice);
+                }
+                else if (selection == 3)
+                {
+                    Selector.localPosition = new Vector3(-700, -50, -2);
+                    coinsText.text = (Coins + " / " + speedPrice);
+                }
+                else if (selection == 4)
+                {
+                    Selector.localPosition = new Vector3(-700, -220, -2);
+                    coinsText.text = (Coins + " / " + specialPrice);
+                }
+                RectTransform upgradeMeter = upgrade.GetComponent<RectTransform>();
+                // Grow the upgrade meter while X is held down and the meter hasn't reached max scale
+                if (Input.GetKey(KeyCode.X) && upgradeMeter.localScale.x <= maxScale)
+                {
+                    upgradeMeter.localScale = new Vector3(upgradeMeter.localScale.x + scaleSpeed, upgradeMeter.localScale.y, 1);
+                    upgradeMeter.localPosition += new Vector3(scaleSpeed / 2, 0f, 0f);  // Move to the left as it grows
+                }
+                // Shrink the upgrade meter when X is released and the meter is above min scale
+                else if (!Input.GetKey(KeyCode.X) && upgradeMeter.localScale.x > minScale)
+                {
+                    upgradeMeter.localScale = new Vector3(upgradeMeter.localScale.x - scaleSpeed, upgradeMeter.localScale.y, 1);
+                    upgradeMeter.localPosition -= new Vector3(scaleSpeed / 2, 0f, 0f);  // Move to the right as it shrinks
+                }
+                if (Input.GetKey(KeyCode.X) && upgradeMeter.localScale.x <= maxScale)
+                {
+                    upgradeMeter.localScale = new Vector3(upgradeMeter.localScale.x + scaleSpeed, upgradeMeter.localScale.y, 1);
+                    upgradeMeter.localPosition += new Vector3(scaleSpeed / 2, 0f, 0f);  // Move to the left as it grows
+                }
+                // Shrink the upgrade meter when X is released and the meter is above min scale
+                else if (!Input.GetKey(KeyCode.X) && upgradeMeter.localScale.x > minScale)
+                {
+                    upgradeMeter.localScale = new Vector3(upgradeMeter.localScale.x - scaleSpeed, upgradeMeter.localScale.y, 1);
+                    upgradeMeter.localPosition -= new Vector3(scaleSpeed / 2, 0f, 0f);  // Move to the right as it shrinks
+                }
+
+                // Check if the upgrade meter is full and call the appropriate ShipMenu
+                if (upgradeMeter.localScale.x > maxScale - 10)
+                {
+                    if (selection == 1)
+                    {
+                        ShipMenu("Laser");
+                    }
+                    else if (selection == 2)
+                    {
+                        ShipMenu("Shield");
+                    }
+                    else if (selection == 3)
+                    {
+                        ShipMenu("Speed");
+                    }
+                    else if (selection == 4)
+                    {
+                        ShipMenu("Special");
+                    }
+
+                    // Reset the upgrade meter to minimum scale and position
+                    upgradeMeter.localScale = new Vector3(minScale, upgradeMeter.localScale.y, 1);
+                    upgradeMeter.localPosition = new Vector3(-446, upgradeMeter.localPosition.y, -1.5f); // Adjust position as needed
+                }
+
+
+            }
+
+
+
+
 
         }
         else if (currentState == GameState.Space)
@@ -83,11 +162,7 @@ public class GameManager : MonoBehaviour
 
             StartCoroutine(UpdateUILate());
             
-        }
-         
-
-
-
+        }  
     }
 
     // Enum to hold different game states
@@ -95,7 +170,8 @@ public class GameManager : MonoBehaviour
     {
         GameStart,
         Planet,
-        Space
+        Space,
+        Explore
     }
 
     IEnumerator  UpdateUILate()
@@ -106,9 +182,6 @@ public class GameManager : MonoBehaviour
 
         coinCount = GameObject.Find("CoinText").GetComponent<TextMeshProUGUI>();
         coinCount.text = (" : " + Coins);
-
-        chargeText = GameObject.Find("ChargeText").GetComponent<TextMeshProUGUI>();
-        chargeText.text = (" : " + Charge);
     }
 
     // The current game state
@@ -122,13 +195,13 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void OnClick(string type)
+    public void ShipMenu(string type)
     {
         InputController Player = player.GetComponent<InputController>();
         int coins = Player.coins;
 
-        coinsText.text = coins.ToString();
-
+        
+        float ScaleX = 80f;  // Amount to scale
         switch (type)
         {
             case "Shield":
@@ -137,9 +210,9 @@ public class GameManager : MonoBehaviour
 
                 if (shieldLevel < 7 && coins >= shieldPrice)
                 {
-                    float shieldScaleY = 50f;  // Amount to scale
-                    ShieldMete.localScale = new Vector3(ShieldMete.localScale.x, ShieldMete.localScale.y + shieldScaleY, ShieldMete.localScale.z);
-                    ShieldMete.localPosition += new Vector3(0f, shieldScaleY / 2, 0f);  // Move up by half the scale amount
+   
+                    ShieldMete.localScale = new Vector3(ShieldMete.localScale.x + ScaleX, ShieldMete.localScale.y, ShieldMete.localScale.z);
+                    ShieldMete.localPosition += new Vector3(ScaleX / 2, 0f, 0f);  // Move up by half the scale amount
                     Player.coins -= shieldPrice;
                     shieldPrice *= 2;
                     
@@ -150,12 +223,11 @@ public class GameManager : MonoBehaviour
             case "Laser":
                 laserLevel++;
                 RectTransform LaserMete = LaserMeter.GetComponent<RectTransform>();
-
+                Debug.Log("good");
                 if (laserLevel < 7 && coins >= laserPrice)
                 {
-                    float laserScaleY = 50f;  // Amount to scale
-                    LaserMete.localScale = new Vector3(LaserMete.localScale.x, LaserMete.localScale.y + laserScaleY, LaserMete.localScale.z);
-                    LaserMete.localPosition += new Vector3(0f, laserScaleY / 2, 0f);  // Move up by half the scale amount
+                    LaserMete.localScale = new Vector3(LaserMete.localScale.x + ScaleX, LaserMete.localScale.y, LaserMete.localScale.z);
+                    LaserMete.localPosition += new Vector3(ScaleX / 2, 0f, 0f);  // Move up by half the scale amount
                     Player.coins -= laserPrice;
                     laserPrice *= 2;
                     
@@ -167,9 +239,8 @@ public class GameManager : MonoBehaviour
                 RectTransform SpecialMete = SpecialMeter.GetComponent<RectTransform>();
                 if (specialLevel < 7 && coins >= specialPrice)
                 {
-                    float specialScaleY = 50f;  // Amount to scale
-                    SpecialMete.localScale = new Vector3(SpecialMete.localScale.x, SpecialMete.localScale.y + specialScaleY, SpecialMete.localScale.z);
-                    SpecialMete.localPosition += new Vector3(0f, specialScaleY / 2, 0f);  // Move up by half the scale amount
+                    SpecialMete.localScale = new Vector3(SpecialMete.localScale.x + ScaleX, SpecialMete.localScale.y, SpecialMete.localScale.z);
+                    SpecialMete.localPosition += new Vector3(ScaleX / 2, 0f, 0f);  // Move up by half the scale amount
                     Player.coins -= specialPrice;
                     specialPrice *= 2;
                     
@@ -177,27 +248,23 @@ public class GameManager : MonoBehaviour
                 
             break;
 
-            case "Health":
-                healthLevel++;
+            case "Speed":
+                speedLevel++;
                 RectTransform HealthMete = HealthMeter.GetComponent<RectTransform>();
 
-                if(healthLevel < 7 && coins >= healthPrice)
+                if(speedLevel < 7 && coins >= speedPrice)
                 {
-                    float healthScaleY = 50f;  // Amount to scale
-                    HealthMete.localScale = new Vector3(HealthMete.localScale.x, HealthMete.localScale.y + healthScaleY, HealthMete.localScale.z);
-                    HealthMete.localPosition += new Vector3(0f, healthScaleY / 2, 0f);  // Move up by half the scale amount
-                    Player.coins -= healthPrice;
-                    healthPrice *= 2;
+                    HealthMete.localScale = new Vector3(HealthMete.localScale.x + ScaleX, HealthMete.localScale.y, HealthMete.localScale.z);
+                    HealthMete.localPosition += new Vector3(ScaleX / 2, 0f, 0f);  // Move up by half the scale amount
+                    Player.coins -= speedPrice;
+                    speedPrice *= 2;
                     
                 }
                 
             break;
         }
 
-        shieldText.text = (" Shield: " + shieldPrice);
-        specialText.text = ("Special: " + specialPrice);
-        laserText.text = ("Laser: " + laserPrice);
-        healthText.text = ("Health: " + healthPrice);
+
     }
 
 

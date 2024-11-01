@@ -69,6 +69,12 @@ public class Player : MonoBehaviour
     //Holds a reference to the active special (not instantiated by script)
     private GameObject currentSpecial;
 
+    //Objects that display status for special and shield
+    [SerializeField]
+    private GameObject specialStatus;
+    [SerializeField]
+    private GameObject shieldStatus;
+
     //list of health display objects
     private List<GameObject> health = new List<GameObject>();
 
@@ -108,16 +114,17 @@ public class Player : MonoBehaviour
         //Reads what the active special is and assigns the correct item
         switch (special)
         {
-            //TODO: change name later
             case 0:
-                currentSpecial = GameObject.Find("barrierPlaceholder");
+                currentSpecial = GameObject.Find("barrierSpecial");
+                break;
+
+            case 1:
+                currentSpecial = GameObject.Find("beamSpecial");
                 break;
         }
 
         //Hides the special
         currentSpecial.SetActive(false);
-        Debug.Log(currentSpecial);
-
     }
 
     // Update is called once per frame
@@ -277,31 +284,74 @@ public class Player : MonoBehaviour
                         //Sets use status to active
                         specialActive = true;
                         specialCDTimer = specialCD;
+
+                        //Deactivates "ready" indicator
+                        specialStatus.SetActive(false);
+                    }
+
+                    //updates object position
+                    if (specialActive)
+                    {
+                        currentSpecial.transform.position = transform.position;
+                    }
+
+                    //Handles timers and deactivation
+                    objectSpecialTimers();
+                break;
+
+                //Straight beam in front of player
+                case 1:
+
+                    if (Input.GetKeyDown(KeyCode.X) && specialCDTimer <= 0)
+                    {
+                        //Makes the special object active
+                        currentSpecial.SetActive(true);
+
+                        //Sets use status to active
+                        specialActive = true;
+                        specialCDTimer = specialCD;
                     }
 
                     if (specialActive)
                     {
-                        //Updates the object position
-                        currentSpecial.transform.position = transform.position;
-                        specialTime += (1 * Time.deltaTime);
-
-                        //Checks if time is up
-                        if (specialTime >= specialDuration)
-                        {
-                            specialActive = false;
-                            currentSpecial.SetActive(false);
-                        }
+                        currentSpecial.transform.position = new Vector3(transform.position.x, transform.position.y + 1, 0);
                     }
 
-                    //Decreases cooldown if needed
-                    if (specialCDTimer > 0)
-                    {
-                        specialCDTimer -= 1 * Time.deltaTime;
-                    }
+                    //Handles timers and deactivation
+                    objectSpecialTimers();
 
                 break;
             }
 
+    }
+
+    //Handles timer and activation for object-based specials
+    private void objectSpecialTimers()
+    {
+        if (specialActive)
+        {
+            specialTime += (1 * Time.deltaTime);
+
+            //Checks if time is up
+            if (specialTime >= specialDuration)
+            {
+                specialActive = false;
+                currentSpecial.SetActive(false);
+                specialTime = 0;
+            }
+
+        }
+        //Decreases cooldown if needed
+        if (specialCDTimer > 0)
+        {
+            specialCDTimer -= 1 * Time.deltaTime;
+        }
+
+        //If special is available, activates indicator
+        if (specialCDTimer <= 0)
+        {
+            specialStatus.SetActive(true);
+        }
     }
 
     //player shield--nullifies damage for a set amount of time
@@ -314,6 +364,9 @@ public class Player : MonoBehaviour
             shieldActive = true;
             playerSprite.color = Color.blue;
             shieldCDTimer = shieldCD;
+
+            //hides "ready" indicator
+            shieldStatus.SetActive(false);
         }
 
         //handles shield timers
@@ -334,6 +387,12 @@ public class Player : MonoBehaviour
         if (shieldCDTimer > 0)
         {
             shieldCDTimer -= ( 1* Time.deltaTime);
+        }
+
+        //if shield is available, displays "ready" indicator
+        if (shieldCDTimer <= 0)
+        {
+            shieldStatus.SetActive(true);
         }
     }
 
