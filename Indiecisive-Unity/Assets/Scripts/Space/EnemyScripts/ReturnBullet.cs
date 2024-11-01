@@ -3,16 +3,10 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
-public class SeekingBullet : MonoBehaviour
+public class ReturnBullet : MonoBehaviour
 {
     [SerializeField]
-    protected float speed = 5.0f;
-
-    [SerializeField]
-    protected GameObject targetTransform;
-
-    [SerializeField]
-    protected float turnWeight = 10;
+    protected float speed = 6.0f;
 
     private Vector3 screenPosition;
     private Rigidbody2D rb;
@@ -35,20 +29,13 @@ public class SeekingBullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        rb.velocity = transform.forward * speed * Time.deltaTime;
-
-        var targetRotation = Quaternion.LookRotation(targetTransform.transform.position - transform.position);
-
-        rb.MoveRotation(Quaternion.RotateTowards(transform.rotation, targetRotation, turnWeight));
-
         // shoots the bullet straight down
-        //transform.Translate(Vector2.down * speed * Time.fixedDeltaTime);
-        // try using the player transform for the seek
+        transform.Translate(Vector2.down * speed * Time.deltaTime);
+        speed -= 0.005f;
 
         // destroy when off screen--translate position to pixels, compare to screen height
-        // ***TODO: make this destroy on exit of all sides of screen
         screenPosition = Camera.main.WorldToScreenPoint(transform.position);
-        if (screenPosition.y < -Screen.height / 50)
+        if (screenPosition.y > Screen.height)
         {
             Destroy(gameObject);
         }

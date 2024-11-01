@@ -27,13 +27,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9191297168087706564}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 0.75, y: 0.75, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8651574277114618362
 SpriteRenderer:
@@ -101,15 +101,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 3
   maxForce: 0.5
-  seperateRange: 0.25
+  seperateRange: 0.5
   shootsBullets: 1
-  fireDelay: 2
+  fireDelay: 3
   seekPointDelay: 3
   stayOnScreenCooldown: 7
   manager: {fileID: 0}
   bulletPrefab: {fileID: 8259664165903907130, guid: b4975a30c01af71468310f293ae3d319, type: 3}
   targetPos: {x: 0, y: 0, z: 0}
-  targetObject: {fileID: 0}
+  targetTransform: {fileID: 0}
   boundsWeight: 3
   firingEnabled: 1
   seekWeight: 0.5
