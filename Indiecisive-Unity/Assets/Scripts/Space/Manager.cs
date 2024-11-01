@@ -8,7 +8,7 @@ public class Manager : MonoBehaviour
     Player playerClass;
 
     [SerializeField]
-    EnemyManager enemies;
+    GameObject enemies;
 
     [SerializeField]
     StageTimer timer;
@@ -19,7 +19,12 @@ public class Manager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        enemies.InitialSpawnDelay = startDelay;
+        for (int i = 0; i < enemies.GetComponents<EnemyManager>().Length; i++)
+        {
+            // meant to set spawn delay for each enemy type's manager in the Empty
+            // NOT WORKING
+            enemies.GetComponent<EnemyManager>().InitialSpawnDelay = startDelay;
+        }
         timer.InitialStartDelay = startDelay;
     }
 

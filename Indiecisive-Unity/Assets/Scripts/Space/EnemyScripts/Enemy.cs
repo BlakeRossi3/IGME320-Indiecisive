@@ -45,6 +45,8 @@ public abstract class Enemy : MonoBehaviour
     protected float currentHP = 1f;
     protected float maxHP = 2f;
 
+    protected bool doOnce = false;
+
     public float FireDelay { get { return fireDelay; } set { fireDelay = value; } }
     public Vector3 ScreenMax { get { return screenMax; } }
     public Vector3 ScreenMin { get { return screenMin; } }
@@ -110,7 +112,7 @@ public abstract class Enemy : MonoBehaviour
         return seekingForce;
     }
 
-    protected Vector3 Seek(GameObject target)
+    protected Vector3 Seek(Transform target)
     {
         return Seek(target.transform.position);
     }
@@ -197,7 +199,17 @@ public abstract class Enemy : MonoBehaviour
         Vector3 targetPos = Vector3.zero;
 
         targetPos.x = Random.Range(screenMin.x + 0.5f, screenMax.x - 0.5f);
-        targetPos.y = Random.Range(0.5f, screenMin.y - 1.5f);
+        targetPos.y = Random.Range(screenMax.y + 5.0f, screenMin.y - 1.5f);
+
+        return targetPos;
+    }
+
+    protected Vector3 WanderInZone(float min_X, float max_X, float min_Y, float max_Y)
+    {
+        Vector3 targetPos = Vector3.zero;
+
+        targetPos.x = Random.Range(screenMin.x + min_X, screenMax.x - max_X);
+        targetPos.y = Random.Range(screenMax.y + min_Y, screenMin.y - max_Y);
 
         return targetPos;
     }

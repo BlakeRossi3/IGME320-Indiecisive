@@ -152,8 +152,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de4c2cde181a8e64db5938fbc2331ebc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnCount: 0
+  spawnCount: 3
   spawnDelay: 15
+  initialSpawnDelay: 3.3
   enemyPrefab: {fileID: -1236334127038752367, guid: 47ba29c1bccd00d48a8d63718be43fba, type: 3}
   enemies: []
 --- !u!114 &44939682
@@ -170,6 +171,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnCount: 8
   spawnDelay: 10
+  initialSpawnDelay: 0
   enemyPrefab: {fileID: 6503120815084692272, guid: 6047828b514cd904797d2d1d09e326c2, type: 3}
   enemies: []
 --- !u!4 &44939683
@@ -1097,6 +1099,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1080302709}
   - component: {fileID: 1080302708}
+  - component: {fileID: 1080302710}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -1117,7 +1120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerClass: {fileID: 483461482}
-  enemies: {fileID: 44939682}
+  enemies: {fileID: 44939680}
   timer: {fileID: 1192453956}
   startDelay: 3.3
 --- !u!4 &1080302709
@@ -1135,6 +1138,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1080302710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1080302707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3300171001c69d49a1e34b8f407d009, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 8259664165903907130, guid: b4975a30c01af71468310f293ae3d319, type: 3}
+  objects: []
+  countToPool: 20
+  canExpand: 1
 --- !u!1 &1192453953
 GameObject:
   m_ObjectHideFlags: 0

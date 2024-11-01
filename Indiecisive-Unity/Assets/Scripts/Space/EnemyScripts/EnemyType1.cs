@@ -13,13 +13,16 @@ public class EnemyType1 : Enemy
     protected Vector3 targetPos; // randomized position to wander from WanderInZone
 
     [SerializeField]
-    protected GameObject targetObject; // object to seek
+    protected Transform targetTransform; // object to seek
 
     [SerializeField]
     protected float boundsWeight; // how strong the force of the screen bounds is
 
     [SerializeField]
     protected bool firingEnabled = false;
+
+    [SerializeField]
+    protected float seekWeight; // how strong the force of the screen bounds is
 
     protected override void CalcSteeringForces()
     {
@@ -48,7 +51,7 @@ public class EnemyType1 : Enemy
                 seekPointCooldown = seekPointDelay;
                 stayOnScreenCooldown--;
             }
-            TotalForce += Seek(targetPos);
+            TotalForce += Seek(targetPos) * seekWeight;
             TotalForce += Separate();
             //TotalForce += StayInBoundsForce() * boundsWeight;
             //IgnoreCollisionsWithEnemies(enemyRB.GetComponent<Collider2D>());
@@ -59,10 +62,12 @@ public class EnemyType1 : Enemy
         {
             Vector3 exitPoint = new Vector3(0.0f, 5.0f, 0.0f);
             TotalForce = Flee(exitPoint);
-            maxSpeed += 0.5f;
+            maxSpeed += 2.0f * Time.fixedDeltaTime;
+            maxForce = 1.0f;
             enemyRB.freezeRotation = false;
+            //transform.rotation = Quaternion.identity;
             firingEnabled = false;
-            transform.localScale += new Vector3(-0.0005f, -0.0005f, 0.0f);
+            transform.localScale += new Vector3(-0.05f * Time.fixedDeltaTime, -0.05f * Time.fixedDeltaTime, 0.0f);
 
             // attempt at a rotation change will look at later
             enemyRB.rotation = Mathf.Atan(Vector3.Normalize(TotalForce).x / Vector3.Normalize(TotalForce).y);
@@ -89,12 +94,15 @@ public class EnemyType1 : Enemy
         if (fireCooldown <= 0)
         {
             //creates a new bullet at the enemy's position TODO: update this based on how it looks with enemy sprite
-            var newBullet = Instantiate(bulletPrefab, enemyRB.position, Quaternion.identity);
-
-            //attaches bullet movement script to newly created bullet
-            newBullet.AddComponent<NormalBullet>();
-            newBullet.AddComponent<BoxCollider2D>();
-            newBullet.AddComponent<Rigidbody2D>();
+            //var newBullet = Instantiate(bulletPrefab, enemyRB.position, Quaternion.identity);
+            var newBullet = ObjectPool.instance.GetPooledObject();
+            if(newBullet == null)
+            {
+                return;
+            }
+            newBullet.transform.position = enemyRB.position;
+            newBullet.GetComponent<NormalBullet>().FireAngle = Vector3.down;
+            newBullet.SetActive(true);
             fireCooldown = fireDelay;
         }
     }

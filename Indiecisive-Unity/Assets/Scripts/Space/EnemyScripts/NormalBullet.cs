@@ -6,11 +6,15 @@ using UnityEngine;
 public class NormalBullet : MonoBehaviour
 {
     [SerializeField]
-    protected float speed = 4.0f;
+    protected float speed = 5.0f;
 
     private Vector3 screenPosition;
     private Rigidbody2D rb;
     private BoxCollider2D collider;
+    private Vector3 fireAngle = Vector2.down;
+
+    public Vector3 FireAngle { get { return fireAngle; } set {  fireAngle = value; } }
+    public float Speed { get { return speed; } set { speed = value; } }
 
     void Start()
     {
@@ -30,13 +34,13 @@ public class NormalBullet : MonoBehaviour
     void Update()
     {
         // shoots the bullet straight down
-        transform.Translate(Vector2.down * speed * Time.deltaTime);
+        transform.Translate(fireAngle * speed * Time.deltaTime);
 
         // destroy when off screen--translate position to pixels, compare to screen height
         screenPosition = Camera.main.WorldToScreenPoint(transform.position);
         if (screenPosition.y < -Screen.height / 50)
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 }
