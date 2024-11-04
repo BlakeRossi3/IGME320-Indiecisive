@@ -121,6 +121,9 @@ public class Player : MonoBehaviour
             case 1:
                 currentSpecial = GameObject.Find("beamSpecial");
                 break;
+
+            case 2: currentSpecial = null; //TODO: console yelling at me :) may need to move handling out of methods and just not assign anything here
+                break;
         }
 
         //Hides the special
@@ -278,15 +281,7 @@ public class Player : MonoBehaviour
 
                     if (Input.GetKeyDown(KeyCode.X) && specialCDTimer <= 0)
                     {
-                        //Makes the special object active
-                        currentSpecial.SetActive(true);
-
-                        //Sets use status to active
-                        specialActive = true;
-                        specialCDTimer = specialCD;
-
-                        //Deactivates "ready" indicator
-                        specialStatus.SetActive(false);
+                        startSpecial();
                     }
 
                     //updates object position
@@ -295,8 +290,9 @@ public class Player : MonoBehaviour
                         currentSpecial.transform.position = transform.position;
                     }
 
-                    //Handles timers and deactivation
-                    objectSpecialTimers();
+                    //Handles timers
+                    specialTimers();
+
                 break;
 
                 //Straight beam in front of player
@@ -304,12 +300,7 @@ public class Player : MonoBehaviour
 
                     if (Input.GetKeyDown(KeyCode.X) && specialCDTimer <= 0)
                     {
-                        //Makes the special object active
-                        currentSpecial.SetActive(true);
-
-                        //Sets use status to active
-                        specialActive = true;
-                        specialCDTimer = specialCD;
+                        startSpecial();
                     }
 
                     if (specialActive)
@@ -317,16 +308,57 @@ public class Player : MonoBehaviour
                         currentSpecial.transform.position = new Vector3(transform.position.x, transform.position.y + 1, 0);
                     }
 
-                    //Handles timers and deactivation
-                    objectSpecialTimers();
+                    //Handles timers
+                    specialTimers();
 
                 break;
+
+            //Rapid fire double bullets that don't drain bullet count
+            case 2:
+
+                if (Input.GetKeyDown(KeyCode.X) && specialCDTimer <= 0)
+                {
+                    startSpecial();
+                }
+
+                if (specialActive)
+                {
+                    //instantiates bullets at a fixed rate TODO: firing cooldown numbers outside of update method, double spawn on player wings, different bullet colors
+                    var newBullet = Instantiate(bulletPrefab, playerRB.position, Quaternion.identity);
+
+                    //attaches components to newly created bullet
+                    newBullet.AddComponent<PlayerBullet>();
+                    newBullet.AddComponent<BoxCollider2D>();
+                    newBullet.AddComponent<Rigidbody2D>();
+                }
+
+                //handles timers
+                specialTimers();
+            break;
+
             }
 
     }
 
-    //Handles timer and activation for object-based specials
-    private void objectSpecialTimers()
+    //Sets special use status to active
+    private void startSpecial()
+    {
+        //Sets use status to active
+        specialActive = true;
+        specialCDTimer = specialCD;
+
+        //if there's a special object, activates it
+        if (currentSpecial != null)
+        {
+            currentSpecial.SetActive(true);
+        }
+
+        //Deactivates "ready" indicator
+        specialStatus.SetActive(false);
+    }
+
+    //Handles timer and activation forspecials
+    private void specialTimers()
     {
         if (specialActive)
         {
@@ -336,8 +368,13 @@ public class Player : MonoBehaviour
             if (specialTime >= specialDuration)
             {
                 specialActive = false;
-                currentSpecial.SetActive(false);
                 specialTime = 0;
+
+                //disables specialObject if necessary
+                if (currentSpecial != null)
+                {
+                    currentSpecial.SetActive(false);
+                }
             }
 
         }
