@@ -154,7 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnCount: 3
   spawnDelay: 15
-  initialSpawnDelay: 3.3
+  initialSpawnDelay: 0
   enemyPrefab: {fileID: -1236334127038752367, guid: 47ba29c1bccd00d48a8d63718be43fba, type: 3}
   enemies: []
 --- !u!114 &44939682
@@ -454,7 +454,7 @@ MonoBehaviour:
   isGameOver: 0
   playerSprite: {fileID: 483461483}
   bulletPrefab: {fileID: 1636891944895576526, guid: f73bed8337a435a4fb8f0957d5011b3b, type: 3}
-  special: 0
+  special: 2
   specialStatus: {fileID: 1298454685}
   shieldStatus: {fileID: 1453416100}
 --- !u!212 &483461483

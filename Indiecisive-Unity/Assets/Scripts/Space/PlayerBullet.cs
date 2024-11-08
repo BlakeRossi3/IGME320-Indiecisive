@@ -10,7 +10,7 @@ public class PlayerBullet : MonoBehaviour
 {
     
     //Bullet stats TODO: tune these as necessary
-    private float speed = 3f;
+    private float speed = 4f;
     private Vector3 screenPosition;
     private BoxCollider2D collider;
     private Rigidbody2D rb;

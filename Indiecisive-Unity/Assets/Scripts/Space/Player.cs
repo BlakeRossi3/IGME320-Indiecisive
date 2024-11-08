@@ -66,6 +66,10 @@ public class Player : MonoBehaviour
     private float specialCDTimer = 0;
     private bool specialActive = false;
 
+    //cooldown for firing special
+    private float specialFireDelay = 0.1f;
+    private float specialFireTimer = 0;
+
     //Holds a reference to the active special (not instantiated by script)
     private GameObject currentSpecial;
 
@@ -122,12 +126,15 @@ public class Player : MonoBehaviour
                 currentSpecial = GameObject.Find("beamSpecial");
                 break;
 
-            case 2: currentSpecial = null; //TODO: console yelling at me :) may need to move handling out of methods and just not assign anything here
+            case 2: currentSpecial = null;
                 break;
         }
 
         //Hides the special
-        currentSpecial.SetActive(false);
+        if (currentSpecial != null)
+        {
+            currentSpecial.SetActive(false);
+        }
     }
 
     // Update is called once per frame
@@ -218,9 +225,9 @@ public class Player : MonoBehaviour
     //This is a workaround due to needing the ship to have a kinematic rigidbody instead of dynamic (physics issues)
     private void checkBounds()
     {
-        if (transform.position.y > screenWorld.y)
+        if (transform.position.y > screenWorld.y - 2)
         {
-            Vector3 newPosition = new Vector3(transform.position.x, screenWorld.y, 0);
+            Vector3 newPosition = new Vector3(transform.position.x, screenWorld.y - 2, 0);
             transform.position = newPosition;
         }
         if (transform.position.y < - screenWorld.y)
@@ -323,17 +330,36 @@ public class Player : MonoBehaviour
 
                 if (specialActive)
                 {
-                    //instantiates bullets at a fixed rate TODO: firing cooldown numbers outside of update method, double spawn on player wings, different bullet colors
-                    var newBullet = Instantiate(bulletPrefab, playerRB.position, Quaternion.identity);
+                    //If firing can be used, automatically fires bullets
+                    if (specialFireTimer <= 0)
+                    {
+                        //instantiates bullets
+                        var newBullet1 = Instantiate(bulletPrefab, new Vector3(playerRB.position.x - 0.75f, playerRB.position.y + 0.25f, 0), Quaternion.identity);
+                        var newBullet2 = Instantiate(bulletPrefab, new Vector3(playerRB.position.x + 0.75f, playerRB.position.y + 0.25f, 0), Quaternion.identity);
 
-                    //attaches components to newly created bullet
-                    newBullet.AddComponent<PlayerBullet>();
-                    newBullet.AddComponent<BoxCollider2D>();
-                    newBullet.AddComponent<Rigidbody2D>();
+                        //attaches components to newly created bullet
+                        newBullet1.AddComponent<PlayerBullet>();
+                        newBullet1.AddComponent<BoxCollider2D>();
+                        newBullet1.AddComponent<Rigidbody2D>();
+
+                        newBullet2.AddComponent<PlayerBullet>();
+                        newBullet2.AddComponent<BoxCollider2D>();
+                        newBullet2.AddComponent<Rigidbody2D>();
+                    }
+
+                    //Automatically increments delay timer
+                    specialFireTimer += 1 * Time.deltaTime;
+
+                    //sets delay timer to zero when maxed out
+                    if (specialFireTimer >= specialFireDelay)
+                    {
+                        specialFireTimer = 0;
+                    }
                 }
 
                 //handles timers
                 specialTimers();
+
             break;
 
             }
