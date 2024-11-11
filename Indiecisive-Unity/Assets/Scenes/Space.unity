@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 44939683}
   - component: {fileID: 44939682}
   - component: {fileID: 44939681}
+  - component: {fileID: 44939684}
   m_Layer: 0
   m_Name: EnemyManager
   m_TagString: Untagged
@@ -152,7 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de4c2cde181a8e64db5938fbc2331ebc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnCount: 3
+  spawnCount: 4
   spawnDelay: 15
   initialSpawnDelay: 0
   enemyPrefab: {fileID: -1236334127038752367, guid: 47ba29c1bccd00d48a8d63718be43fba, type: 3}
@@ -189,6 +190,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &44939684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 44939680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de4c2cde181a8e64db5938fbc2331ebc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnCount: 0
+  spawnDelay: 10
+  initialSpawnDelay: 0
+  enemyPrefab: {fileID: -8568634739978329092, guid: 65769a7703a409d49a2093213b4f543c, type: 3}
+  enemies: []
 --- !u!1001 &203688163
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1251,7 +1269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 063621c976328094db145cd66a870563, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageTime: 30
+  stageTime: 300
   showTime: 0
   timerText: {fileID: 913341656}
 --- !u!1 &1223213158 stripped

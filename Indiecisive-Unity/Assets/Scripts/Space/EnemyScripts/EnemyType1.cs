@@ -22,7 +22,7 @@ public class EnemyType1 : Enemy
     protected bool firingEnabled = false;
 
     [SerializeField]
-    protected float seekWeight; // how strong the force of the screen bounds is
+    protected float seekWeight; // how strong the forces of the points to seek are
 
     protected override void CalcSteeringForces()
     {
@@ -54,7 +54,6 @@ public class EnemyType1 : Enemy
             TotalForce += Seek(targetPos) * seekWeight;
             TotalForce += Separate();
             //TotalForce += StayInBoundsForce() * boundsWeight;
-            //IgnoreCollisionsWithEnemies(enemyRB.GetComponent<Collider2D>());
         }
 
         // Leave the screen after a bit so the enemies don't overflow the screen
@@ -63,11 +62,15 @@ public class EnemyType1 : Enemy
             Vector3 exitPoint = new Vector3(0.0f, 5.0f, 0.0f);
             TotalForce = Flee(exitPoint);
             maxSpeed += 2.0f * Time.fixedDeltaTime;
-            maxForce = 1.0f;
+            maxForce = 1.5f;
             enemyRB.freezeRotation = false;
-            //transform.rotation = Quaternion.identity;
+            if (TotalForce != Vector3.zero)
+            {
+                transform.rotation = Quaternion.LookRotation(Vector3.forward, -TotalForce.normalized);
+            }
             firingEnabled = false;
-            transform.localScale += new Vector3(-0.05f * Time.fixedDeltaTime, -0.05f * Time.fixedDeltaTime, 0.0f);
+            transform.localScale += new Vector3(-0.08f * Time.fixedDeltaTime, -0.08f * Time.fixedDeltaTime, 0.0f);
+            enemyBoxCollider.enabled = false;
 
             // attempt at a rotation change will look at later
             enemyRB.rotation = Mathf.Atan(Vector3.Normalize(TotalForce).x / Vector3.Normalize(TotalForce).y);

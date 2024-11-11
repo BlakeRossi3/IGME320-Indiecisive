@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 129039658962266751}
   - component: {fileID: -2709490773063614740}
   m_Layer: 0
-  m_Name: EnemyType2Placeholder
-  m_TagString: Untagged
+  m_Name: EnemyType2
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -102,12 +102,13 @@ MonoBehaviour:
   maxSpeed: 1.5
   maxForce: 0.5
   seperateRange: 0.25
-  shootsBullets: 1
   fireDelay: 6
   seekPointDelay: 3
-  stayOnScreenCooldown: 7
+  stayOnScreenCooldown: 9
+  player: {fileID: 0}
   manager: {fileID: 0}
-  bulletPrefab: {fileID: 8259664165903907130, guid: 9d87f39737512a542b4f2531b32b9195, type: 3}
+  bullet1Prefab: {fileID: 8259664165903907130, guid: 9d87f39737512a542b4f2531b32b9195, type: 3}
+  bullet2Prefab: {fileID: 1636891944895576526, guid: 48110731598ee5b46af035b9511ec78f, type: 3}
   targetPos: {x: 0, y: 0, z: 0}
   targetTransform: {fileID: 0}
   boundsWeight: 1
