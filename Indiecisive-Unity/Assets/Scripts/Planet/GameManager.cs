@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject upgrade;
 
-    float scaleSpeed = 0.3f;  // Amount to scale per frame
+    float scaleSpeed = 150.0f;  // Amount to scale per frame
     float maxScale = 675f;
     float minScale = 10f;
     private string originalSceneName = "Planet"; // Replace with your original scene name
@@ -120,26 +120,17 @@ public class GameManager : MonoBehaviour
                 // Grow the upgrade meter while X is held down and the meter hasn't reached max scale
                 if (Input.GetKey(KeyCode.X) && upgradeMeter.localScale.x <= maxScale)
                 {
-                    upgradeMeter.localScale = new Vector3(upgradeMeter.localScale.x + scaleSpeed, upgradeMeter.localScale.y, 1);
-                    upgradeMeter.localPosition += new Vector3(scaleSpeed / 2, 0f, 0f);  // Move to the left as it grows
+                    upgradeMeter.localScale = new Vector3(upgradeMeter.localScale.x + scaleSpeed * Time.deltaTime, upgradeMeter.localScale.y, 1);
+                    upgradeMeter.localPosition += new Vector3((scaleSpeed * Time.deltaTime) / 2, 0f, 0f);  // Move to the left as it grows
                 }
                 // Shrink the upgrade meter when X is released and the meter is above min scale
                 else if (!Input.GetKey(KeyCode.X) && upgradeMeter.localScale.x > minScale)
                 {
-                    upgradeMeter.localScale = new Vector3(upgradeMeter.localScale.x - scaleSpeed, upgradeMeter.localScale.y, 1);
-                    upgradeMeter.localPosition -= new Vector3(scaleSpeed / 2, 0f, 0f);  // Move to the right as it shrinks
+                    upgradeMeter.localScale = new Vector3(upgradeMeter.localScale.x - scaleSpeed * Time.deltaTime, upgradeMeter.localScale.y, 1);
+                    upgradeMeter.localPosition -= new Vector3((scaleSpeed * Time.deltaTime) / 2, 0f, 0f);  // Move to the right as it shrinks
                 }
-                if (Input.GetKey(KeyCode.X) && upgradeMeter.localScale.x <= maxScale)
-                {
-                    upgradeMeter.localScale = new Vector3(upgradeMeter.localScale.x + scaleSpeed, upgradeMeter.localScale.y, 1);
-                    upgradeMeter.localPosition += new Vector3(scaleSpeed / 2, 0f, 0f);  // Move to the left as it grows
-                }
-                // Shrink the upgrade meter when X is released and the meter is above min scale
-                else if (!Input.GetKey(KeyCode.X) && upgradeMeter.localScale.x > minScale)
-                {
-                    upgradeMeter.localScale = new Vector3(upgradeMeter.localScale.x - scaleSpeed, upgradeMeter.localScale.y, 1);
-                    upgradeMeter.localPosition -= new Vector3(scaleSpeed / 2, 0f, 0f);  // Move to the right as it shrinks
-                }
+
+
 
                 // Check if the upgrade meter is full and call the appropriate ShipMenu
                 if (upgradeMeter.localScale.x > maxScale - 10)
