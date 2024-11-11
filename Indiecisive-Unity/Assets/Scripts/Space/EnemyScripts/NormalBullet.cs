@@ -19,7 +19,7 @@ public class NormalBullet : MonoBehaviour
     void Start()
     {
         //Tags the bullet for collision purposes
-        gameObject.tag = "EnemyBullet";
+        gameObject.tag = "EnemyBulletPooled";
         rb = GetComponent<Rigidbody2D>();
         collider = GetComponent<BoxCollider2D>();
 
@@ -38,7 +38,10 @@ public class NormalBullet : MonoBehaviour
 
         // destroy when off screen--translate position to pixels, compare to screen height
         screenPosition = Camera.main.WorldToScreenPoint(transform.position);
-        if (screenPosition.y < -Screen.height / 50)
+        if (screenPosition.y < -Screen.height / 50 ||
+            screenPosition.y > Screen.height ||
+            screenPosition.x < -Screen.width / 50 ||
+            screenPosition.x > Screen.width)
         {
             gameObject.SetActive(false);
         }

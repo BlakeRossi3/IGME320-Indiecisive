@@ -4,13 +4,10 @@ using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
 
-public class EnemyType2 : Enemy
+public class EnemyType3 : Enemy
 {
     [SerializeField]
-    protected GameObject bullet1Prefab; // sprite for bullets
-
-    [SerializeField]
-    protected GameObject bullet2Prefab; // sprite for bullets
+    protected GameObject bulletPrefab; // sprite for bullets
 
     [SerializeField]
     protected Vector3 targetPos; // randomized position to wander from WanderInZone
@@ -26,6 +23,9 @@ public class EnemyType2 : Enemy
 
     [SerializeField]
     protected float seekWeight; // how strong the forces of the points to seek are
+
+    [SerializeField]
+    protected float bulletNum; // how many bullets to fire in one spread
 
     protected override void CalcSteeringForces()
     {
@@ -68,13 +68,9 @@ public class EnemyType2 : Enemy
             maxSpeed += 2.0f * Time.fixedDeltaTime;
             maxForce = 1.0f;
             enemyRB.freezeRotation = false;
-            if (TotalForce != Vector3.zero)
-            {
-                transform.rotation = Quaternion.LookRotation(Vector3.forward, -TotalForce.normalized);
-            }
+            //transform.rotation = Quaternion.identity;
             firingEnabled = false;
             transform.localScale += new Vector3(-0.05f * Time.fixedDeltaTime, -0.05f * Time.fixedDeltaTime, 0.0f);
-            enemyBoxCollider.enabled = false;
 
             // attempt at a rotation change will look at later
             enemyRB.rotation = Mathf.Atan(Vector3.Normalize(TotalForce).x / Vector3.Normalize(TotalForce).y);
@@ -98,26 +94,32 @@ public class EnemyType2 : Enemy
             fireCooldown -= Time.deltaTime;
         }
 
+        // make sequential radial bullet spread
         if (fireCooldown <= 0)
         {
-            GameObject bulletChoice;
-            int randomBullet = Random.Range(0, 2);
-
-            if(randomBullet >= 1)
+            float angleStep = 180.0f / bulletNum;
+            Vector3 spreadCenter = (player.transform.position - enemyRB.transform.position).normalized;
+            for (int i = 0; i < bulletNum; i++)
             {
-                bulletChoice = bullet1Prefab;
-            }
-            else
-            {
-                bulletChoice = bullet2Prefab;
+                // Direction calculations
+                float projectileDirX = Mathf.Sin(((angleStep * i * spreadCenter.x) * Mathf.PI) / 180);
+                float projectileDirY = Mathf.Cos(((angleStep * i * spreadCenter.y) * Mathf.PI) / 180);
+
+                // Create vectors
+                Vector3 projectileVector = new Vector3(projectileDirX, projectileDirY, 0);
+
+                //creates a new bullet at the enemy's position TODO: update this based on how it looks with enemy sprite
+                var newBullet = ObjectPool.instance.GetPooledObject();
+                if (newBullet == null)
+                {
+                    return;
+                }
+                newBullet.transform.position = enemyRB.position;
+                newBullet.GetComponent<NormalBullet>().FireAngle = projectileVector;
+                newBullet.GetComponent<NormalBullet>().Speed = 2.0f;
+                newBullet.SetActive(true);
             }
 
-            //creates a new bullet at the enemy's position TODO: update this based on how it looks with enemy sprite
-            var newBullet = Instantiate(bulletChoice, enemyRB.position, Quaternion.identity);
-
-            //attach bullet movement script to newly created bullet
-            newBullet.AddComponent<BoxCollider2D>();
-            newBullet.AddComponent<Rigidbody2D>();
             fireCooldown = fireDelay;
         }
     }

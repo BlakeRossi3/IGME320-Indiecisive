@@ -10,6 +10,9 @@ public class SpreadBullet : MonoBehaviour
     private float initSpeed;
 
     [SerializeField]
+    private float decceleration;
+
+    [SerializeField]
     protected float explosionSize = 6.0f;
 
     [SerializeField]
@@ -36,6 +39,9 @@ public class SpreadBullet : MonoBehaviour
 
         // saves initial speed
         initSpeed = speed;
+
+        // sets a random decceleration for varying heights of explosion
+        decceleration = Random.Range(1.5f, 2.5f) * Time.fixedDeltaTime;
     }
 
     // Update is called once per frame
@@ -51,26 +57,13 @@ public class SpreadBullet : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-        for (int i = 0; i < bulletList.Count; i++)
-        {
-            // TODO:: Update this with manual screen bounds
-            screenPosition = Camera.main.WorldToScreenPoint(bulletList[i].transform.position);
-            if (screenPosition.y < -Screen.height ||
-                screenPosition.y > Screen.height ||
-                screenPosition.x < -Screen.width ||
-                screenPosition.x > Screen.width)
-            {
-                bulletList[i].gameObject.SetActive(false);
-            }
-        }
     }
 
     protected void Explode()
     {
         if (speed > 0)
         {
-            speed -= Random.Range(0.7f, 1.0f) * Time.fixedDeltaTime;
+            speed -= decceleration;
         }
         if (speed <= 0)
         {
@@ -103,7 +96,8 @@ public class SpreadBullet : MonoBehaviour
             newBullet.GetComponent<NormalBullet>().Speed = initSpeed;
             newBullet.SetActive(true);
 
-            bulletList.Add(newBullet);
+            // used to be for deletion, keeping in case we want some other functionality
+            //bulletList.Add(newBullet);
         }
     }
 }

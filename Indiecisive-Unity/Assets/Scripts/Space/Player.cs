@@ -411,6 +411,29 @@ public class Player : MonoBehaviour
                 //Decreases health by 1
                 currentHealth -= 1;
 
+                // Destroys the bullet that hit the player
+                Destroy(collision.gameObject);
+            }
+
+            //Pooled enemy bullet -- 1 dmg
+            if (collision.gameObject.CompareTag("EnemyBulletPooled"))
+            {
+                UnityEngine.Debug.Log("Player hit!");
+
+                //Decreases health by 1
+                currentHealth -= 1;
+
+                // Deactivates the bullet that hit the player
+                collision.gameObject.SetActive(false);
+            }
+
+            //Collision with Enemy -- 1 dmg
+            if (collision.gameObject.CompareTag("Enemy"))
+            {
+                UnityEngine.Debug.Log("Player hit!");
+
+                //Decreases health by 1
+                currentHealth -= 1;
             }
 
             //updates the health display 

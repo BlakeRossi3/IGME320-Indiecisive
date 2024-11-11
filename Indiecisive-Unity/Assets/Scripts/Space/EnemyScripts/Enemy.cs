@@ -17,9 +17,6 @@ public abstract class Enemy : MonoBehaviour
     protected float seperateRange = 1.0f;
 
     [SerializeField]
-    protected bool shootsBullets;
-
-    [SerializeField]
     protected float fireDelay; // delay between shots
     protected float fireCooldown = 1.0f; // delay of initial shot
 
@@ -31,9 +28,13 @@ public abstract class Enemy : MonoBehaviour
     protected float stayOnScreenCooldown; // how many points to wander to before leaving the screen
     protected float inStayCooldown;
 
+    [SerializeField]
+    protected GameObject player;
+
     protected Rigidbody2D enemyRB;
     protected BoxCollider2D enemyBoxCollider;
     protected Vector3 TotalForce = Vector3.zero;
+    private SpriteRenderer enemySprite;
 
     public EnemyManager manager;
 
@@ -56,11 +57,13 @@ public abstract class Enemy : MonoBehaviour
     {
         enemyRB = GetComponent<Rigidbody2D>();
         enemyBoxCollider = GetComponent<BoxCollider2D>();
-        // temporary comment out since the movement code doesn't work with kinematic
-        //enemyRB.isKinematic = true;
         enemyBoxCollider.isTrigger = true;
 
         inStayCooldown = stayOnScreenCooldown;
+
+        player = GameObject.Find("Player");
+
+        enemySprite = GetComponent<SpriteRenderer>();
 
         cameraSize.y = Camera.main.orthographicSize * 2f;
         cameraSize.x = cameraSize.y * Camera.main.aspect;
@@ -81,10 +84,7 @@ public abstract class Enemy : MonoBehaviour
 
         enemyRB.AddForce(TotalForce);
 
-        if(shootsBullets == true)
-        {
-            ShootBullets();
-        }
+        ShootBullets();
     }
 
     protected abstract void CalcSteeringForces();
@@ -199,7 +199,7 @@ public abstract class Enemy : MonoBehaviour
         Vector3 targetPos = Vector3.zero;
 
         targetPos.x = Random.Range(screenMin.x - screenMin.x / 3.0f, screenMax.x - screenMax.x / 3.0f);
-        targetPos.y = Random.Range(screenMax.y - screenMax.y * 1.3f, screenMin.y - screenMin.y / 1.8f);
+        targetPos.y = Random.Range(screenMax.y - screenMax.y * 1.3f, screenMin.y - screenMin.y / 2.5f);
 
         return targetPos;
     }
@@ -246,6 +246,14 @@ public abstract class Enemy : MonoBehaviour
             }
         }
 
+        // feedback for collision with enemy
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            // TODO:: make this have a flash
+            enemySprite.color = Color.red;
+            enemySprite.color = Color.white;
+        }
+
         //hi this is Julia adding code to enemy again
         //Handling for special attack collision
         //This is separate in case we change damage dealt by special (can also be split further if different specials deal different amounts of damage)
@@ -260,14 +268,5 @@ public abstract class Enemy : MonoBehaviour
                 manager.Enemies.Remove(this);
             }
         }
-    }
-
-    protected void IgnoreCollisionsWithEnemies(Collider2D collision)
-    {
-        Physics2D.IgnoreCollision(collision, GetComponent<Collider2D>());
-        //if (collision.gameObject.tag == "Enemy")
-        //{
-        //    Physics2D.IgnoreCollision(collision, GetComponent<Collider2D>());
-        //}
     }
 }
