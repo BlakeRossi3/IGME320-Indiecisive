@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 7095932722506307861}
   - component: {fileID: 8501417605465912616}
-  - component: {fileID: -1236334127038752367}
+  - component: {fileID: -8568634739978329092}
   - component: {fileID: 129039658962266751}
   - component: {fileID: -2709490773063614740}
   m_Layer: 0
-  m_Name: EnemyType2Placeholder
-  m_TagString: Untagged
+  m_Name: EnemyType3
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27,13 +27,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3750163868156452588}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.355689, y: 0.82508576, z: 0}
   m_LocalScale: {x: 0.9, y: 0.9, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8501417605465912616
 SpriteRenderer:
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 8986c28b8eebcd64f897568ed4ced5e6, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.83949494, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -87,7 +87,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-1236334127038752367
+--- !u!114 &-8568634739978329092
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -96,22 +96,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 3750163868156452588}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83bcca5aa101eb64f85e43134f6acad9, type: 3}
+  m_Script: {fileID: 11500000, guid: 2c6e03f3dec4ddf4093ff48dffc913df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxSpeed: 1.5
-  maxForce: 2
-  seperateRange: 0.5
-  shootsBullets: 1
-  fireDelay: 5
+  maxForce: 0.5
+  seperateRange: 0.25
+  fireDelay: 6
   seekPointDelay: 3
-  stayOnScreenCooldown: 7
+  stayOnScreenCooldown: 9
+  player: {fileID: 0}
   manager: {fileID: 0}
-  bulletPrefab: {fileID: 1636891944895576526, guid: 48110731598ee5b46af035b9511ec78f, type: 3}
+  bulletPrefab: {fileID: 8259664165903907130, guid: b4975a30c01af71468310f293ae3d319, type: 3}
   targetPos: {x: 0, y: 0, z: 0}
-  targetObject: {fileID: 0}
+  targetTransform: {fileID: 0}
   boundsWeight: 1
   firingEnabled: 1
+  seekWeight: 0.5
+  bulletNum: 5
 --- !u!50 &129039658962266751
 Rigidbody2D:
   serializedVersion: 4

@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Threading;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Android;
 
 public class Player : MonoBehaviour
 {
@@ -51,6 +54,31 @@ public class Player : MonoBehaviour
     private float shieldCDTimer = 0;
     private bool shieldActive = false;
 
+    //Variable for determining active special TODO: retrieve this data from planetside
+    [SerializeField]
+    private int special = 0;
+
+    //Other variables for handling special TODO: tune this
+    //TODO: could read active special in start and adjust values based on that?
+    private float specialDuration = 3;
+    private float specialTime = 0;
+    private float specialCD = 7;
+    private float specialCDTimer = 0;
+    private bool specialActive = false;
+
+    //cooldown for firing special
+    private float specialFireDelay = 0.1f;
+    private float specialFireTimer = 0;
+
+    //Holds a reference to the active special (not instantiated by script)
+    private GameObject currentSpecial;
+
+    //Objects that display status for special and shield
+    [SerializeField]
+    private GameObject specialStatus;
+    [SerializeField]
+    private GameObject shieldStatus;
+
     //list of health display objects
     private List<GameObject> health = new List<GameObject>();
 
@@ -84,9 +112,29 @@ public class Player : MonoBehaviour
 
         //TODO: TEMP TEMP TEMP REMOVE LATER
         chargeText.text = (": " + bulletCount);
-        //Vector3 position = new Vector3(-4, -4, 0);
-        //chargeText.transform.position = position;
-        
+
+        //TODO: check active special and adjust timers/duration as needed
+
+        //Reads what the active special is and assigns the correct item
+        switch (special)
+        {
+            case 0:
+                currentSpecial = GameObject.Find("barrierSpecial");
+                break;
+
+            case 1:
+                currentSpecial = GameObject.Find("beamSpecial");
+                break;
+
+            case 2: currentSpecial = null;
+                break;
+        }
+
+        //Hides the special
+        if (currentSpecial != null)
+        {
+            currentSpecial.SetActive(false);
+        }
     }
 
     // Update is called once per frame
@@ -104,8 +152,11 @@ public class Player : MonoBehaviour
             //basic player fire
             playerFire();
 
-            //player special abilities
+            //player shield
             playerShield();
+
+            //player special
+            playerSpecial();
         }
 
         //player feedback for gameover state
@@ -174,9 +225,9 @@ public class Player : MonoBehaviour
     //This is a workaround due to needing the ship to have a kinematic rigidbody instead of dynamic (physics issues)
     private void checkBounds()
     {
-        if (transform.position.y > screenWorld.y)
+        if (transform.position.y > screenWorld.y - 2)
         {
-            Vector3 newPosition = new Vector3(transform.position.x, screenWorld.y, 0);
+            Vector3 newPosition = new Vector3(transform.position.x, screenWorld.y - 2, 0);
             transform.position = newPosition;
         }
         if (transform.position.y < - screenWorld.y)
@@ -228,7 +279,142 @@ public class Player : MonoBehaviour
     //Player special abilities. Uses a switch to determine which is active.
     private void playerSpecial()
     {
+        //Special is activated when X is pressed and not on cooldown
+        //While the current specials have similar mechanics, this switch is for future proofing with other specials that may act differently.
+            switch (special)
+            {
+                //Damaging barrier around player
+                case 0:
 
+                    if (Input.GetKeyDown(KeyCode.X) && specialCDTimer <= 0)
+                    {
+                        startSpecial();
+                    }
+
+                    //updates object position
+                    if (specialActive)
+                    {
+                        currentSpecial.transform.position = transform.position;
+                    }
+
+                    //Handles timers
+                    specialTimers();
+
+                break;
+
+                //Straight beam in front of player
+                case 1:
+
+                    if (Input.GetKeyDown(KeyCode.X) && specialCDTimer <= 0)
+                    {
+                        startSpecial();
+                    }
+
+                    if (specialActive)
+                    {
+                        currentSpecial.transform.position = new Vector3(transform.position.x, transform.position.y + 1, 0);
+                    }
+
+                    //Handles timers
+                    specialTimers();
+
+                break;
+
+            //Rapid fire double bullets that don't drain bullet count
+            case 2:
+
+                if (Input.GetKeyDown(KeyCode.X) && specialCDTimer <= 0)
+                {
+                    startSpecial();
+                }
+
+                if (specialActive)
+                {
+                    //If firing can be used, automatically fires bullets
+                    if (specialFireTimer <= 0)
+                    {
+                        //instantiates bullets
+                        var newBullet1 = Instantiate(bulletPrefab, new Vector3(playerRB.position.x - 0.75f, playerRB.position.y + 0.25f, 0), Quaternion.identity);
+                        var newBullet2 = Instantiate(bulletPrefab, new Vector3(playerRB.position.x + 0.75f, playerRB.position.y + 0.25f, 0), Quaternion.identity);
+
+                        //attaches components to newly created bullet
+                        newBullet1.AddComponent<PlayerBullet>();
+                        newBullet1.AddComponent<BoxCollider2D>();
+                        newBullet1.AddComponent<Rigidbody2D>();
+
+                        newBullet2.AddComponent<PlayerBullet>();
+                        newBullet2.AddComponent<BoxCollider2D>();
+                        newBullet2.AddComponent<Rigidbody2D>();
+                    }
+
+                    //Automatically increments delay timer
+                    specialFireTimer += 1 * Time.deltaTime;
+
+                    //sets delay timer to zero when maxed out
+                    if (specialFireTimer >= specialFireDelay)
+                    {
+                        specialFireTimer = 0;
+                    }
+                }
+
+                //handles timers
+                specialTimers();
+
+            break;
+
+            }
+
+    }
+
+    //Sets special use status to active
+    private void startSpecial()
+    {
+        //Sets use status to active
+        specialActive = true;
+        specialCDTimer = specialCD;
+
+        //if there's a special object, activates it
+        if (currentSpecial != null)
+        {
+            currentSpecial.SetActive(true);
+        }
+
+        //Deactivates "ready" indicator
+        specialStatus.SetActive(false);
+    }
+
+    //Handles timer and activation forspecials
+    private void specialTimers()
+    {
+        if (specialActive)
+        {
+            specialTime += (1 * Time.deltaTime);
+
+            //Checks if time is up
+            if (specialTime >= specialDuration)
+            {
+                specialActive = false;
+                specialTime = 0;
+
+                //disables specialObject if necessary
+                if (currentSpecial != null)
+                {
+                    currentSpecial.SetActive(false);
+                }
+            }
+
+        }
+        //Decreases cooldown if needed
+        if (specialCDTimer > 0)
+        {
+            specialCDTimer -= 1 * Time.deltaTime;
+        }
+
+        //If special is available, activates indicator
+        if (specialCDTimer <= 0)
+        {
+            specialStatus.SetActive(true);
+        }
     }
 
     //player shield--nullifies damage for a set amount of time
@@ -241,6 +427,9 @@ public class Player : MonoBehaviour
             shieldActive = true;
             playerSprite.color = Color.blue;
             shieldCDTimer = shieldCD;
+
+            //hides "ready" indicator
+            shieldStatus.SetActive(false);
         }
 
         //handles shield timers
@@ -261,7 +450,12 @@ public class Player : MonoBehaviour
         if (shieldCDTimer > 0)
         {
             shieldCDTimer -= ( 1* Time.deltaTime);
-            Debug.Log(shieldCDTimer);
+        }
+
+        //if shield is available, displays "ready" indicator
+        if (shieldCDTimer <= 0)
+        {
+            shieldStatus.SetActive(true);
         }
     }
 
@@ -280,6 +474,29 @@ public class Player : MonoBehaviour
                 //Decreases health by 1
                 currentHealth -= 1;
 
+                // Destroys the bullet that hit the player
+                Destroy(collision.gameObject);
+            }
+
+            //Pooled enemy bullet -- 1 dmg
+            if (collision.gameObject.CompareTag("EnemyBulletPooled"))
+            {
+                UnityEngine.Debug.Log("Player hit!");
+
+                //Decreases health by 1
+                currentHealth -= 1;
+
+                // Deactivates the bullet that hit the player
+                collision.gameObject.SetActive(false);
+            }
+
+            //Collision with Enemy -- 1 dmg
+            if (collision.gameObject.CompareTag("Enemy"))
+            {
+                UnityEngine.Debug.Log("Player hit!");
+
+                //Decreases health by 1
+                currentHealth -= 1;
             }
 
             //updates the health display 

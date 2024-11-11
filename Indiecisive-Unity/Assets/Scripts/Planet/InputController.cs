@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class InputController : MonoBehaviour
 {
@@ -24,12 +25,14 @@ public class InputController : MonoBehaviour
     public Sprite leftSprite;
     public Sprite rightSprite;
 
+    public bool shopActive;
     public bool shovel;
     public int coins;
-    public Button myButton;
     public GameObject uiPanel;
-    private bool uiToggle =false;
+    private bool uiToggle = false;
     public int charge;
+
+    public bool inFog;
 
 
 
@@ -57,6 +60,22 @@ public class InputController : MonoBehaviour
     {
         HandleMovementInput();
         HandleInteraction();
+
+        if(inFog)
+        {
+            if (Input.GetKeyDown(KeyCode.Z))
+            {
+
+               // SceneManager.LoadScene("Explore");
+            }
+        }
+        if(Input.GetKeyDown(KeyCode.Z))
+        {
+            SideMenuToggle();
+        }
+
+
+
     }
 
     void HandleMovementInput()
@@ -194,61 +213,68 @@ public class InputController : MonoBehaviour
 
     void HandleInteraction()
     {
-        
-        if (textSwitch == false)
+        if (interactables.Length > 1)
         {
-            // Loop through all the potential interactable objects
-            for (int i = 0; i < interactables.Length; i++)
+            if (textSwitch == false)
             {
-                objectNum = i;
-                float distanceToObject = Vector2.Distance(transform.position, interactables[i].transform.position);
-
-                // Check if the player is within interaction radius of the object
-                if (distanceToObject <= interactionRadius)
+                // Loop through all the potential interactable objects
+                for (int i = 0; i < interactables.Length; i++)
                 {
-                    // Show the interaction prompt and move it above the player's head
-                    interactionText.gameObject.SetActive(true);
-                    interactionText.text = "C to Interact";
-                    textSwitch = true;
-                   
-                    break;                    
+                    objectNum = i;
+                    float distanceToObject = Vector2.Distance(transform.position, interactables[i].transform.position);
+
+                    // Check if the player is within interaction radius of the object
+                    if (distanceToObject <= interactionRadius)
+                    {
+                        // Show the interaction prompt and move it above the player's head
+                        interactionText.gameObject.SetActive(true);
+                        interactionText.text = "C to Interact";
+                        textSwitch = true;
+
+                        break;
+                    }
                 }
             }
-        }
 
-        
 
-        float distanceToObject2 = Vector2.Distance(transform.position, interactables[objectNum].transform.position);
 
-        if (Input.GetKeyDown(KeyCode.C) && distanceToObject2 < interactionRadius)
-        {
-            Interact(objectNum);
-        }
+            float distanceToObject2 = Vector2.Distance(transform.position, interactables[objectNum].transform.position);
 
-        if (distanceToObject2 > interactionRadius)
-        {
-            // Hide the interaction prompt if the player is too far
-            interactionText.gameObject.SetActive(false);
-            textSwitch = false;
-            NPC npcComponent = interactables[objectNum].GetComponent<NPC>();
-            if (npcComponent != null)
+            if (Input.GetKeyDown(KeyCode.C) && distanceToObject2 < interactionRadius)
             {
-                npcComponent.moveSpeed = 2f;
+                Interact(objectNum);
+            }
 
+            NPC npcComponent = interactables[objectNum].GetComponent<NPC>();
+            if (distanceToObject2 > interactionRadius)
+            {
+                // Hide the interaction prompt if the player is too far
+                interactionText.gameObject.SetActive(false);
+                textSwitch = false;
+                
+                if (npcComponent != null)
+                {
+                    npcComponent.moveSpeed = 2f;
+                }
+                if (npcComponent.active)
+                {
+                    npcComponent.MenuInteraction();
+                }
 
             }
-            if(npcComponent.active)
+
+            if(objectNum == 4 && inFog && Input.GetKeyDown(KeyCode.X))
             {
+                inFog = false;
                 npcComponent.MenuInteraction();
             }
-
-        }                                
+        }
+                           
     }
 
     void Interact(int type)
     {
         // Your interaction logic here
-        Debug.Log("Player interacted with the object");
         NPC npcComponent = interactables[type].GetComponent<NPC>();
         if (npcComponent != null)
         {
@@ -259,23 +285,34 @@ public class InputController : MonoBehaviour
         {
             npcComponent.DialogueOutput(type);
         }
+        if (type == 3 && !shopActive)
+        {
+            moveSpeed = 0;
+            shopActive = true;
+        }
+        else if (type == 3 && shopActive)
+        {
+            moveSpeed = 10;
+            shopActive = false;
+        }
+        if (type == 4)
+        {
+            inFog = true;
+        }
         npcComponent.MenuInteraction();
     }
 
     public void SideMenuToggle()
     {
-        RectTransform rectTransform = myButton.GetComponent<RectTransform>();
         // If the menu isnt already toggled
         if (!uiToggle)
         {
             uiPanel.SetActive(true); // Set panel active
-            rectTransform.anchoredPosition += new Vector2(250, 0); // Move right 250
             uiToggle = true;
         }
         else
         {
             uiPanel.SetActive(false);
-            rectTransform.anchoredPosition -= new Vector2(250, 0); // Move right 250
             uiToggle=false;
         }
         

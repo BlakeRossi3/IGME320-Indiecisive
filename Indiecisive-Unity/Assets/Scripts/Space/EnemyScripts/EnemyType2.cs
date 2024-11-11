@@ -1,26 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor;
 using UnityEditor.Rendering;
 using UnityEngine;
 
 public class EnemyType2 : Enemy
 {
     [SerializeField]
-    protected GameObject bulletPrefab; // sprite for bullets
+    protected GameObject bullet1Prefab; // sprite for bullets
+
+    [SerializeField]
+    protected GameObject bullet2Prefab; // sprite for bullets
 
     [SerializeField]
     protected Vector3 targetPos; // randomized position to wander from WanderInZone
 
     [SerializeField]
-    protected GameObject targetObject;
+    protected Transform targetTransform; // object to seek
 
     [SerializeField]
     protected float boundsWeight; // how strong the force of the screen bounds is
 
     [SerializeField]
     protected bool firingEnabled = false;
+
+    [SerializeField]
+    protected float seekWeight; // how strong the forces of the points to seek are
 
     protected override void CalcSteeringForces()
     {
@@ -40,27 +45,39 @@ public class EnemyType2 : Enemy
 
         if (stayOnScreenCooldown > 0)
         {
-            seekPointCooldown -= Time.fixedDeltaTime;
+            seekPointCooldown -= Time.deltaTime;
 
             // slightly randomizes the time it takes for enemies to change where they are going
-            if (seekPointCooldown <= Random.Range(0f, 10f))
+            if (seekPointCooldown <= Random.Range(0f, 1f))
             {
-                targetPos = WanderInZone();
+                targetPos = WanderInZone(7.0f, 7.0f, 1.6f, 3.0f);
                 seekPointCooldown = seekPointDelay;
                 stayOnScreenCooldown--;
             }
-            TotalForce += Seek(targetObject);
+            TotalForce += Seek(targetPos) * seekWeight;
             TotalForce += Separate();
             //TotalForce += StayInBoundsForce() * boundsWeight;
             //IgnoreCollisionsWithEnemies(enemyRB.GetComponent<Collider2D>());
         }
+
+        // Leave the screen after a bit so the enemies don't overflow the screen
         else
         {
             Vector3 exitPoint = new Vector3(0.0f, 5.0f, 0.0f);
             TotalForce = Flee(exitPoint);
-            maxSpeed += 0.5f;
+            maxSpeed += 2.0f * Time.fixedDeltaTime;
+            maxForce = 1.0f;
+            enemyRB.freezeRotation = false;
+            if (TotalForce != Vector3.zero)
+            {
+                transform.rotation = Quaternion.LookRotation(Vector3.forward, -TotalForce.normalized);
+            }
             firingEnabled = false;
-            transform.localScale += new Vector3(-0.0005f, -0.0005f, 0.0f);
+            transform.localScale += new Vector3(-0.05f * Time.fixedDeltaTime, -0.05f * Time.fixedDeltaTime, 0.0f);
+            enemyBoxCollider.enabled = false;
+
+            // attempt at a rotation change will look at later
+            enemyRB.rotation = Mathf.Atan(Vector3.Normalize(TotalForce).x / Vector3.Normalize(TotalForce).y);
 
             // once the enemy gets far enough off screen, destroy
             if (transform.position.x < ScreenMin.x * 1.2f ||
@@ -78,16 +95,27 @@ public class EnemyType2 : Enemy
     {
         if (firingEnabled == true)
         {
-            fireCooldown -= Time.fixedDeltaTime;
+            fireCooldown -= Time.deltaTime;
         }
 
         if (fireCooldown <= 0)
         {
-            //creates a new bullet at the enemy's position TODO: update this based on how it looks with enemy sprite
-            var newBullet = Instantiate(bulletPrefab, enemyRB.position, Quaternion.identity);
+            GameObject bulletChoice;
+            int randomBullet = Random.Range(0, 2);
 
-            //attaches bullet movement script to newly created bullet
-            newBullet.AddComponent<SeekingBullet>();
+            if(randomBullet >= 1)
+            {
+                bulletChoice = bullet1Prefab;
+            }
+            else
+            {
+                bulletChoice = bullet2Prefab;
+            }
+
+            //creates a new bullet at the enemy's position TODO: update this based on how it looks with enemy sprite
+            var newBullet = Instantiate(bulletChoice, enemyRB.position, Quaternion.identity);
+
+            //attach bullet movement script to newly created bullet
             newBullet.AddComponent<BoxCollider2D>();
             newBullet.AddComponent<Rigidbody2D>();
             fireCooldown = fireDelay;

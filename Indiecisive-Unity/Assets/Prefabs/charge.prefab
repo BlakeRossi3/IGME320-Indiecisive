@@ -25,13 +25,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 667367135677553380}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.73, y: -9.07, z: 0}
-  m_LocalScale: {x: 0.19645534, y: 0.19645534, z: 0.19645534}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.19645534}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &717294642913395330
 SpriteRenderer:
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: a9c851857c124864baaf4f06b0db371b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 64cbc7ed31783ad4b9b776f8fda51636, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -105,3 +105,4 @@ MonoBehaviour:
   coinCount: {fileID: 0}
   isCoin: 0
   isCharge: 1
+  value: 0

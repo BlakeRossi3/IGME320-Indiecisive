@@ -17,6 +17,8 @@ public class Item : MonoBehaviour
     public bool isCoin;
     public bool isCharge;
 
+    public int value;
+
 
 
     // Start is called before the first frame update
@@ -34,6 +36,18 @@ public class Item : MonoBehaviour
     void Update()
     {
         CheckPickUp();
+
+        if (coinCount == null && isCoin)
+        {
+            Canvas canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+            coinCount = GameObject.Find("CoinText").GetComponent<TextMeshProUGUI>();
+            if (coinCount == null)
+            {
+                Debug.LogError("CoinText GameObject or TextMeshProUGUI component not found!");
+            }
+
+
+        }
     }
     void FixedUpdate()
     {
@@ -78,16 +92,14 @@ public class Item : MonoBehaviour
             itemIcon.SetActive(true);
             bag.shovel = true;
         }
-
-
-        else if (distanceToItem < pickUpRadius - 1.5)
+        else if (distanceToItem < pickUpRadius - 1.5 && (isCoin || isCharge))
         {
             gameObject.SetActive(false);
 
             InputController bag = astro.GetComponent<InputController>();
             if (isCoin)
             {
-                bag.coins += 12;
+                bag.coins += value;
                 coinCount.text = (" : " + bag.coins);
             }
             else if (isCharge)
