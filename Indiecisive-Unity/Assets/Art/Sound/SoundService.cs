@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class SoundService : MonoBehaviour
 {
-    [SerializeField] private AudioClip clip;
-    [SerializeField] private AudioSource source;
-    private bool isPlayingFootsteps = false;
+    [SerializeField] AudioSource source;
+    [SerializeField] AudioClip clip1;
+
+    //private bool isPlayingFootsteps = false;
 
     // Update is called once per frame
     void Start()
     {
-        source = GetComponent<AudioSource>();
-        source.clip = clip;
+        //source = GetComponent<AudioSource>();
+        //source.clip = clip;
     }
     void Update()
     {
@@ -22,7 +23,12 @@ public class SoundService : MonoBehaviour
             // Debug.Log("space key was pressed");
             //source.Play();
             isPlayingFootsteps = true;
-        }
+        }*
         */
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            source.clip = clip1;
+            source.Play();
+        }
     }
 }
