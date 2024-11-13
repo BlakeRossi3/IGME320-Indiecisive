@@ -16,9 +16,18 @@ public class Player : MonoBehaviour
     public float currentHealth = 5f;
     private float maxHealth = 5f;
 
+    // Ship current levels
+    int laserLevel;
+    int shieldLevel;
+    int speedLevel;
+    int specialLevel;
+
+
     //TODO: temp variables until eventSystem is fixed
-    private float bulletCount = 50; //REMOVE LATER
     public TextMeshProUGUI chargeText; //REMOVE LATER
+    public TextMeshProUGUI coinText; //REMOVE LATER
+    private int creditCount;
+    private int bulletCount;
 
     //variables for handling player game over status
     [HideInInspector]
@@ -85,6 +94,16 @@ public class Player : MonoBehaviour
     //Initializes elements
     void Start()
     {
+        //from planet data
+        laserLevel = PlayerPrefs.GetInt("laserLevel", 1);
+        shieldLevel = PlayerPrefs.GetInt("shieldLevel", 1);
+        speedLevel = PlayerPrefs.GetInt("speedLevel", 1);
+        specialLevel = PlayerPrefs.GetInt("specialLevel", 1);
+
+        bulletCount = PlayerPrefs.GetInt("charge", 0);
+        creditCount = PlayerPrefs.GetInt("credits", 0);
+
+
         //connects the rigidbody assigned in the scene editor
         playerRB = GetComponent<Rigidbody2D>();
 
@@ -112,6 +131,7 @@ public class Player : MonoBehaviour
 
         //TODO: TEMP TEMP TEMP REMOVE LATER
         chargeText.text = (": " + bulletCount);
+        coinText.text = (": " + creditCount);
 
         //TODO: check active special and adjust timers/duration as needed
 
@@ -140,6 +160,10 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        PlayerPrefs.SetInt("credits", creditCount);
+        PlayerPrefs.SetInt("charge", bulletCount);
+
+
         //Only allow player input if not in a game over state
         if (!isGameOver)
         {
@@ -174,6 +198,7 @@ public class Player : MonoBehaviour
         //Checks for keyboard input, adds direction to Vector2
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
+            Debug.Log("up");
             moveDirection += Vector2.up;
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow))

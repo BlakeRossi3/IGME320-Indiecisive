@@ -6,7 +6,7 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject HealthMeter;
+    public GameObject SpeedMeter;
     public GameObject ShieldMeter;
     public GameObject SpecialMeter;
     public GameObject LaserMeter;
@@ -16,10 +16,13 @@ public class GameManager : MonoBehaviour
 
     public TextMeshProUGUI purchaseText;
 
-    private int shieldLevel = 0;
-    private int specialLevel = 0;
-    private int laserLevel = 0;
-    private int speedLevel = 0;
+    
+
+    
+    int currentLaserLevel = 1;
+    int currentShieldLevel = 1;
+    int currentSpeedLevel = 1;
+    int currentSpecialLevel = 1;
 
     private int shieldPrice = 20;
     private int laserPrice = 20;
@@ -38,43 +41,40 @@ public class GameManager : MonoBehaviour
 
     public GameObject upgrade;
 
-    float scaleSpeed = 0.3f;  // Amount to scale per frame
+    float scaleSpeed = 200.0f;  // Amount to scale per frame
     float maxScale = 675f;
     float minScale = 10f;
-    private string originalSceneName = "Planet"; // Replace with your original scene name
+    private string originalSceneName = "Planet";
     private bool hasSwitchedScenes = false;
 
-    void OnEnable()
+    void Start()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
+        PlayerPrefs.SetInt("credits", 0);
+        PlayerPrefs.SetInt("charge", 0);
 
-    void OnDisable()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
+        PlayerPrefs.SetInt("laserLevel", 1);
+        PlayerPrefs.SetInt("shieldLevel", 1);
+        PlayerPrefs.SetInt("speedLevel", 1);
+        PlayerPrefs.SetInt("specialLevel", 1);
     }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        // Check if returning to the original scene
-        if (scene.name == originalSceneName && hasSwitchedScenes)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            hasSwitchedScenes = true;
-        }
-    }
-
 
     // Update is called once per frame
     void Update()
     {
         Canvas.ForceUpdateCanvases();
-       
 
-        if(currentState == GameState.Planet)
+        PlayerPrefs.SetInt("credits", Coins);
+        PlayerPrefs.SetInt("charge", Charge);
+
+        PlayerPrefs.SetInt("laserLevel", currentLaserLevel);
+        PlayerPrefs.SetInt("shieldLevel", currentShieldLevel);
+        PlayerPrefs.SetInt("speedLevel", currentSpeedLevel);
+        PlayerPrefs.SetInt("specialLevel", currentSpecialLevel);
+        PlayerPrefs.Save();
+
+
+
+        if (currentState == GameState.Planet)
         {
 
             InputController Player = player.GetComponent<InputController>();
@@ -95,6 +95,7 @@ public class GameManager : MonoBehaviour
                 {
                     selection--;
                 }
+
                 RectTransform Selector = Select.GetComponent<RectTransform>();
                 if (selection == 1) 
                 {
@@ -120,26 +121,17 @@ public class GameManager : MonoBehaviour
                 // Grow the upgrade meter while X is held down and the meter hasn't reached max scale
                 if (Input.GetKey(KeyCode.X) && upgradeMeter.localScale.x <= maxScale)
                 {
-                    upgradeMeter.localScale = new Vector3(upgradeMeter.localScale.x + scaleSpeed, upgradeMeter.localScale.y, 1);
-                    upgradeMeter.localPosition += new Vector3(scaleSpeed / 2, 0f, 0f);  // Move to the left as it grows
+                    upgradeMeter.localScale = new Vector3(upgradeMeter.localScale.x + scaleSpeed * Time.deltaTime, upgradeMeter.localScale.y, 1);
+                    upgradeMeter.localPosition += new Vector3((scaleSpeed * Time.deltaTime) / 2, 0f, 0f);  // Move to the left as it grows
                 }
                 // Shrink the upgrade meter when X is released and the meter is above min scale
                 else if (!Input.GetKey(KeyCode.X) && upgradeMeter.localScale.x > minScale)
                 {
-                    upgradeMeter.localScale = new Vector3(upgradeMeter.localScale.x - scaleSpeed, upgradeMeter.localScale.y, 1);
-                    upgradeMeter.localPosition -= new Vector3(scaleSpeed / 2, 0f, 0f);  // Move to the right as it shrinks
+                    upgradeMeter.localScale = new Vector3(upgradeMeter.localScale.x - scaleSpeed * Time.deltaTime, upgradeMeter.localScale.y, 1);
+                    upgradeMeter.localPosition -= new Vector3((scaleSpeed * Time.deltaTime) / 2, 0f, 0f);  // Move to the right as it shrinks
                 }
-                if (Input.GetKey(KeyCode.X) && upgradeMeter.localScale.x <= maxScale)
-                {
-                    upgradeMeter.localScale = new Vector3(upgradeMeter.localScale.x + scaleSpeed, upgradeMeter.localScale.y, 1);
-                    upgradeMeter.localPosition += new Vector3(scaleSpeed / 2, 0f, 0f);  // Move to the left as it grows
-                }
-                // Shrink the upgrade meter when X is released and the meter is above min scale
-                else if (!Input.GetKey(KeyCode.X) && upgradeMeter.localScale.x > minScale)
-                {
-                    upgradeMeter.localScale = new Vector3(upgradeMeter.localScale.x - scaleSpeed, upgradeMeter.localScale.y, 1);
-                    upgradeMeter.localPosition -= new Vector3(scaleSpeed / 2, 0f, 0f);  // Move to the right as it shrinks
-                }
+
+
 
                 // Check if the upgrade meter is full and call the appropriate ShipMenu
                 if (upgradeMeter.localScale.x > maxScale - 10)
@@ -170,12 +162,7 @@ public class GameManager : MonoBehaviour
             }
 
         }
-        else if (currentState == GameState.Space)
-        {
 
-            StartCoroutine(UpdateUILate());
-            
-        }  
     }
 
     // Enum to hold different game states
@@ -187,15 +174,7 @@ public class GameManager : MonoBehaviour
         Explore
     }
 
-    IEnumerator  UpdateUILate()
-    {
-        yield return new WaitForSeconds(0.1f);
 
-        Canvas canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
-
-        coinCount = GameObject.Find("CoinText").GetComponent<TextMeshProUGUI>();
-        coinCount.text = (" : " + Coins);
-    }
 
     // The current game state
     public GameState currentState;
@@ -218,60 +197,59 @@ public class GameManager : MonoBehaviour
         switch (type)
         {
             case "Shield":
-                shieldLevel++;
                 RectTransform ShieldMete = ShieldMeter.GetComponent<RectTransform>();
 
-                if (shieldLevel < 7 && coins >= shieldPrice)
+                if (currentShieldLevel < 7 && coins >= shieldPrice)
                 {
    
                     ShieldMete.localScale = new Vector3(ShieldMete.localScale.x + ScaleX, ShieldMete.localScale.y, ShieldMete.localScale.z);
                     ShieldMete.localPosition += new Vector3(ScaleX / 2, 0f, 0f);  // Move up by half the scale amount
                     Player.coins -= shieldPrice;
                     shieldPrice *= 2;
-                    
+                    currentShieldLevel += 1;
+
                 }
                 
             break;
 
             case "Laser":
-                laserLevel++;
                 RectTransform LaserMete = LaserMeter.GetComponent<RectTransform>();
                 Debug.Log("good");
-                if (laserLevel < 7 && coins >= laserPrice)
+                if (currentLaserLevel < 7 && coins >= laserPrice)
                 {
                     LaserMete.localScale = new Vector3(LaserMete.localScale.x + ScaleX, LaserMete.localScale.y, LaserMete.localScale.z);
                     LaserMete.localPosition += new Vector3(ScaleX / 2, 0f, 0f);  // Move up by half the scale amount
                     Player.coins -= laserPrice;
                     laserPrice *= 2;
+                    currentLaserLevel += 1;
                     
                 }
             break;
 
             case "Special":
-                specialLevel++;
                 RectTransform SpecialMete = SpecialMeter.GetComponent<RectTransform>();
-                if (specialLevel < 7 && coins >= specialPrice)
+                if (currentSpecialLevel < 7 && coins >= specialPrice)
                 {
                     SpecialMete.localScale = new Vector3(SpecialMete.localScale.x + ScaleX, SpecialMete.localScale.y, SpecialMete.localScale.z);
                     SpecialMete.localPosition += new Vector3(ScaleX / 2, 0f, 0f);  // Move up by half the scale amount
                     Player.coins -= specialPrice;
                     specialPrice *= 2;
+                    currentSpecialLevel += 1;
                     
                 }
                 
             break;
 
             case "Speed":
-                speedLevel++;
-                RectTransform HealthMete = HealthMeter.GetComponent<RectTransform>();
+                RectTransform HealthMete = SpeedMeter.GetComponent<RectTransform>();
 
-                if(speedLevel < 7 && coins >= speedPrice)
+                if(currentSpeedLevel < 7 && coins >= speedPrice)
                 {
                     HealthMete.localScale = new Vector3(HealthMete.localScale.x + ScaleX, HealthMete.localScale.y, HealthMete.localScale.z);
                     HealthMete.localPosition += new Vector3(ScaleX / 2, 0f, 0f);  // Move up by half the scale amount
                     Player.coins -= speedPrice;
                     speedPrice *= 2;
-                    
+                    currentSpeedLevel += 1;
                 }
                 
             break;
