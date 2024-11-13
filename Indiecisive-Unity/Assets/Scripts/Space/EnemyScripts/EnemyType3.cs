@@ -115,7 +115,7 @@ public class EnemyType3 : Enemy
                     return;
                 }
                 newBullet.transform.position = enemyRB.position;
-                newBullet.GetComponent<NormalBullet>().FireAngle = projectileVector;
+                newBullet.GetComponent<NormalBullet>().FireAngle = projectileVector.normalized;
                 newBullet.GetComponent<NormalBullet>().Speed = 2.0f;
                 newBullet.SetActive(true);
             }
