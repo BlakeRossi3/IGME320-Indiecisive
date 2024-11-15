@@ -99,6 +99,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3.5
   acceleration: 65
-  stopSeekRadius: 1.8
+  stopSeekRadius: 1.6
   seekTime: 8
   targetTransform: {fileID: 8325592890613077611, guid: df6579fdf93f1f5468586cadd41cb37d, type: 3}

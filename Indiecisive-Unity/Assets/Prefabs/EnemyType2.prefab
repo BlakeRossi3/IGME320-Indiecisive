@@ -102,7 +102,7 @@ MonoBehaviour:
   maxSpeed: 1.5
   maxForce: 0.5
   seperateRange: 0.25
-  fireDelay: 6
+  fireDelay: 8
   seekPointDelay: 3
   stayOnScreenCooldown: 9
   player: {fileID: 0}

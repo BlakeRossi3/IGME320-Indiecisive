@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de4c2cde181a8e64db5938fbc2331ebc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnCount: 0
+  spawnCount: 3
   spawnDelay: 15
   initialSpawnDelay: 0
   enemyPrefab: {fileID: -1236334127038752367, guid: 47ba29c1bccd00d48a8d63718be43fba, type: 3}
@@ -170,7 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de4c2cde181a8e64db5938fbc2331ebc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnCount: 0
+  spawnCount: 6
   spawnDelay: 10
   initialSpawnDelay: 0
   enemyPrefab: {fileID: 6503120815084692272, guid: 6047828b514cd904797d2d1d09e326c2, type: 3}
@@ -202,7 +202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de4c2cde181a8e64db5938fbc2331ebc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnCount: 1
+  spawnCount: 0
   spawnDelay: 10
   initialSpawnDelay: 0
   enemyPrefab: {fileID: -8568634739978329092, guid: 65769a7703a409d49a2093213b4f543c, type: 3}
