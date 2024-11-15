@@ -70,6 +70,7 @@ public class EnemyType1 : Enemy
             }
             newBullet.transform.position = enemyRB.position;
             newBullet.GetComponent<NormalBullet>().FireAngle = Vector3.down;
+            newBullet.GetComponent<SpriteRenderer>().color = new Vector4(1.0f, 0.5f, 0.0f, 1);
             newBullet.SetActive(true);
             fireCooldown = fireDelay;
         }

@@ -25,6 +25,7 @@ public class NormalBullet : MonoBehaviour
 
         //setting the bullet as a trigger allows it to pass through objects but trigger collision detection
         collider.isTrigger = true;
+        collider.size = new Vector2(0.35f, 0.35f);
 
         //Sets gravity scale to 0
         rb.gravityScale = 0;

@@ -65,6 +65,13 @@ public class ObjectPool : MonoBehaviour
 
                 objects.Add(obj);
             }
+            for (int i = 0; i < objects.Count; i++)
+            {
+                if (!objects[i].activeInHierarchy)
+                {
+                    return objects[i];
+                }
+            }
         }
         return null;
     }

@@ -45,8 +45,7 @@ public abstract class Enemy : MonoBehaviour
     //TODO: placeholder hp
     protected float currentHP = 1f;
     protected float maxHP = 2f;
-
-    protected bool doOnce = false;
+    private float flashPause = 0.1f;
 
     public float FireDelay { get { return fireDelay; } set { fireDelay = value; } }
     public Vector3 ScreenMax { get { return screenMax; } }
@@ -85,6 +84,15 @@ public abstract class Enemy : MonoBehaviour
         enemyRB.AddForce(TotalForce);
 
         ShootBullets();
+
+        if(enemySprite.color == Color.red)
+        {
+            flashPause -= 0.1f * Time.fixedDeltaTime;
+            if(flashPause <= 0.0f)
+            {
+                enemySprite.color = Color.white;
+            }
+        }
     }
 
     protected abstract void CalcSteeringForces();
@@ -249,9 +257,8 @@ public abstract class Enemy : MonoBehaviour
         // feedback for collision with enemy
         if (collision.gameObject.CompareTag("Player"))
         {
-            // TODO:: make this have a flash
+            // this will flash due to the code in update
             enemySprite.color = Color.red;
-            enemySprite.color = Color.white;
         }
 
         //hi this is Julia adding code to enemy again
