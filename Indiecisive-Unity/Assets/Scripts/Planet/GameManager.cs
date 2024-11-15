@@ -186,6 +186,13 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void ToBossState()
+    {
+        //TODO: couldn't find the enum to update current state >.> just marking it as space for now
+        currentState = GameState.Space;
+        SceneManager.LoadScene("Boss");
+    }
+
 
     public void ShipMenu(string type)
     {
