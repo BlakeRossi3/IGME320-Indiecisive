@@ -15,6 +15,7 @@ public class NormalBullet : MonoBehaviour
 
     public Vector3 FireAngle { get { return fireAngle; } set {  fireAngle = value; } }
     public float Speed { get { return speed; } set { speed = value; } }
+    
 
     void Start()
     {
