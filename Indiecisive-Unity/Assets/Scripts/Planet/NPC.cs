@@ -176,7 +176,7 @@ public class NPC : MonoBehaviour
 
     public void DialogueOutput(int NPCnum)
     {
-        if (lineNum >= dialogue.GetLength(NPCnum))
+        if (lineNum >= dialogue.GetLength(0))
         {
             menu.SetActive(false);
             active = false;
