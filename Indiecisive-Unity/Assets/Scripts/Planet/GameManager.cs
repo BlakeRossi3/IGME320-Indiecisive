@@ -12,13 +12,18 @@ public class GameManager : MonoBehaviour
     public GameObject LaserMeter;
     public Canvas Canvas;
     public GameObject player;
-    public TextMeshProUGUI coinsText;
 
-    public TextMeshProUGUI purchaseText;
+    public TextMeshProUGUI bulletText;
+    public TextMeshProUGUI bulletTextShop;
 
-    
+    public TextMeshProUGUI creditText;
+    public TextMeshProUGUI creditTextShop;
 
-    
+    public TextMeshProUGUI upgradeTypeText; // Upgrade texts for shop menu
+    public TextMeshProUGUI upgradeLevelText;
+    public TextMeshProUGUI upgradeInfoText;
+    public TextMeshProUGUI upgradePriceText;
+
     int currentLaserLevel = 1;
     int currentShieldLevel = 1;
     int currentSpeedLevel = 1;
@@ -31,9 +36,9 @@ public class GameManager : MonoBehaviour
 
     public int Charge;
 
-    public int Coins;
+    public int Coins = 100;
 
-    public TextMeshProUGUI coinCount;
+
 
     public GameObject Select;
 
@@ -41,7 +46,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject upgrade;
 
-    float scaleSpeed = 200.0f;  // Amount to scale per frame
+    float scaleSpeed = 250.0f;  // Amount to scale per frame
     float maxScale = 675f;
     float minScale = 10f;
     private string originalSceneName = "Planet";
@@ -80,8 +85,11 @@ public class GameManager : MonoBehaviour
             InputController Player = player.GetComponent<InputController>();
             Coins = Player.coins;
             Charge = Player.charge;
-            coinsText.text = (" : " + Coins);
-            coinCount.text = (" : " + Coins);
+            creditText.text = (" : " + Coins);
+            creditTextShop.text = (" : " + Coins);
+            bulletText.text = (" : " + Charge);
+            bulletTextShop.text = (" : " + Charge);
+
 
             //shop menu logic
             if (Select != null && Player.shopActive)
@@ -100,22 +108,34 @@ public class GameManager : MonoBehaviour
                 if (selection == 1) 
                 {
                     Selector.localPosition = new Vector3(-700, 270, -2);
-                    coinsText.text = (Coins + " / " + laserPrice);
+                    upgradeInfoText.text = ("Increase Primary Fire Damage");
+                    upgradeTypeText.text = ("LASER");
+                    upgradeLevelText.text = ("LVL " + currentLaserLevel);
+                    upgradePriceText.text = (""+laserPrice);
                 }
                 else if (selection == 2)
                 {
                     Selector.localPosition = new Vector3(-700, 115, -2);
-                    coinsText.text = (Coins + " / " + shieldPrice);
+                    upgradeInfoText.text = ("Increase Shield Duration");
+                    upgradeTypeText.text = ("SHIELD");
+                    upgradeLevelText.text = ("LVL " + currentShieldLevel);
+                    upgradePriceText.text = ("" + shieldPrice);
                 }
                 else if (selection == 3)
                 {
                     Selector.localPosition = new Vector3(-700, -50, -2);
-                    coinsText.text = (Coins + " / " + speedPrice);
+                    upgradeInfoText.text = ("Increase Ship Speed");
+                    upgradeTypeText.text = ("SPEED");
+                    upgradeLevelText.text = ("LVL " + currentSpeedLevel);
+                    upgradePriceText.text = ("" + speedPrice);
                 }
                 else if (selection == 4)
                 {
                     Selector.localPosition = new Vector3(-700, -220, -2);
-                    coinsText.text = (Coins + " / " + specialPrice);
+                    upgradeInfoText.text = ("Increase Special Ability Level");
+                    upgradeTypeText.text = ("SPECIAL");
+                    upgradeLevelText.text = ("LVL " + currentSpecialLevel);
+                    upgradePriceText.text = ("" + specialPrice);
                 }
                 RectTransform upgradeMeter = upgrade.GetComponent<RectTransform>();
                 // Grow the upgrade meter while X is held down and the meter hasn't reached max scale
@@ -205,7 +225,7 @@ public class GameManager : MonoBehaviour
             case "Shield":
                 RectTransform ShieldMete = ShieldMeter.GetComponent<RectTransform>();
 
-                if (currentShieldLevel < 7 && coins >= shieldPrice)
+                if (currentShieldLevel < 11 && coins >= shieldPrice)
                 {
    
                     ShieldMete.localScale = new Vector3(ShieldMete.localScale.x + ScaleX, ShieldMete.localScale.y, ShieldMete.localScale.z);
@@ -220,8 +240,7 @@ public class GameManager : MonoBehaviour
 
             case "Laser":
                 RectTransform LaserMete = LaserMeter.GetComponent<RectTransform>();
-                Debug.Log("good");
-                if (currentLaserLevel < 7 && coins >= laserPrice)
+                if (currentLaserLevel < 11 && coins >= laserPrice)
                 {
                     LaserMete.localScale = new Vector3(LaserMete.localScale.x + ScaleX, LaserMete.localScale.y, LaserMete.localScale.z);
                     LaserMete.localPosition += new Vector3(ScaleX / 2, 0f, 0f);  // Move up by half the scale amount
@@ -234,7 +253,7 @@ public class GameManager : MonoBehaviour
 
             case "Special":
                 RectTransform SpecialMete = SpecialMeter.GetComponent<RectTransform>();
-                if (currentSpecialLevel < 7 && coins >= specialPrice)
+                if (currentSpecialLevel < 11 && coins >= specialPrice)
                 {
                     SpecialMete.localScale = new Vector3(SpecialMete.localScale.x + ScaleX, SpecialMete.localScale.y, SpecialMete.localScale.z);
                     SpecialMete.localPosition += new Vector3(ScaleX / 2, 0f, 0f);  // Move up by half the scale amount
@@ -249,7 +268,7 @@ public class GameManager : MonoBehaviour
             case "Speed":
                 RectTransform HealthMete = SpeedMeter.GetComponent<RectTransform>();
 
-                if(currentSpeedLevel < 7 && coins >= speedPrice)
+                if(currentSpeedLevel < 11 && coins >= speedPrice)
                 {
                     HealthMete.localScale = new Vector3(HealthMete.localScale.x + ScaleX, HealthMete.localScale.y, HealthMete.localScale.z);
                     HealthMete.localPosition += new Vector3(ScaleX / 2, 0f, 0f);  // Move up by half the scale amount
