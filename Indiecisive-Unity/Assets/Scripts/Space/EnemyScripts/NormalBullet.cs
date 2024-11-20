@@ -15,6 +15,7 @@ public class NormalBullet : MonoBehaviour
 
     public Vector3 FireAngle { get { return fireAngle; } set {  fireAngle = value; } }
     public float Speed { get { return speed; } set { speed = value; } }
+    
 
     void Start()
     {
@@ -25,6 +26,7 @@ public class NormalBullet : MonoBehaviour
 
         //setting the bullet as a trigger allows it to pass through objects but trigger collision detection
         collider.isTrigger = true;
+        collider.size = new Vector2(0.35f, 0.35f);
 
         //Sets gravity scale to 0
         rb.gravityScale = 0;

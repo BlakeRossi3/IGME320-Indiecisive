@@ -40,50 +40,15 @@ public class EnemyType1 : Enemy
             TotalForce += Vector3.down * 0.1f;
         }
 
-        if(stayOnScreenCooldown > 0)
+        if (stayOnScreenCooldown > 0)
         {
-            seekPointCooldown -= Time.deltaTime;
-
-            // slightly randomizes the time it takes for enemies to change where they are going
-            if (seekPointCooldown <= Random.Range(0f, 1f))
-            {
-                targetPos = WanderInZone();
-                seekPointCooldown = seekPointDelay;
-                stayOnScreenCooldown--;
-            }
-            TotalForce += Seek(targetPos) * seekWeight;
-            TotalForce += Separate();
-            //TotalForce += StayInBoundsForce() * boundsWeight;
+            // Apply steering forces while the enemies are set to stay on screen
+            MovementOnScreen();
         }
-
-        // Leave the screen after a bit so the enemies don't overflow the screen
         else
         {
-            Vector3 exitPoint = new Vector3(0.0f, 5.0f, 0.0f);
-            TotalForce = Flee(exitPoint);
-            maxSpeed += 2.0f * Time.fixedDeltaTime;
-            maxForce = 1.5f;
-            enemyRB.freezeRotation = false;
-            if (TotalForce != Vector3.zero)
-            {
-                transform.rotation = Quaternion.LookRotation(Vector3.forward, -TotalForce.normalized);
-            }
-            firingEnabled = false;
-            transform.localScale += new Vector3(-0.08f * Time.fixedDeltaTime, -0.08f * Time.fixedDeltaTime, 0.0f);
-            enemyBoxCollider.enabled = false;
-
-            // attempt at a rotation change will look at later
-            enemyRB.rotation = Mathf.Atan(Vector3.Normalize(TotalForce).x / Vector3.Normalize(TotalForce).y);
-
-            // once the enemy gets far enough off screen, destroy
-            if (transform.position.x < ScreenMin.x * 1.2f ||
-               transform.position.x > ScreenMax.x * 1.2f ||
-               transform.position.y > ScreenMin.y * 1.2f ||
-               transform.position.y < ScreenMax.y * 1.2f)
-            {
-                Destroy(gameObject);
-                manager.Enemies.Remove(this);
-            }
+            // Leave the screen after a bit so the enemies don't overflow the screen
+            LeaveScreen();
         }
     }
 
@@ -105,8 +70,54 @@ public class EnemyType1 : Enemy
             }
             newBullet.transform.position = enemyRB.position;
             newBullet.GetComponent<NormalBullet>().FireAngle = Vector3.down;
+            newBullet.GetComponent<SpriteRenderer>().color = new Vector4(1.0f, 0.5f, 0.0f, 1);
             newBullet.SetActive(true);
             fireCooldown = fireDelay;
+        }
+    }
+
+    private void MovementOnScreen()
+    {
+        seekPointCooldown -= Time.deltaTime;
+
+        // slightly randomizes the time it takes for enemies to change where they are going
+        if (seekPointCooldown <= Random.Range(0f, 1f))
+        {
+            targetPos = WanderInZone();
+            seekPointCooldown = seekPointDelay;
+            stayOnScreenCooldown--;
+        }
+        TotalForce += Seek(targetPos) * seekWeight;
+        TotalForce += Separate();
+        //TotalForce += StayInBoundsForce() * boundsWeight;
+    }
+
+    private void LeaveScreen()
+    {
+        Vector3 exitPoint = new Vector3(0.0f, 5.0f, 0.0f);
+        TotalForce = Flee(exitPoint);
+        maxSpeed += 2.0f * Time.fixedDeltaTime;
+        maxForce = 1.5f;
+        enemyRB.freezeRotation = false;
+        if (TotalForce != Vector3.zero)
+        {
+            transform.rotation = Quaternion.LookRotation(Vector3.forward, -TotalForce.normalized);
+        }
+        firingEnabled = false;
+        transform.localScale += new Vector3(-0.08f * Time.fixedDeltaTime, -0.08f * Time.fixedDeltaTime, 0.0f);
+        enemyBoxCollider.enabled = false;
+
+        // attempt at a rotation change will look at later
+        enemyRB.rotation = Mathf.Atan(Vector3.Normalize(TotalForce).x / Vector3.Normalize(TotalForce).y);
+
+        // once the enemy gets far enough off screen, destroy
+        if (transform.position.x < ScreenMin.x * 1.2f ||
+            transform.position.x > ScreenMax.x * 1.2f ||
+            transform.position.y > ScreenMin.y * 1.2f ||
+            transform.position.y < ScreenMax.y * 1.2f)
+        {
+            Destroy(gameObject);
+            manager.Enemies.Remove(this);
         }
     }
 }

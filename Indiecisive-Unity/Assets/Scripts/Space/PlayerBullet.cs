@@ -14,7 +14,7 @@ public class PlayerBullet : MonoBehaviour
     private Vector3 screenPosition;
     private BoxCollider2D collider;
     private Rigidbody2D rb;
-
+    private int laserLevel;
     void Start()
     {
         //Adds a tag to the object (used for collision)
@@ -27,6 +27,13 @@ public class PlayerBullet : MonoBehaviour
         //ensures gravity is zero for bullets
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = 0;
+
+        //Updates bullet speed based on upgrade level
+        laserLevel = PlayerPrefs.GetInt("laserLevel", 1);
+        if (laserLevel > 0)
+        {
+            speed += (laserLevel / 2);
+        }
     }
     // Update is called once per frame
     void Update()

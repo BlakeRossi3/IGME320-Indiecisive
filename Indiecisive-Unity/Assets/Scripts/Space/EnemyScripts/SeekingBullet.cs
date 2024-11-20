@@ -37,6 +37,7 @@ public class SeekingBullet : MonoBehaviour
 
         //setting the bullet as a trigger allows it to pass through objects but trigger collision detection
         collider.isTrigger = true;
+        collider.size = new Vector2(0.2f, 0.35f);
 
         //Sets gravity scale to 0
         rb.gravityScale = 0;
@@ -68,7 +69,7 @@ public class SeekingBullet : MonoBehaviour
             // adds the seeking force to the bullet
             rb.AddForce(targetVelocity * Time.deltaTime);
 
-            seekTime -= 0.5f * Time.fixedDeltaTime;
+            seekTime -= 0.1f * Time.fixedDeltaTime;
             return;
         }
 
@@ -78,6 +79,7 @@ public class SeekingBullet : MonoBehaviour
             // adds the seeking force to the bullet
             rb.AddForce(targetVelocity * 1.5f * Time.deltaTime);
             sprite.color = Color.gray;
+            GetComponent<TrailRenderer>().enabled = false;
             collider.enabled = false;
 
             return;
@@ -90,7 +92,7 @@ public class SeekingBullet : MonoBehaviour
         // adds the seeking force to the bullet
         rb.AddForce(targetVelocity * acceleration * Time.deltaTime);
 
-        seekTime -= 0.5f * Time.fixedDeltaTime;
+        seekTime -= 0.1f * Time.fixedDeltaTime;
     }
 
     private void DestroyOffScreen()

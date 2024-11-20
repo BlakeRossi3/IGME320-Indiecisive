@@ -41,7 +41,7 @@ public class SpreadBullet : MonoBehaviour
         initSpeed = speed;
 
         // sets a random decceleration for varying heights of explosion
-        decceleration = Random.Range(1.5f, 2.5f) * Time.fixedDeltaTime;
+        decceleration = Random.Range(1.5f, 1.8f) * Time.fixedDeltaTime;
     }
 
     // Update is called once per frame
@@ -93,7 +93,8 @@ public class SpreadBullet : MonoBehaviour
             newBullet.transform.position = position;
 
             newBullet.GetComponent<NormalBullet>().FireAngle = projectileVector;
-            newBullet.GetComponent<NormalBullet>().Speed = initSpeed;
+            newBullet.GetComponent<NormalBullet>().Speed = initSpeed / 2;
+            newBullet.GetComponent<SpriteRenderer>().color = Color.magenta;
             newBullet.SetActive(true);
 
             // used to be for deletion, keeping in case we want some other functionality

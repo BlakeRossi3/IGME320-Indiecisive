@@ -12,10 +12,10 @@ public class Player : MonoBehaviour
 {
     //Player stats TODO: tune these as necessary
     //Do we want damage as a player variable or bullet variable?
-    private float moveSpeed = 7f;
+    private float moveSpeed = 5f;
     public float currentHealth = 5f;
     private float maxHealth = 5f;
-
+    
     // Ship current levels
     int laserLevel;
     int shieldLevel;
@@ -23,9 +23,9 @@ public class Player : MonoBehaviour
     int specialLevel;
 
 
-    //TODO: temp variables until eventSystem is fixed
-    public TextMeshProUGUI chargeText; //REMOVE LATER
-    public TextMeshProUGUI coinText; //REMOVE LATER
+    //Manages the charge and credit counts
+    public TextMeshProUGUI chargeText;
+    public TextMeshProUGUI coinText; 
     private int creditCount;
     private int bulletCount;
 
@@ -71,7 +71,7 @@ public class Player : MonoBehaviour
     //TODO: could read active special in start and adjust values based on that?
     private float specialDuration = 3;
     private float specialTime = 0;
-    private float specialCD = 7;
+    private float specialCD = 10;
     private float specialCDTimer = 0;
     private bool specialActive = false;
 
@@ -129,7 +129,7 @@ public class Player : MonoBehaviour
         screenPixels = new Vector3 (screenWidth, screenHeight, 0);
         screenWorld = Camera.main.ScreenToWorldPoint(screenPixels);
 
-        //TODO: TEMP TEMP TEMP REMOVE LATER
+        //Displays bullet count and credit count
         chargeText.text = (": " + bulletCount);
         coinText.text = (": " + creditCount);
 
@@ -154,6 +154,24 @@ public class Player : MonoBehaviour
         if (currentSpecial != null)
         {
             currentSpecial.SetActive(false);
+        }
+
+        //Updates player speed based on upgrade level
+        if (speedLevel > 0)
+        {
+            moveSpeed += (moveSpeed / 2);
+        }
+
+        //updates shield duration based on upgrade level
+        if (shieldLevel > 0)
+        {
+            shieldDuration += (shieldLevel / 3);
+        }
+
+        //updates special duration based on upgrade level
+        if (specialLevel > 0)
+        {
+            specialDuration += (specialLevel / 2);
         }
     }
 
@@ -278,12 +296,7 @@ public class Player : MonoBehaviour
         //Checks for if player has pressed the fire button
         if (Input.GetKeyUp(KeyCode.Space))
         {
-            // BLAKE CODE - adding charge functionality TODO: COMMENTED OUT FOR BUGS RN
-            //GameManager gameManager = GameObject.Find("EventSystem").GetComponent<GameManager>();
-
-            //gameManager.Charge -= 100;
-
-            //TODO: update with gameManager data when available
+            //Fires bullet if able
             if (bulletCount > 0)
             {
                 //creates a new bullet at the player's position TODO: update this based on how it looks with ship sprite
