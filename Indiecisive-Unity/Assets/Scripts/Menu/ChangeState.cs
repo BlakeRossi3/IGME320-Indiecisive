@@ -19,4 +19,14 @@ public class ChangeState : MonoBehaviour
     {
         SceneManager.LoadScene("Boss");
     }
+
+    public void ToTitle()
+    {
+        SceneManager.LoadScene("GameStart");
+    }
+
+    public void quitGame()
+    {
+        Application.Quit();
+    }
 }
