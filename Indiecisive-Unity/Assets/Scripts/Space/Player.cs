@@ -205,6 +205,7 @@ public class Player : MonoBehaviour
         //player feedback for gameover state
         if (isGameOver)
         {
+            //Updates playerprefs in case player just wants to return to planet
             //TODO: destroy player SPRITE (set inactive? wait X amount of seconds, then move to gameover)
             SceneManager.LoadScene("GameOver");
         }
@@ -216,7 +217,6 @@ public class Player : MonoBehaviour
         //Checks for keyboard input, adds direction to Vector2
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            Debug.Log("up");
             moveDirection += Vector2.up;
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow))
@@ -307,7 +307,6 @@ public class Player : MonoBehaviour
                 newBullet.AddComponent<BoxCollider2D>();
                 newBullet.AddComponent<Rigidbody2D>();
 
-                //TODO: update this with gamemanager stuff later
                 bulletCount--;
                 chargeText.text = (": " + bulletCount); 
             }
@@ -543,10 +542,10 @@ public class Player : MonoBehaviour
                     //hides a heart
                     health[i].SetActive(false);
                 }
-            }
-       }
+            } 
+       } 
 
 
-    }
+    } 
 
 }

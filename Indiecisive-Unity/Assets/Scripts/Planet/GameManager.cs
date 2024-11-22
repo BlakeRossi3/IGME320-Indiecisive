@@ -54,13 +54,21 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        PlayerPrefs.SetInt("credits", 0);
-        PlayerPrefs.SetInt("charge", 0);
+        /* PlayerPrefs.SetInt("credits", 0);
+         PlayerPrefs.SetInt("charge", 0);
 
-        PlayerPrefs.SetInt("laserLevel", 1);
-        PlayerPrefs.SetInt("shieldLevel", 1);
-        PlayerPrefs.SetInt("speedLevel", 1);
-        PlayerPrefs.SetInt("specialLevel", 1);
+         PlayerPrefs.SetInt("laserLevel", 1);
+         PlayerPrefs.SetInt("shieldLevel", 1);
+         PlayerPrefs.SetInt("speedLevel", 1);
+         PlayerPrefs.SetInt("specialLevel", 1); */
+
+        //Retrieves playerprefs stats
+        Coins = PlayerPrefs.GetInt("credits", 0);
+        Charge = PlayerPrefs.GetInt("charge", 0);
+        currentLaserLevel = PlayerPrefs.GetInt("laserLevel", 1);
+        currentShieldLevel = PlayerPrefs.GetInt("shieldLevel", 1);
+        currentSpeedLevel = PlayerPrefs.GetInt("speedLevel", 1);
+        currentSpecialLevel = PlayerPrefs.GetInt("specialLevel", 1);
     }
 
     // Update is called once per frame
