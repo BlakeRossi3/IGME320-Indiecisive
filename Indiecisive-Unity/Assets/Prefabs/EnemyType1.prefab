@@ -113,6 +113,7 @@ MonoBehaviour:
   boundsWeight: 3
   firingEnabled: 1
   seekWeight: 0.5
+  spawnedByManager: 1
 --- !u!50 &-8339888383338116925
 Rigidbody2D:
   serializedVersion: 4

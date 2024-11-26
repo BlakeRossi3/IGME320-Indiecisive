@@ -24,13 +24,17 @@ public class EnemyType1 : Enemy
     [SerializeField]
     protected float seekWeight; // how strong the forces of the points to seek are
 
+    [SerializeField]
+    protected bool spawnedByManager; // enables / disables things depenent on an enemy manager
+
     protected override void CalcSteeringForces()
     {
         // make enable things when the enemy is inside the screen
         if (transform.position.x >= ScreenMin.x &&
            transform.position.x <= ScreenMax.x &&
            transform.position.y <= ScreenMin.y + 0.25f &&
-           transform.position.y >= ScreenMax.y)
+           transform.position.y >= ScreenMax.y &&
+           spawnedByManager)
         {
             firingEnabled = true;
         }
@@ -88,7 +92,10 @@ public class EnemyType1 : Enemy
             stayOnScreenCooldown--;
         }
         TotalForce += Seek(targetPos) * seekWeight;
-        TotalForce += Separate();
+        if(spawnedByManager)
+        {
+            TotalForce += Separate();
+        }
         //TotalForce += StayInBoundsForce() * boundsWeight;
     }
 
@@ -96,7 +103,7 @@ public class EnemyType1 : Enemy
     {
         Vector3 exitPoint = new Vector3(0.0f, 5.0f, 0.0f);
         TotalForce = Flee(exitPoint);
-        maxSpeed += 2.0f * Time.fixedDeltaTime;
+        maxSpeed += 2.0f * Time.deltaTime;
         maxForce = 1.5f;
         enemyRB.freezeRotation = false;
         if (TotalForce != Vector3.zero)
@@ -104,8 +111,7 @@ public class EnemyType1 : Enemy
             transform.rotation = Quaternion.LookRotation(Vector3.forward, -TotalForce.normalized);
         }
         firingEnabled = false;
-        transform.localScale += new Vector3(-0.08f * Time.fixedDeltaTime, -0.08f * Time.fixedDeltaTime, 0.0f);
-        enemyBoxCollider.enabled = false;
+        transform.localScale += new Vector3(-0.2f * Time.deltaTime, -0.2f * Time.deltaTime, 0.0f);
 
         // attempt at a rotation change will look at later
         enemyRB.rotation = Mathf.Atan(Vector3.Normalize(TotalForce).x / Vector3.Normalize(TotalForce).y);

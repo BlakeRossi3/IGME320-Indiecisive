@@ -50,7 +50,6 @@ public abstract class Enemy : MonoBehaviour
     public float FireDelay { get { return fireDelay; } set { fireDelay = value; } }
     public Vector3 ScreenMax { get { return screenMax; } }
     public Vector3 ScreenMin { get { return screenMin; } }
-
     // Start is called before the first frame update
     void Start()
     {
@@ -87,10 +86,11 @@ public abstract class Enemy : MonoBehaviour
 
         if(enemySprite.color == Color.red)
         {
-            flashPause -= 0.1f * Time.fixedDeltaTime;
+            flashPause -= 0.5f * Time.deltaTime;
             if(flashPause <= 0.0f)
             {
                 enemySprite.color = Color.white;
+                flashPause = 0.1f;
             }
         }
     }
@@ -155,7 +155,7 @@ public abstract class Enemy : MonoBehaviour
     {
         // Sum of all flee forces to separate
         Vector3 separateForce = Vector3.zero;
-
+        
         if(manager.Enemies.Count > 1)
         {
             // Go through all agents

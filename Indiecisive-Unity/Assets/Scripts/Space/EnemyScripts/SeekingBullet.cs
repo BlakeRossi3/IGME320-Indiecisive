@@ -77,7 +77,7 @@ public class SeekingBullet : MonoBehaviour
         if(seekTime <= 0.0f)
         {
             // adds the seeking force to the bullet
-            rb.AddForce(targetVelocity * 1.5f * Time.deltaTime);
+            rb.AddForce(targetVelocity * 2.0f * Time.deltaTime);
             sprite.color = Color.gray;
             GetComponent<TrailRenderer>().enabled = false;
             collider.enabled = false;
@@ -92,7 +92,7 @@ public class SeekingBullet : MonoBehaviour
         // adds the seeking force to the bullet
         rb.AddForce(targetVelocity * acceleration * Time.deltaTime);
 
-        seekTime -= 0.1f * Time.fixedDeltaTime;
+        seekTime -= 0.3f * Time.deltaTime;
     }
 
     private void DestroyOffScreen()
