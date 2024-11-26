@@ -67,8 +67,7 @@ public class InputController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Z))
             {
-
-               // SceneManager.LoadScene("Explore");
+                SceneManager.LoadScene("Explore");
             }
         }
         if(Input.GetKeyDown(KeyCode.Z))

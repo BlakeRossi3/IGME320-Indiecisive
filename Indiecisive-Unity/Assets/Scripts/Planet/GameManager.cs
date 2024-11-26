@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
 
     public int Charge;
 
-    public int Coins = 100;
+    public int Coins;
 
 
 
