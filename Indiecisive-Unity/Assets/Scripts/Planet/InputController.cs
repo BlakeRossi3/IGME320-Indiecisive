@@ -41,8 +41,8 @@ public class InputController : MonoBehaviour
     void Start()
     {
         uiPanel.SetActive(false);
-        coins = 0;
-        charge = 0;
+        coins = PlayerPrefs.GetInt("credits", 0);
+        charge = PlayerPrefs.GetInt("charge", 0);
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
