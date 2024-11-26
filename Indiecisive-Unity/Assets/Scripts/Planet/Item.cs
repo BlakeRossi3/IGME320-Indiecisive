@@ -37,17 +37,6 @@ public class Item : MonoBehaviour
     {
         CheckPickUp();
 
-        if (coinCount == null && isCoin)
-        {
-            Canvas canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
-            coinCount = GameObject.Find("CoinText").GetComponent<TextMeshProUGUI>();
-            if (coinCount == null)
-            {
-                Debug.LogError("CoinText GameObject or TextMeshProUGUI component not found!");
-            }
-
-
-        }
     }
     void FixedUpdate()
     {
@@ -100,7 +89,6 @@ public class Item : MonoBehaviour
             if (isCoin)
             {
                 bag.coins += value;
-                coinCount.text = (" : " + bag.coins);
             }
             else if (isCharge)
             {

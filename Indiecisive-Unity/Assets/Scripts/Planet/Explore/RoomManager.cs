@@ -25,7 +25,8 @@ public class RoomManager : MonoBehaviour
 
     private int currentRoomNumber = 1;
 
-    private int coinNum;
+    public int creditCount;
+    private int bulletCount;
     public GameObject Astro;
 
     public GameObject northFog;
@@ -41,11 +42,16 @@ public class RoomManager : MonoBehaviour
     public int northMoveMultiplier;
     public int westMoveMultiplier;
 
+    public TextMeshProUGUI creditText;
+    public TextMeshProUGUI bulletText;
+
     public GameObject Panel;
 
     public GameObject ground;
 
     private GameObject[,] fog = new GameObject[10, 4];
+
+    InputController input;
 
     //bounds for spawning in new room
     private int minX; private int maxX; private int minY; private int maxY;
@@ -73,11 +79,27 @@ public class RoomManager : MonoBehaviour
 
         GenerateRoom();
 
+        bulletCount = PlayerPrefs.GetInt("charge", 0);
+        creditCount = PlayerPrefs.GetInt("credits", 0);
+        input = Astro.GetComponent<InputController>();
+        input.coins = PlayerPrefs.GetInt("charge", 0);
+        input.charge = PlayerPrefs.GetInt("credits", 0);
+
     }
-    void update()
+    void Update()
     {
-        InputController Player = Astro.GetComponent<InputController>();
-        coinNum = Player.coins;
+        
+        bulletCount = input.coins;
+        creditCount = input.charge;
+
+        creditText.text = (" : " + creditCount);
+        bulletText.text = (" : " + bulletCount);
+
+        PlayerPrefs.SetInt("credits", creditCount);
+        PlayerPrefs.SetInt("charge", bulletCount);
+        PlayerPrefs.Save();
+
+
     }
 
     void GenerateRoom()
@@ -91,14 +113,6 @@ public class RoomManager : MonoBehaviour
             Vector2 randomPosition = GetRandomPosition();
             Instantiate(treePrefab, randomPosition, Quaternion.identity);
         }
-
-        // Generate enemies with increasing difficulty
-        //int enemyCount = Random.Range(minEnemies, maxEnemies + currentRoomNumber);
-        //for (int i = 0; i < enemyCount; i++)
-        // {
-        //     Vector2 randomPosition = GetRandomPosition();
-        //     Instantiate(enemyPrefab, randomPosition, Quaternion.identity);
-        // }
 
         // Generate coins
 
@@ -127,7 +141,7 @@ public class RoomManager : MonoBehaviour
 
    public void EnterNextRoom(string direction)
    {
-
+        
 
         if (direction == "North")
         {

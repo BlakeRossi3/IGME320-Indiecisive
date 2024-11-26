@@ -34,13 +34,15 @@ public class InputController : MonoBehaviour
 
     public bool inFog;
 
+    public Animator animator;  // Animator component
 
+    //animator = GetComponent<Animator>();
 
     void Start()
     {
         uiPanel.SetActive(false);
-        coins = 0;
-        charge = 0;
+        coins = PlayerPrefs.GetInt("credits", 0);
+        charge = PlayerPrefs.GetInt("charge", 0);
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -65,17 +67,13 @@ public class InputController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Z))
             {
-
-               // SceneManager.LoadScene("Explore");
+                SceneManager.LoadScene("Explore");
             }
         }
         if(Input.GetKeyDown(KeyCode.Z))
         {
             SideMenuToggle();
         }
-
-
-
     }
 
     void HandleMovementInput()
@@ -281,21 +279,21 @@ public class InputController : MonoBehaviour
             npcComponent.moveSpeed = 0;
             
         }
-        if (type < 2)
+        if (type < 3)
         {
             npcComponent.DialogueOutput(type);
         }
-        if (type == 3 && !shopActive)
+        if (type == 4 && !shopActive)
         {
             moveSpeed = 0;
             shopActive = true;
         }
-        else if (type == 3 && shopActive)
+        else if (type == 4 && shopActive)
         {
             moveSpeed = 10;
             shopActive = false;
         }
-        if (type == 4)
+        if (type == 5)
         {
             inFog = true;
         }

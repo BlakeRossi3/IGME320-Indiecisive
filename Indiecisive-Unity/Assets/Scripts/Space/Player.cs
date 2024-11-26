@@ -7,6 +7,7 @@ using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Android;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -56,7 +57,7 @@ public class Player : MonoBehaviour
     private GameObject health4;
     private GameObject health5;
 
-    //shield timer handling TODO: tune this
+    //shield timer handling
     private float shieldDuration = 1;
     private float shieldTime = 0;
     private float shieldCD = 5;
@@ -202,21 +203,20 @@ public class Player : MonoBehaviour
         }
 
         //player feedback for gameover state
-        //TODO: placeholder way of handling this. should be updated later on.
         if (isGameOver)
         {
-            playerSprite.color = Color.red;
-
+            //Updates playerprefs in case player just wants to return to planet
+            //TODO: destroy player SPRITE (set inactive? wait X amount of seconds, then move to gameover)
+            SceneManager.LoadScene("GameOver");
         }
     }
 
-    //player input for movement. uses WASD keys.
+    //player input for movement. uses arrow keys.
     private void playerMovement()
     {
         //Checks for keyboard input, adds direction to Vector2
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            Debug.Log("up");
             moveDirection += Vector2.up;
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow))
@@ -307,7 +307,6 @@ public class Player : MonoBehaviour
                 newBullet.AddComponent<BoxCollider2D>();
                 newBullet.AddComponent<Rigidbody2D>();
 
-                //TODO: update this with gamemanager stuff later
                 bulletCount--;
                 chargeText.text = (": " + bulletCount); 
             }
@@ -507,7 +506,6 @@ public class Player : MonoBehaviour
             //Generic enemy bullet -- 1 dmg
             if (collision.gameObject.CompareTag("EnemyBullet"))
             {
-                UnityEngine.Debug.Log("Player hit!");
 
                 //Decreases health by 1
                 currentHealth -= 1;
@@ -519,7 +517,6 @@ public class Player : MonoBehaviour
             //Pooled enemy bullet -- 1 dmg
             if (collision.gameObject.CompareTag("EnemyBulletPooled"))
             {
-                UnityEngine.Debug.Log("Player hit!");
 
                 //Decreases health by 1
                 currentHealth -= 1;
@@ -531,7 +528,6 @@ public class Player : MonoBehaviour
             //Collision with Enemy -- 1 dmg
             if (collision.gameObject.CompareTag("Enemy"))
             {
-                UnityEngine.Debug.Log("Player hit!");
 
                 //Decreases health by 1
                 currentHealth -= 1;
@@ -546,10 +542,10 @@ public class Player : MonoBehaviour
                     //hides a heart
                     health[i].SetActive(false);
                 }
-            }
-       }
+            } 
+       } 
 
 
-    }
+    } 
 
 }
