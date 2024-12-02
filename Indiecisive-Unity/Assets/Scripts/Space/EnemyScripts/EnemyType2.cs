@@ -111,8 +111,11 @@ public class EnemyType2 : Enemy
 
     private void LeaveScreen()
     {
+        gameObject.tag = "FleeingEnemy";
+        fleeing = true;
         Vector3 exitPoint = new Vector3(0.0f, 5.0f, 0.0f);
         TotalForce = Flee(exitPoint);
+        TotalForce += Flee(new Vector3(0.0f, -2.0f, 0.0f)) * 0.4f;
         maxSpeed += 2.0f * Time.deltaTime;
         maxForce = 1.0f;
         enemyRB.freezeRotation = false;

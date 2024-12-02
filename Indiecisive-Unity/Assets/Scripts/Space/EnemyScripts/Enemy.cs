@@ -45,6 +45,7 @@ public abstract class Enemy : MonoBehaviour
     //TODO: placeholder hp
     protected float currentHP = 1f;
     protected float maxHP = 2f;
+    protected bool fleeing = false;
     private float flashPause = 0.1f;
 
     public float FireDelay { get { return fireDelay; } set { fireDelay = value; } }
@@ -254,11 +255,15 @@ public abstract class Enemy : MonoBehaviour
             }
         }
 
-        // feedback for collision with enemy
-        if (collision.gameObject.CompareTag("Player"))
+        // if the enemy is fleeing the screen, don't allow collisions with the player
+        if(!fleeing)
         {
-            // this will flash due to the code in update
-            enemySprite.color = Color.red;
+            // feedback for collision with enemy
+            if (collision.gameObject.CompareTag("Player"))
+            {
+                // this will flash due to the code in update
+                enemySprite.color = Color.red;
+            }
         }
 
         //hi this is Julia adding code to enemy again
