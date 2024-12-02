@@ -45,6 +45,7 @@ public class StageTimer : MonoBehaviour
             // if the time in the level has reached the set time, send the player back to the planet
             if (stageClock >= stageTime)
             {
+                //TODO: get playerprefs charge data, update here first
                 SceneManager.LoadScene("Planet");
             }
 
