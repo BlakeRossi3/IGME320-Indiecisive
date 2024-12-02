@@ -11,8 +11,7 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-    //Player stats TODO: tune these as necessary
-    //Do we want damage as a player variable or bullet variable?
+    //Player stats
     private float moveSpeed = 5f;
     public float currentHealth = 5f;
     private float maxHealth = 5f;
@@ -68,8 +67,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int special = 0;
 
-    //Other variables for handling special TODO: tune this
-    //TODO: could read active special in start and adjust values based on that?
+    //Other variables for handling special
     private float specialDuration = 3;
     private float specialTime = 0;
     private float specialCD = 10;
@@ -91,6 +89,26 @@ public class Player : MonoBehaviour
 
     //list of health display objects
     private List<GameObject> health = new List<GameObject>();
+
+    //obtaining audio sources
+    [SerializeField] AudioSource source0;
+    [SerializeField] AudioSource source1;
+    [SerializeField] AudioSource source2;
+    [SerializeField] AudioSource source3;
+    [SerializeField] AudioSource source4;
+    [SerializeField] AudioSource source5;
+    [SerializeField] AudioSource source6;
+    [SerializeField] AudioSource source7;
+    [SerializeField] AudioSource source8;
+    [SerializeField] AudioSource source9;
+
+    AudioSource[] AudioSourceArray = new AudioSource[10];
+
+    //audio clips
+    [SerializeField] AudioClip bulletClip;
+    [SerializeField] AudioClip shieldClip;
+    [SerializeField] AudioClip specialClip;
+    [SerializeField] AudioClip damageClip;
 
     //Initializes elements
     void Start()
@@ -174,6 +192,18 @@ public class Player : MonoBehaviour
         {
             specialDuration += (specialLevel / 2);
         }
+
+        //adds audio sources to array
+        AudioSourceArray[0] = source0;
+        AudioSourceArray[1] = source1;
+        AudioSourceArray[2] = source2;
+        AudioSourceArray[3] = source3;
+        AudioSourceArray[4] = source4;
+        AudioSourceArray[5] = source5;
+        AudioSourceArray[6] = source6;
+        AudioSourceArray[7] = source7;
+        AudioSourceArray[8] = source8;
+        AudioSourceArray[9] = source9;
     }
 
     // Update is called once per frame
@@ -544,8 +574,20 @@ public class Player : MonoBehaviour
                 }
             } 
        } 
+    }
 
-
-    } 
+    //plays the specified sound
+    void playSound(AudioClip clip)
+    {
+        for (int i = 0; i < AudioSourceArray.Length; ++i)
+        {
+            if (AudioSourceArray[i].isPlaying == false)
+            {
+                AudioSourceArray[i].clip = clip;
+                AudioSourceArray[i].Play();
+                break;
+            }
+        }
+    }
 
 }
