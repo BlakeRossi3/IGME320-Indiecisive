@@ -2970,9 +2970,25 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1287900937}
     - target: {fileID: 4772400719935655383, guid: 614a32956712b4e459f0341936be313f, type: 3}
+      propertyPath: bulletClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 3e0e28328281ba04298255e83e4ce9e6, type: 3}
+    - target: {fileID: 4772400719935655383, guid: 614a32956712b4e459f0341936be313f, type: 3}
       propertyPath: chargeText
       value: 
       objectReference: {fileID: 1769393023}
+    - target: {fileID: 4772400719935655383, guid: 614a32956712b4e459f0341936be313f, type: 3}
+      propertyPath: damageClip
+      value: 
+      objectReference: {fileID: 8300000, guid: a2c71d167a9464542b6948f3d86b3f93, type: 3}
+    - target: {fileID: 4772400719935655383, guid: 614a32956712b4e459f0341936be313f, type: 3}
+      propertyPath: shieldClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 5cf40cfcbf85b4b4e9bec5a061f2df0b, type: 3}
+    - target: {fileID: 4772400719935655383, guid: 614a32956712b4e459f0341936be313f, type: 3}
+      propertyPath: specialClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 5d828c2901e89304ebd5198c9b1ddada, type: 3}
     - target: {fileID: 4772400719935655383, guid: 614a32956712b4e459f0341936be313f, type: 3}
       propertyPath: shieldStatus
       value: 
