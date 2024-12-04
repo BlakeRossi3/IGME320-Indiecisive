@@ -338,7 +338,9 @@ public class Player : MonoBehaviour
                 newBullet.AddComponent<Rigidbody2D>();
 
                 bulletCount--;
-                chargeText.text = (": " + bulletCount); 
+                chargeText.text = (": " + bulletCount);
+
+                playSound(bulletClip);
             }
         }
     }
@@ -356,6 +358,7 @@ public class Player : MonoBehaviour
                     if (Input.GetKeyDown(KeyCode.X) && specialCDTimer <= 0)
                     {
                         startSpecial();
+                        playSound(specialClip);
                     }
 
                     //updates object position
@@ -375,6 +378,7 @@ public class Player : MonoBehaviour
                     if (Input.GetKeyDown(KeyCode.X) && specialCDTimer <= 0)
                     {
                         startSpecial();
+                        playSound(specialClip);
                     }
 
                     if (specialActive)
@@ -412,6 +416,8 @@ public class Player : MonoBehaviour
                         newBullet2.AddComponent<PlayerBullet>();
                         newBullet2.AddComponent<BoxCollider2D>();
                         newBullet2.AddComponent<Rigidbody2D>();
+
+                        playSound(bulletClip);
                     }
 
                     //Automatically increments delay timer
@@ -494,7 +500,7 @@ public class Player : MonoBehaviour
             shieldActive = true;
             playerSprite.color = Color.blue;
             shieldCDTimer = shieldCD;
-
+            playSound(shieldClip);
             //hides "ready" indicator
             shieldStatus.SetActive(false);
         }
