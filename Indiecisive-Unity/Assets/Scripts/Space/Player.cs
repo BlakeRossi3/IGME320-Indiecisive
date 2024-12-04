@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
     int shieldLevel;
     int speedLevel;
     int specialLevel;
-
+    //TODO: adjust dmg of non rapid fire specials (higher dmg = more dmg to boss to account for discrepancy)
 
     //Manages the charge and credit counts
     public TextMeshProUGUI chargeText;
