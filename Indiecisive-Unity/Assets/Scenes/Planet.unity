@@ -970,6 +970,22 @@ PrefabInstance:
       propertyPath: coinCount
       value: 
       objectReference: {fileID: 1296113582}
+    - target: {fileID: 5647670503915516965, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
+      propertyPath: soundService
+      value: 
+      objectReference: {fileID: 2094354374}
+    - target: {fileID: 5647670503915516965, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
+      propertyPath: Audio_CoinGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: a4ca955298f45254286aedd20df176ca, type: 3}
+    - target: {fileID: 5647670503915516965, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
+      propertyPath: Audio_ChargeGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: 385973edae993ac49a03b2b9cce8ba4e, type: 3}
+    - target: {fileID: 5647670503915516965, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
+      propertyPath: Audio_ShovelPickup
+      value: 
+      objectReference: {fileID: 8300000, guid: 303d5647e770b924eaf6d79fe052167e, type: 3}
     - target: {fileID: 8548042471892639629, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
       propertyPath: m_Name
       value: CreditBronze (4)
@@ -2533,6 +2549,22 @@ PrefabInstance:
       propertyPath: astro
       value: 
       objectReference: {fileID: 2042298260}
+    - target: {fileID: 7316337508072727941, guid: 6588d6bca51d80f4bb9230e6d654dde6, type: 3}
+      propertyPath: soundService
+      value: 
+      objectReference: {fileID: 2094354374}
+    - target: {fileID: 7316337508072727941, guid: 6588d6bca51d80f4bb9230e6d654dde6, type: 3}
+      propertyPath: Audio_CoinGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: a4ca955298f45254286aedd20df176ca, type: 3}
+    - target: {fileID: 7316337508072727941, guid: 6588d6bca51d80f4bb9230e6d654dde6, type: 3}
+      propertyPath: Audio_ChargeGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: 385973edae993ac49a03b2b9cce8ba4e, type: 3}
+    - target: {fileID: 7316337508072727941, guid: 6588d6bca51d80f4bb9230e6d654dde6, type: 3}
+      propertyPath: Audio_ShovelPickup
+      value: 
+      objectReference: {fileID: 8300000, guid: 303d5647e770b924eaf6d79fe052167e, type: 3}
     - target: {fileID: 8916429154709939866, guid: 6588d6bca51d80f4bb9230e6d654dde6, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -4376,6 +4408,22 @@ PrefabInstance:
       propertyPath: astro
       value: 
       objectReference: {fileID: 2042298260}
+    - target: {fileID: 7316337508072727941, guid: 6588d6bca51d80f4bb9230e6d654dde6, type: 3}
+      propertyPath: soundService
+      value: 
+      objectReference: {fileID: 2094354374}
+    - target: {fileID: 7316337508072727941, guid: 6588d6bca51d80f4bb9230e6d654dde6, type: 3}
+      propertyPath: Audio_CoinGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: a4ca955298f45254286aedd20df176ca, type: 3}
+    - target: {fileID: 7316337508072727941, guid: 6588d6bca51d80f4bb9230e6d654dde6, type: 3}
+      propertyPath: Audio_ChargeGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: 385973edae993ac49a03b2b9cce8ba4e, type: 3}
+    - target: {fileID: 7316337508072727941, guid: 6588d6bca51d80f4bb9230e6d654dde6, type: 3}
+      propertyPath: Audio_ShovelPickup
+      value: 
+      objectReference: {fileID: 8300000, guid: 303d5647e770b924eaf6d79fe052167e, type: 3}
     - target: {fileID: 8916429154709939866, guid: 6588d6bca51d80f4bb9230e6d654dde6, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -4493,6 +4541,22 @@ PrefabInstance:
       propertyPath: coinCount
       value: 
       objectReference: {fileID: 1296113582}
+    - target: {fileID: 5647670503915516965, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
+      propertyPath: soundService
+      value: 
+      objectReference: {fileID: 2094354374}
+    - target: {fileID: 5647670503915516965, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
+      propertyPath: Audio_CoinGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: a4ca955298f45254286aedd20df176ca, type: 3}
+    - target: {fileID: 5647670503915516965, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
+      propertyPath: Audio_ChargeGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: 385973edae993ac49a03b2b9cce8ba4e, type: 3}
+    - target: {fileID: 5647670503915516965, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
+      propertyPath: Audio_ShovelPickup
+      value: 
+      objectReference: {fileID: 8300000, guid: 303d5647e770b924eaf6d79fe052167e, type: 3}
     - target: {fileID: 8548042471892639629, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
       propertyPath: m_Name
       value: CreditBronze (2)
@@ -5025,6 +5089,22 @@ PrefabInstance:
       propertyPath: coinCount
       value: 
       objectReference: {fileID: 1296113582}
+    - target: {fileID: 5647670503915516965, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
+      propertyPath: soundService
+      value: 
+      objectReference: {fileID: 2094354374}
+    - target: {fileID: 5647670503915516965, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
+      propertyPath: Audio_CoinGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: a4ca955298f45254286aedd20df176ca, type: 3}
+    - target: {fileID: 5647670503915516965, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
+      propertyPath: Audio_ChargeGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: 385973edae993ac49a03b2b9cce8ba4e, type: 3}
+    - target: {fileID: 5647670503915516965, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
+      propertyPath: Audio_ShovelPickup
+      value: 
+      objectReference: {fileID: 8300000, guid: 303d5647e770b924eaf6d79fe052167e, type: 3}
     - target: {fileID: 8548042471892639629, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
       propertyPath: m_Name
       value: CreditBronze (6)
@@ -5176,6 +5256,22 @@ PrefabInstance:
       propertyPath: coinCount
       value: 
       objectReference: {fileID: 1296113582}
+    - target: {fileID: 5647670503915516965, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
+      propertyPath: soundService
+      value: 
+      objectReference: {fileID: 2094354374}
+    - target: {fileID: 5647670503915516965, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
+      propertyPath: Audio_CoinGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: a4ca955298f45254286aedd20df176ca, type: 3}
+    - target: {fileID: 5647670503915516965, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
+      propertyPath: Audio_ChargeGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: 385973edae993ac49a03b2b9cce8ba4e, type: 3}
+    - target: {fileID: 5647670503915516965, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
+      propertyPath: Audio_ShovelPickup
+      value: 
+      objectReference: {fileID: 8300000, guid: 303d5647e770b924eaf6d79fe052167e, type: 3}
     - target: {fileID: 8548042471892639629, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
       propertyPath: m_Name
       value: CreditBronze (5)
@@ -5352,7 +5448,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.31100002}
   m_AnchorMax: {x: 0.7746042, y: 0.5}
-  m_AnchoredPosition: {x: 256.22003, y: -118.939995}
+  m_AnchoredPosition: {x: 256.22003, y: -118.94}
   m_SizeDelta: {x: -327, y: -154}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &854999697
@@ -5496,6 +5592,10 @@ MonoBehaviour:
   isCoin: 0
   isCharge: 0
   value: 0
+  soundService: {fileID: 2094354374}
+  Audio_ShovelPickup: {fileID: 8300000, guid: 303d5647e770b924eaf6d79fe052167e, type: 3}
+  Audio_CoinGrab: {fileID: 0}
+  Audio_ChargeGrab: {fileID: 0}
 --- !u!212 &860490964
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5721,6 +5821,22 @@ PrefabInstance:
       propertyPath: coinCount
       value: 
       objectReference: {fileID: 1296113582}
+    - target: {fileID: 5417904623445847085, guid: c56cd40241c1cc244ab20c8c53e34574, type: 3}
+      propertyPath: soundService
+      value: 
+      objectReference: {fileID: 2094354374}
+    - target: {fileID: 5417904623445847085, guid: c56cd40241c1cc244ab20c8c53e34574, type: 3}
+      propertyPath: Audio_CoinGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: a4ca955298f45254286aedd20df176ca, type: 3}
+    - target: {fileID: 5417904623445847085, guid: c56cd40241c1cc244ab20c8c53e34574, type: 3}
+      propertyPath: Audio_ChargeGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: 385973edae993ac49a03b2b9cce8ba4e, type: 3}
+    - target: {fileID: 5417904623445847085, guid: c56cd40241c1cc244ab20c8c53e34574, type: 3}
+      propertyPath: Audio_ShovelPickup
+      value: 
+      objectReference: {fileID: 8300000, guid: 303d5647e770b924eaf6d79fe052167e, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5866,6 +5982,22 @@ PrefabInstance:
       propertyPath: coinCount
       value: 
       objectReference: {fileID: 1296113582}
+    - target: {fileID: 5647670503915516965, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
+      propertyPath: soundService
+      value: 
+      objectReference: {fileID: 2094354374}
+    - target: {fileID: 5647670503915516965, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
+      propertyPath: Audio_CoinGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: a4ca955298f45254286aedd20df176ca, type: 3}
+    - target: {fileID: 5647670503915516965, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
+      propertyPath: Audio_ChargeGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: 385973edae993ac49a03b2b9cce8ba4e, type: 3}
+    - target: {fileID: 5647670503915516965, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
+      propertyPath: Audio_ShovelPickup
+      value: 
+      objectReference: {fileID: 8300000, guid: 303d5647e770b924eaf6d79fe052167e, type: 3}
     - target: {fileID: 8548042471892639629, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
       propertyPath: m_Name
       value: CreditBronze (3)
@@ -6074,6 +6206,22 @@ PrefabInstance:
       propertyPath: coinCount
       value: 
       objectReference: {fileID: 1296113582}
+    - target: {fileID: 5417904623445847085, guid: c56cd40241c1cc244ab20c8c53e34574, type: 3}
+      propertyPath: soundService
+      value: 
+      objectReference: {fileID: 2094354374}
+    - target: {fileID: 5417904623445847085, guid: c56cd40241c1cc244ab20c8c53e34574, type: 3}
+      propertyPath: Audio_CoinGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: a4ca955298f45254286aedd20df176ca, type: 3}
+    - target: {fileID: 5417904623445847085, guid: c56cd40241c1cc244ab20c8c53e34574, type: 3}
+      propertyPath: Audio_ChargeGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: 385973edae993ac49a03b2b9cce8ba4e, type: 3}
+    - target: {fileID: 5417904623445847085, guid: c56cd40241c1cc244ab20c8c53e34574, type: 3}
+      propertyPath: Audio_ShovelPickup
+      value: 
+      objectReference: {fileID: 8300000, guid: 303d5647e770b924eaf6d79fe052167e, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6135,6 +6283,22 @@ PrefabInstance:
       propertyPath: coinCount
       value: 
       objectReference: {fileID: 1296113582}
+    - target: {fileID: 5647670503915516965, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
+      propertyPath: soundService
+      value: 
+      objectReference: {fileID: 2094354374}
+    - target: {fileID: 5647670503915516965, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
+      propertyPath: Audio_CoinGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: a4ca955298f45254286aedd20df176ca, type: 3}
+    - target: {fileID: 5647670503915516965, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
+      propertyPath: Audio_ChargeGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: 385973edae993ac49a03b2b9cce8ba4e, type: 3}
+    - target: {fileID: 5647670503915516965, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
+      propertyPath: Audio_ShovelPickup
+      value: 
+      objectReference: {fileID: 8300000, guid: 303d5647e770b924eaf6d79fe052167e, type: 3}
     - target: {fileID: 8548042471892639629, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
       propertyPath: m_Name
       value: CreditBronze (9)
@@ -6397,7 +6561,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -786, y: -23}
+  m_AnchoredPosition: {x: -786.0001, y: -23}
   m_SizeDelta: {x: -1666.3, y: -347.7801}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &995325159
@@ -6547,6 +6711,22 @@ PrefabInstance:
       propertyPath: coinCount
       value: 
       objectReference: {fileID: 1296113582}
+    - target: {fileID: 1540574963383222095, guid: 66ca7dce8b6a7c647ac072ef50f64395, type: 3}
+      propertyPath: soundService
+      value: 
+      objectReference: {fileID: 2094354374}
+    - target: {fileID: 1540574963383222095, guid: 66ca7dce8b6a7c647ac072ef50f64395, type: 3}
+      propertyPath: Audio_CoinGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: a4ca955298f45254286aedd20df176ca, type: 3}
+    - target: {fileID: 1540574963383222095, guid: 66ca7dce8b6a7c647ac072ef50f64395, type: 3}
+      propertyPath: Audio_ChargeGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: 385973edae993ac49a03b2b9cce8ba4e, type: 3}
+    - target: {fileID: 1540574963383222095, guid: 66ca7dce8b6a7c647ac072ef50f64395, type: 3}
+      propertyPath: Audio_ShovelPickup
+      value: 
+      objectReference: {fileID: 8300000, guid: 303d5647e770b924eaf6d79fe052167e, type: 3}
     - target: {fileID: 5014946650363464656, guid: 66ca7dce8b6a7c647ac072ef50f64395, type: 3}
       propertyPath: m_Name
       value: CreditSilver (2)
@@ -6652,6 +6832,22 @@ PrefabInstance:
       propertyPath: coinCount
       value: 
       objectReference: {fileID: 1296113582}
+    - target: {fileID: 5647670503915516965, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
+      propertyPath: soundService
+      value: 
+      objectReference: {fileID: 2094354374}
+    - target: {fileID: 5647670503915516965, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
+      propertyPath: Audio_CoinGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: a4ca955298f45254286aedd20df176ca, type: 3}
+    - target: {fileID: 5647670503915516965, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
+      propertyPath: Audio_ChargeGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: 385973edae993ac49a03b2b9cce8ba4e, type: 3}
+    - target: {fileID: 5647670503915516965, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
+      propertyPath: Audio_ShovelPickup
+      value: 
+      objectReference: {fileID: 8300000, guid: 303d5647e770b924eaf6d79fe052167e, type: 3}
     - target: {fileID: 8548042471892639629, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
       propertyPath: m_Name
       value: CreditBronze
@@ -7554,6 +7750,22 @@ PrefabInstance:
       propertyPath: coinCount
       value: 
       objectReference: {fileID: 1296113582}
+    - target: {fileID: 5417904623445847085, guid: c56cd40241c1cc244ab20c8c53e34574, type: 3}
+      propertyPath: soundService
+      value: 
+      objectReference: {fileID: 2094354374}
+    - target: {fileID: 5417904623445847085, guid: c56cd40241c1cc244ab20c8c53e34574, type: 3}
+      propertyPath: Audio_CoinGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: a4ca955298f45254286aedd20df176ca, type: 3}
+    - target: {fileID: 5417904623445847085, guid: c56cd40241c1cc244ab20c8c53e34574, type: 3}
+      propertyPath: Audio_ChargeGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: 385973edae993ac49a03b2b9cce8ba4e, type: 3}
+    - target: {fileID: 5417904623445847085, guid: c56cd40241c1cc244ab20c8c53e34574, type: 3}
+      propertyPath: Audio_ShovelPickup
+      value: 
+      objectReference: {fileID: 8300000, guid: 303d5647e770b924eaf6d79fe052167e, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8088,6 +8300,22 @@ PrefabInstance:
       propertyPath: coinCount
       value: 
       objectReference: {fileID: 1296113582}
+    - target: {fileID: 5647670503915516965, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
+      propertyPath: soundService
+      value: 
+      objectReference: {fileID: 2094354374}
+    - target: {fileID: 5647670503915516965, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
+      propertyPath: Audio_CoinGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: a4ca955298f45254286aedd20df176ca, type: 3}
+    - target: {fileID: 5647670503915516965, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
+      propertyPath: Audio_ChargeGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: 385973edae993ac49a03b2b9cce8ba4e, type: 3}
+    - target: {fileID: 5647670503915516965, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
+      propertyPath: Audio_ShovelPickup
+      value: 
+      objectReference: {fileID: 8300000, guid: 303d5647e770b924eaf6d79fe052167e, type: 3}
     - target: {fileID: 8548042471892639629, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
       propertyPath: m_Name
       value: CreditBronze (8)
@@ -8821,6 +9049,22 @@ PrefabInstance:
       propertyPath: coinCount
       value: 
       objectReference: {fileID: 1296113582}
+    - target: {fileID: 5647670503915516965, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
+      propertyPath: soundService
+      value: 
+      objectReference: {fileID: 2094354374}
+    - target: {fileID: 5647670503915516965, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
+      propertyPath: Audio_CoinGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: a4ca955298f45254286aedd20df176ca, type: 3}
+    - target: {fileID: 5647670503915516965, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
+      propertyPath: Audio_ChargeGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: 385973edae993ac49a03b2b9cce8ba4e, type: 3}
+    - target: {fileID: 5647670503915516965, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
+      propertyPath: Audio_ShovelPickup
+      value: 
+      objectReference: {fileID: 8300000, guid: 303d5647e770b924eaf6d79fe052167e, type: 3}
     - target: {fileID: 8548042471892639629, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
       propertyPath: m_Name
       value: CreditBronze (7)
@@ -8890,6 +9134,22 @@ PrefabInstance:
       propertyPath: coinCount
       value: 
       objectReference: {fileID: 1296113582}
+    - target: {fileID: 5417904623445847085, guid: c56cd40241c1cc244ab20c8c53e34574, type: 3}
+      propertyPath: soundService
+      value: 
+      objectReference: {fileID: 2094354374}
+    - target: {fileID: 5417904623445847085, guid: c56cd40241c1cc244ab20c8c53e34574, type: 3}
+      propertyPath: Audio_CoinGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: a4ca955298f45254286aedd20df176ca, type: 3}
+    - target: {fileID: 5417904623445847085, guid: c56cd40241c1cc244ab20c8c53e34574, type: 3}
+      propertyPath: Audio_ChargeGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: 385973edae993ac49a03b2b9cce8ba4e, type: 3}
+    - target: {fileID: 5417904623445847085, guid: c56cd40241c1cc244ab20c8c53e34574, type: 3}
+      propertyPath: Audio_ShovelPickup
+      value: 
+      objectReference: {fileID: 8300000, guid: 303d5647e770b924eaf6d79fe052167e, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9759,6 +10019,22 @@ PrefabInstance:
       propertyPath: astro
       value: 
       objectReference: {fileID: 2042298260}
+    - target: {fileID: 7316337508072727941, guid: 6588d6bca51d80f4bb9230e6d654dde6, type: 3}
+      propertyPath: soundService
+      value: 
+      objectReference: {fileID: 2094354374}
+    - target: {fileID: 7316337508072727941, guid: 6588d6bca51d80f4bb9230e6d654dde6, type: 3}
+      propertyPath: Audio_CoinGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: a4ca955298f45254286aedd20df176ca, type: 3}
+    - target: {fileID: 7316337508072727941, guid: 6588d6bca51d80f4bb9230e6d654dde6, type: 3}
+      propertyPath: Audio_ChargeGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: 385973edae993ac49a03b2b9cce8ba4e, type: 3}
+    - target: {fileID: 7316337508072727941, guid: 6588d6bca51d80f4bb9230e6d654dde6, type: 3}
+      propertyPath: Audio_ShovelPickup
+      value: 
+      objectReference: {fileID: 8300000, guid: 303d5647e770b924eaf6d79fe052167e, type: 3}
     - target: {fileID: 8916429154709939866, guid: 6588d6bca51d80f4bb9230e6d654dde6, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -10594,6 +10870,22 @@ PrefabInstance:
       propertyPath: astro
       value: 
       objectReference: {fileID: 2042298260}
+    - target: {fileID: 7316337508072727941, guid: 6588d6bca51d80f4bb9230e6d654dde6, type: 3}
+      propertyPath: soundService
+      value: 
+      objectReference: {fileID: 2094354374}
+    - target: {fileID: 7316337508072727941, guid: 6588d6bca51d80f4bb9230e6d654dde6, type: 3}
+      propertyPath: Audio_CoinGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: a4ca955298f45254286aedd20df176ca, type: 3}
+    - target: {fileID: 7316337508072727941, guid: 6588d6bca51d80f4bb9230e6d654dde6, type: 3}
+      propertyPath: Audio_ChargeGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: 385973edae993ac49a03b2b9cce8ba4e, type: 3}
+    - target: {fileID: 7316337508072727941, guid: 6588d6bca51d80f4bb9230e6d654dde6, type: 3}
+      propertyPath: Audio_ShovelPickup
+      value: 
+      objectReference: {fileID: 8300000, guid: 303d5647e770b924eaf6d79fe052167e, type: 3}
     - target: {fileID: 8916429154709939866, guid: 6588d6bca51d80f4bb9230e6d654dde6, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -11034,6 +11326,22 @@ PrefabInstance:
       propertyPath: astro
       value: 
       objectReference: {fileID: 2042298260}
+    - target: {fileID: 7316337508072727941, guid: 6588d6bca51d80f4bb9230e6d654dde6, type: 3}
+      propertyPath: soundService
+      value: 
+      objectReference: {fileID: 2094354374}
+    - target: {fileID: 7316337508072727941, guid: 6588d6bca51d80f4bb9230e6d654dde6, type: 3}
+      propertyPath: Audio_CoinGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: a4ca955298f45254286aedd20df176ca, type: 3}
+    - target: {fileID: 7316337508072727941, guid: 6588d6bca51d80f4bb9230e6d654dde6, type: 3}
+      propertyPath: Audio_ChargeGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: 385973edae993ac49a03b2b9cce8ba4e, type: 3}
+    - target: {fileID: 7316337508072727941, guid: 6588d6bca51d80f4bb9230e6d654dde6, type: 3}
+      propertyPath: Audio_ShovelPickup
+      value: 
+      objectReference: {fileID: 8300000, guid: 303d5647e770b924eaf6d79fe052167e, type: 3}
     - target: {fileID: 8916429154709939866, guid: 6588d6bca51d80f4bb9230e6d654dde6, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -11520,6 +11828,22 @@ PrefabInstance:
       propertyPath: coinCount
       value: 
       objectReference: {fileID: 1296113582}
+    - target: {fileID: 5647670503915516965, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
+      propertyPath: soundService
+      value: 
+      objectReference: {fileID: 2094354374}
+    - target: {fileID: 5647670503915516965, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
+      propertyPath: Audio_CoinGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: a4ca955298f45254286aedd20df176ca, type: 3}
+    - target: {fileID: 5647670503915516965, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
+      propertyPath: Audio_ChargeGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: 385973edae993ac49a03b2b9cce8ba4e, type: 3}
+    - target: {fileID: 5647670503915516965, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
+      propertyPath: Audio_ShovelPickup
+      value: 
+      objectReference: {fileID: 8300000, guid: 303d5647e770b924eaf6d79fe052167e, type: 3}
     - target: {fileID: 8548042471892639629, guid: ba6b3441ba62e20428e767f2a153644b, type: 3}
       propertyPath: m_Name
       value: CreditBronze (1)
@@ -11706,6 +12030,22 @@ PrefabInstance:
       propertyPath: coinCount
       value: 
       objectReference: {fileID: 1296113582}
+    - target: {fileID: 1540574963383222095, guid: 66ca7dce8b6a7c647ac072ef50f64395, type: 3}
+      propertyPath: soundService
+      value: 
+      objectReference: {fileID: 2094354374}
+    - target: {fileID: 1540574963383222095, guid: 66ca7dce8b6a7c647ac072ef50f64395, type: 3}
+      propertyPath: Audio_CoinGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: a4ca955298f45254286aedd20df176ca, type: 3}
+    - target: {fileID: 1540574963383222095, guid: 66ca7dce8b6a7c647ac072ef50f64395, type: 3}
+      propertyPath: Audio_ChargeGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: 385973edae993ac49a03b2b9cce8ba4e, type: 3}
+    - target: {fileID: 1540574963383222095, guid: 66ca7dce8b6a7c647ac072ef50f64395, type: 3}
+      propertyPath: Audio_ShovelPickup
+      value: 
+      objectReference: {fileID: 8300000, guid: 303d5647e770b924eaf6d79fe052167e, type: 3}
     - target: {fileID: 5014946650363464656, guid: 66ca7dce8b6a7c647ac072ef50f64395, type: 3}
       propertyPath: m_Name
       value: CreditSilver (4)
@@ -12436,6 +12776,22 @@ PrefabInstance:
       propertyPath: coinCount
       value: 
       objectReference: {fileID: 1296113582}
+    - target: {fileID: 1540574963383222095, guid: 66ca7dce8b6a7c647ac072ef50f64395, type: 3}
+      propertyPath: soundService
+      value: 
+      objectReference: {fileID: 2094354374}
+    - target: {fileID: 1540574963383222095, guid: 66ca7dce8b6a7c647ac072ef50f64395, type: 3}
+      propertyPath: Audio_CoinGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: a4ca955298f45254286aedd20df176ca, type: 3}
+    - target: {fileID: 1540574963383222095, guid: 66ca7dce8b6a7c647ac072ef50f64395, type: 3}
+      propertyPath: Audio_ChargeGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: 385973edae993ac49a03b2b9cce8ba4e, type: 3}
+    - target: {fileID: 1540574963383222095, guid: 66ca7dce8b6a7c647ac072ef50f64395, type: 3}
+      propertyPath: Audio_ShovelPickup
+      value: 
+      objectReference: {fileID: 8300000, guid: 303d5647e770b924eaf6d79fe052167e, type: 3}
     - target: {fileID: 5014946650363464656, guid: 66ca7dce8b6a7c647ac072ef50f64395, type: 3}
       propertyPath: m_Name
       value: CreditSilver (3)
@@ -13337,6 +13693,8 @@ MonoBehaviour:
   Select: {fileID: 2096752107}
   selection: 1
   upgrade: {fileID: 1721300291}
+  soundService: {fileID: 2094354374}
+  Audio_MenuTraversal: {fileID: 8300000, guid: b193fdba5e8e6f74ab726885a1e34352, type: 3}
   currentState: 1
 --- !u!1001 &1912829801
 PrefabInstance:
@@ -13471,6 +13829,22 @@ PrefabInstance:
       propertyPath: coinCount
       value: 
       objectReference: {fileID: 1296113582}
+    - target: {fileID: 5417904623445847085, guid: c56cd40241c1cc244ab20c8c53e34574, type: 3}
+      propertyPath: soundService
+      value: 
+      objectReference: {fileID: 2094354374}
+    - target: {fileID: 5417904623445847085, guid: c56cd40241c1cc244ab20c8c53e34574, type: 3}
+      propertyPath: Audio_CoinGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: a4ca955298f45254286aedd20df176ca, type: 3}
+    - target: {fileID: 5417904623445847085, guid: c56cd40241c1cc244ab20c8c53e34574, type: 3}
+      propertyPath: Audio_ChargeGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: 385973edae993ac49a03b2b9cce8ba4e, type: 3}
+    - target: {fileID: 5417904623445847085, guid: c56cd40241c1cc244ab20c8c53e34574, type: 3}
+      propertyPath: Audio_ShovelPickup
+      value: 
+      objectReference: {fileID: 8300000, guid: 303d5647e770b924eaf6d79fe052167e, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -13980,6 +14354,22 @@ PrefabInstance:
       propertyPath: coinCount
       value: 
       objectReference: {fileID: 1296113582}
+    - target: {fileID: 5417904623445847085, guid: c56cd40241c1cc244ab20c8c53e34574, type: 3}
+      propertyPath: soundService
+      value: 
+      objectReference: {fileID: 2094354374}
+    - target: {fileID: 5417904623445847085, guid: c56cd40241c1cc244ab20c8c53e34574, type: 3}
+      propertyPath: Audio_CoinGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: a4ca955298f45254286aedd20df176ca, type: 3}
+    - target: {fileID: 5417904623445847085, guid: c56cd40241c1cc244ab20c8c53e34574, type: 3}
+      propertyPath: Audio_ChargeGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: 385973edae993ac49a03b2b9cce8ba4e, type: 3}
+    - target: {fileID: 5417904623445847085, guid: c56cd40241c1cc244ab20c8c53e34574, type: 3}
+      propertyPath: Audio_ShovelPickup
+      value: 
+      objectReference: {fileID: 8300000, guid: 303d5647e770b924eaf6d79fe052167e, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -14275,6 +14665,22 @@ PrefabInstance:
       propertyPath: astro
       value: 
       objectReference: {fileID: 2042298260}
+    - target: {fileID: 7316337508072727941, guid: 6588d6bca51d80f4bb9230e6d654dde6, type: 3}
+      propertyPath: soundService
+      value: 
+      objectReference: {fileID: 2094354374}
+    - target: {fileID: 7316337508072727941, guid: 6588d6bca51d80f4bb9230e6d654dde6, type: 3}
+      propertyPath: Audio_CoinGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: a4ca955298f45254286aedd20df176ca, type: 3}
+    - target: {fileID: 7316337508072727941, guid: 6588d6bca51d80f4bb9230e6d654dde6, type: 3}
+      propertyPath: Audio_ChargeGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: 385973edae993ac49a03b2b9cce8ba4e, type: 3}
+    - target: {fileID: 7316337508072727941, guid: 6588d6bca51d80f4bb9230e6d654dde6, type: 3}
+      propertyPath: Audio_ShovelPickup
+      value: 
+      objectReference: {fileID: 8300000, guid: 303d5647e770b924eaf6d79fe052167e, type: 3}
     - target: {fileID: 8916429154709939866, guid: 6588d6bca51d80f4bb9230e6d654dde6, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -15643,6 +16049,22 @@ PrefabInstance:
       propertyPath: astro
       value: 
       objectReference: {fileID: 2042298260}
+    - target: {fileID: 7316337508072727941, guid: 6588d6bca51d80f4bb9230e6d654dde6, type: 3}
+      propertyPath: soundService
+      value: 
+      objectReference: {fileID: 2094354374}
+    - target: {fileID: 7316337508072727941, guid: 6588d6bca51d80f4bb9230e6d654dde6, type: 3}
+      propertyPath: Audio_CoinGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: a4ca955298f45254286aedd20df176ca, type: 3}
+    - target: {fileID: 7316337508072727941, guid: 6588d6bca51d80f4bb9230e6d654dde6, type: 3}
+      propertyPath: Audio_ChargeGrab
+      value: 
+      objectReference: {fileID: 8300000, guid: 385973edae993ac49a03b2b9cce8ba4e, type: 3}
+    - target: {fileID: 7316337508072727941, guid: 6588d6bca51d80f4bb9230e6d654dde6, type: 3}
+      propertyPath: Audio_ShovelPickup
+      value: 
+      objectReference: {fileID: 8300000, guid: 303d5647e770b924eaf6d79fe052167e, type: 3}
     - target: {fileID: 8916429154709939866, guid: 6588d6bca51d80f4bb9230e6d654dde6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.73
@@ -15915,9 +16337,25 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8037824590207302465, guid: 3f8657c7bb6333f48a28943aae3257cb, type: 3}
+      propertyPath: soundService
+      value: 
+      objectReference: {fileID: 2094354374}
+    - target: {fileID: 8037824590207302465, guid: 3f8657c7bb6333f48a28943aae3257cb, type: 3}
+      propertyPath: Sound_SideMenu
+      value: 
+      objectReference: {fileID: 8300000, guid: 8dc50f126e4808c4ab17b8d3a55ef96a, type: 3}
+    - target: {fileID: 8037824590207302465, guid: 3f8657c7bb6333f48a28943aae3257cb, type: 3}
       propertyPath: interactables.Array.size
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 8037824590207302465, guid: 3f8657c7bb6333f48a28943aae3257cb, type: 3}
+      propertyPath: Sound_OpenShopInteraction
+      value: 
+      objectReference: {fileID: 8300000, guid: 3a825b58a712a1243ba93cf01b1d8d6d, type: 3}
+    - target: {fileID: 8037824590207302465, guid: 3f8657c7bb6333f48a28943aae3257cb, type: 3}
+      propertyPath: Sound_OpenDialogInteraction
+      value: 
+      objectReference: {fileID: 8300000, guid: 26c48e20300e466438ece42bcf1c6259, type: 3}
     - target: {fileID: 8037824590207302465, guid: 3f8657c7bb6333f48a28943aae3257cb, type: 3}
       propertyPath: interactables.Array.data[0]
       value: 
