@@ -5,6 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class ChangeState : MonoBehaviour
 {
+    public void ToOnboarding()
+    {
+        SceneManager.LoadScene("Onboarding");
+    }
+
     public void ToPlanet()
     {
         SceneManager.LoadScene("Planet");

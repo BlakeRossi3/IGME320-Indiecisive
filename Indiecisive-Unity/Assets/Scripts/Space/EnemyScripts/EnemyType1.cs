@@ -24,8 +24,7 @@ public class EnemyType1 : Enemy
     [SerializeField]
     protected float seekWeight; // how strong the forces of the points to seek are
 
-    [SerializeField]
-    protected bool spawnedByManager; // enables / disables things depenent on an enemy manager
+    public bool onScreen;
 
     protected override void CalcSteeringForces()
     {
@@ -33,10 +32,10 @@ public class EnemyType1 : Enemy
         if (transform.position.x >= ScreenMin.x &&
            transform.position.x <= ScreenMax.x &&
            transform.position.y <= ScreenMin.y + 0.25f &&
-           transform.position.y >= ScreenMax.y &&
-           spawnedByManager)
+           transform.position.y >= ScreenMax.y)
         {
             firingEnabled = true;
+            onScreen = true;
         }
         else
         {
@@ -78,6 +77,11 @@ public class EnemyType1 : Enemy
             newBullet.SetActive(true);
             fireCooldown = fireDelay;
         }
+    }
+
+    protected override void SetHealth()
+    {
+        currentHP = 2;
     }
 
     private void MovementOnScreen()

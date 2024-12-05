@@ -9,7 +9,7 @@ public class GameStart : MonoBehaviour
     {
         //Initializes the initial stats for the player that have to be carried over between planet and space
         PlayerPrefs.SetInt("credits", 0);
-        PlayerPrefs.SetInt("charge", 0);
+        PlayerPrefs.SetInt("charge", 100);
 
         PlayerPrefs.SetInt("laserLevel", 1);
         PlayerPrefs.SetInt("shieldLevel", 1);

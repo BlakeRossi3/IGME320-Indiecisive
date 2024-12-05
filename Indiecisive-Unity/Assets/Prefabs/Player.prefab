@@ -108,6 +108,20 @@ MonoBehaviour:
   special: 2
   specialStatus: {fileID: 0}
   shieldStatus: {fileID: 0}
+  source0: {fileID: 0}
+  source1: {fileID: 0}
+  source2: {fileID: 0}
+  source3: {fileID: 0}
+  source4: {fileID: 0}
+  source5: {fileID: 0}
+  source6: {fileID: 0}
+  source7: {fileID: 0}
+  source8: {fileID: 0}
+  source9: {fileID: 0}
+  bulletClip: {fileID: 0}
+  shieldClip: {fileID: 0}
+  specialClip: {fileID: 0}
+  damageClip: {fileID: 0}
 --- !u!50 &8149425309282295338
 Rigidbody2D:
   serializedVersion: 4
