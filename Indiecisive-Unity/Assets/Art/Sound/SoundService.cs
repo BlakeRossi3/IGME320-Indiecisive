@@ -53,7 +53,7 @@ public class SoundService : MonoBehaviour
         }
 
     }
-    void playSound(AudioClip clip)
+    public void playSound(AudioClip clip)
     {
         for (int i = 0; i < AudioSourceArray.Length; ++i)
         {

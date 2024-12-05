@@ -19,12 +19,15 @@ public class Item : MonoBehaviour
 
     public int value;
 
+    [SerializeField] SoundService soundService;
+    [SerializeField] AudioClip Audio_ShovelPickup;
+    [SerializeField] AudioClip Audio_CoinGrab;
+    [SerializeField] AudioClip Audio_ChargeGrab;
 
 
     // Start is called before the first frame update
     void Start()
     {
-
         originalPosition = transform.position;
         if (isCoin)
         {
@@ -63,6 +66,7 @@ public class Item : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.C) && distanceToItem < pickUpRadius && !isCoin && !isCharge)  // Left mouse button clicked and on shovel
         {
+            soundService.playSound(Audio_ShovelPickup);
             gameObject.SetActive(false);
 
             InputController bag = astro.GetComponent<InputController>();
@@ -88,11 +92,13 @@ public class Item : MonoBehaviour
             InputController bag = astro.GetComponent<InputController>();
             if (isCoin)
             {
+                soundService.playSound(Audio_CoinGrab);
                 bag.coins += value;
             }
             else if (isCharge)
             {
-                bag.charge += 500;
+                soundService.playSound(Audio_ChargeGrab);
+                bag.charge += 25;
             }
 
         }

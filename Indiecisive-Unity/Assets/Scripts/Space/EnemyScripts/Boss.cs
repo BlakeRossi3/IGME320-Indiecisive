@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Android;
 
@@ -10,8 +12,8 @@ public class Boss : MonoBehaviour
     float fireCD2 = 3;
     float fireCD3 = 2;
 
-    //todo: tune this
-    float health = 100;
+    //todo: tune this (boss kinda dies stupid fast with rapid fire special,,,,)
+    float health = 500;
 
     //Boss parts
     private Rigidbody2D bossRB;
@@ -28,6 +30,10 @@ public class Boss : MonoBehaviour
     //Movement direction
     private bool moveLeft = false;
 
+    //borrowing the coin ui to show boss hp
+    [SerializeField]
+    private TextMeshProUGUI hpDisplay;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,7 +47,7 @@ public class Boss : MonoBehaviour
     {
         ShootBullets();
         movement();
-
+        Debug.Log(health);
     }
 
     private void ShootBullets()
@@ -55,7 +61,7 @@ public class Boss : MonoBehaviour
         if (fireCD1 <= 0)
         {
             //creates vector with randomized x value
-            Vector3 newVector = new Vector3(Random.Range(bossRB.position.x - 3, bossRB.position.x + 3), bossRB.position.y - 1, 1);
+            Vector3 newVector = new Vector3(UnityEngine.Random.Range(bossRB.position.x - 3, bossRB.position.x + 3), bossRB.position.y - 1, 1);
             //creates a new bullet at the enemy's position
             var newBullet = Instantiate(normalBullet, newVector, Quaternion.identity);
             newBullet.AddComponent<NormalBullet>();
@@ -68,7 +74,7 @@ public class Boss : MonoBehaviour
         if (fireCD2 <= 0)
         {
             //creates vector with randomized x value
-            Vector3 newVector = new Vector3(Random.Range(bossRB.position.x - 3, bossRB.position.x + 3), bossRB.position.y - 1, 1);
+            Vector3 newVector = new Vector3(UnityEngine.Random.Range(bossRB.position.x - 3, bossRB.position.x + 3), bossRB.position.y - 1, 1);
             //creates a new bullet at the enemy's position 
             var newBullet = Instantiate(spreadBullet, newVector, Quaternion.identity);
             newBullet.AddComponent<SpreadBullet>();
@@ -81,7 +87,7 @@ public class Boss : MonoBehaviour
         if (fireCD3 <= 0)
         {
             //creates vector with randomized x value
-            Vector3 newVector = new Vector3(Random.Range(bossRB.position.x - 3, bossRB.position.x + 3), bossRB.position.y - 1, 1);
+            Vector3 newVector = new Vector3(UnityEngine.Random.Range(bossRB.position.x - 3, bossRB.position.x + 3), bossRB.position.y - 1, 1);
             //creates a new bullet at the enemy's position 
             var newBullet = Instantiate(seekingBullet, newVector, Quaternion.identity);
             newBullet.AddComponent<SeekingBullet>();
@@ -130,7 +136,7 @@ public class Boss : MonoBehaviour
             health -= 1;
             //destroys bullet that hit the enemy
             Destroy(collision.gameObject);
-
+            hpDisplay.text = "Boss HP: " + health;
             //destroys the enemy if health is at 0
             if (health <= 0)
             {

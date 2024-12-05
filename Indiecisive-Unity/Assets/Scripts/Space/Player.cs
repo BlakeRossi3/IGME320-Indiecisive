@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
     int shieldLevel;
     int speedLevel;
     int specialLevel;
-
+    //TODO: adjust dmg of non rapid fire specials (higher dmg = more dmg to boss to account for discrepancy)
 
     //Manages the charge and credit counts
     public TextMeshProUGUI chargeText;
@@ -85,7 +85,11 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject specialStatus;
     [SerializeField]
+    private SpriteRenderer specialStatusSprite;
+    [SerializeField]
     private GameObject shieldStatus;
+    [SerializeField]
+    private SpriteRenderer shieldStatusSprite;
 
     //list of health display objects
     private List<GameObject> health = new List<GameObject>();
@@ -150,7 +154,7 @@ public class Player : MonoBehaviour
 
         //Displays bullet count and credit count
         chargeText.text = (": " + bulletCount);
-        coinText.text = (": " + creditCount);
+        //coinText.text = (": " + creditCount);
 
         //TODO: check active special and adjust timers/duration as needed
 
@@ -338,7 +342,9 @@ public class Player : MonoBehaviour
                 newBullet.AddComponent<Rigidbody2D>();
 
                 bulletCount--;
-                chargeText.text = (": " + bulletCount); 
+                chargeText.text = (": " + bulletCount);
+
+                playSound(bulletClip);
             }
         }
     }
@@ -356,6 +362,7 @@ public class Player : MonoBehaviour
                     if (Input.GetKeyDown(KeyCode.X) && specialCDTimer <= 0)
                     {
                         startSpecial();
+                        playSound(specialClip);
                     }
 
                     //updates object position
@@ -375,6 +382,7 @@ public class Player : MonoBehaviour
                     if (Input.GetKeyDown(KeyCode.X) && specialCDTimer <= 0)
                     {
                         startSpecial();
+                        playSound(specialClip);
                     }
 
                     if (specialActive)
@@ -412,6 +420,8 @@ public class Player : MonoBehaviour
                         newBullet2.AddComponent<PlayerBullet>();
                         newBullet2.AddComponent<BoxCollider2D>();
                         newBullet2.AddComponent<Rigidbody2D>();
+
+                        playSound(bulletClip);
                     }
 
                     //Automatically increments delay timer
@@ -447,10 +457,11 @@ public class Player : MonoBehaviour
         }
 
         //Deactivates "ready" indicator
-        specialStatus.SetActive(false);
+        //specialStatus.SetActive(false);
+        specialStatusSprite.color = Color.red;
     }
 
-    //Handles timer and activation forspecials
+    //Handles timer and activation for specials
     private void specialTimers()
     {
         if (specialActive)
@@ -480,7 +491,8 @@ public class Player : MonoBehaviour
         //If special is available, activates indicator
         if (specialCDTimer <= 0)
         {
-            specialStatus.SetActive(true);
+            //specialStatus.SetActive(true);
+            specialStatusSprite.color = Color.green;
         }
     }
 
@@ -494,9 +506,10 @@ public class Player : MonoBehaviour
             shieldActive = true;
             playerSprite.color = Color.blue;
             shieldCDTimer = shieldCD;
-
+            playSound(shieldClip);
             //hides "ready" indicator
-            shieldStatus.SetActive(false);
+            //shieldStatus.SetActive(false);
+            shieldStatusSprite.color = Color.red;
         }
 
         //handles shield timers
@@ -522,7 +535,8 @@ public class Player : MonoBehaviour
         //if shield is available, displays "ready" indicator
         if (shieldCDTimer <= 0)
         {
-            shieldStatus.SetActive(true);
+            //shieldStatus.SetActive(true);
+            shieldStatusSprite.color = Color.green; 
         }
     }
 
