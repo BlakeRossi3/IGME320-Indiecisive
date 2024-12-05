@@ -1378,7 +1378,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -2997,6 +2997,14 @@ PrefabInstance:
       propertyPath: specialStatus
       value: 
       objectReference: {fileID: 1298454685}
+    - target: {fileID: 4772400719935655383, guid: 614a32956712b4e459f0341936be313f, type: 3}
+      propertyPath: shieldStatusSprite
+      value: 
+      objectReference: {fileID: 6167991260103104034}
+    - target: {fileID: 4772400719935655383, guid: 614a32956712b4e459f0341936be313f, type: 3}
+      propertyPath: specialStatusSprite
+      value: 
+      objectReference: {fileID: 6119430158388731596}
     - target: {fileID: 8809097697411226655, guid: 614a32956712b4e459f0341936be313f, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.5
@@ -3140,11 +3148,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2673134817527875418, guid: 6b33af0191bf30b46aa00c4e02e4910d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.52
+      value: -5.55
       objectReference: {fileID: 0}
     - target: {fileID: 2673134817527875418, guid: 6b33af0191bf30b46aa00c4e02e4910d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.38
+      value: -3.94
       objectReference: {fileID: 0}
     - target: {fileID: 2673134817527875418, guid: 6b33af0191bf30b46aa00c4e02e4910d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3178,11 +3186,32 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5792464926659070727, guid: 6b33af0191bf30b46aa00c4e02e4910d, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 03c370c3eb7f95446b3ec50c274bfad7, type: 3}
+    - target: {fileID: 5792464926659070727, guid: 6b33af0191bf30b46aa00c4e02e4910d, type: 3}
+      propertyPath: m_Color.b
+      value: 0.22352941
+      objectReference: {fileID: 0}
+    - target: {fileID: 5792464926659070727, guid: 6b33af0191bf30b46aa00c4e02e4910d, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5792464926659070727, guid: 6b33af0191bf30b46aa00c4e02e4910d, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b33af0191bf30b46aa00c4e02e4910d, type: 3}
+--- !u!212 &6119430158388731596 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 5792464926659070727, guid: 6b33af0191bf30b46aa00c4e02e4910d, type: 3}
+  m_PrefabInstance: {fileID: 6119430158388731595}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6167991260103104033
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3197,7 +3226,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3166923724960591576, guid: e1e56989b375e5549aa73c3054234913, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.51
+      value: -3.94
       objectReference: {fileID: 0}
     - target: {fileID: 3166923724960591576, guid: e1e56989b375e5549aa73c3054234913, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3231,6 +3260,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5532825992624501838, guid: e1e56989b375e5549aa73c3054234913, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 7704ebf666279244db70dc7b322bbccf, type: 3}
+    - target: {fileID: 5532825992624501838, guid: e1e56989b375e5549aa73c3054234913, type: 3}
+      propertyPath: m_Color.b
+      value: 0.2239008
+      objectReference: {fileID: 0}
+    - target: {fileID: 5532825992624501838, guid: e1e56989b375e5549aa73c3054234913, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5532825992624501838, guid: e1e56989b375e5549aa73c3054234913, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7191335173658348080, guid: e1e56989b375e5549aa73c3054234913, type: 3}
       propertyPath: m_Name
       value: shieldStatus
@@ -3240,6 +3285,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1e56989b375e5549aa73c3054234913, type: 3}
+--- !u!212 &6167991260103104034 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 5532825992624501838, guid: e1e56989b375e5549aa73c3054234913, type: 3}
+  m_PrefabInstance: {fileID: 6167991260103104033}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7073666102131593675
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -98,7 +98,7 @@ public class Item : MonoBehaviour
             else if (isCharge)
             {
                 soundService.playSound(Audio_ChargeGrab);
-                bag.charge += 500;
+                bag.charge += 25;
             }
 
         }
