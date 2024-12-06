@@ -71,7 +71,7 @@ public class GameStart : MonoBehaviour
             }
             if (upgradeMeter.localScale.x > 1.79f)
             {
-                SceneManager.LoadScene("Planet");
+                SceneManager.LoadScene("Onboarding");
             }
         }
         else if(selection == 2)
