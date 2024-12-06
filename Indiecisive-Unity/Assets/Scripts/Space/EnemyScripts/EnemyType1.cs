@@ -24,6 +24,8 @@ public class EnemyType1 : Enemy
     [SerializeField]
     protected float seekWeight; // how strong the forces of the points to seek are
 
+    public bool onScreen;
+
     protected override void CalcSteeringForces()
     {
         // make enable things when the enemy is inside the screen
@@ -33,6 +35,7 @@ public class EnemyType1 : Enemy
            transform.position.y >= ScreenMax.y)
         {
             firingEnabled = true;
+            onScreen = true;
         }
         else
         {
@@ -76,6 +79,11 @@ public class EnemyType1 : Enemy
         }
     }
 
+    protected override void SetHealth()
+    {
+        currentHP = 2;
+    }
+
     private void MovementOnScreen()
     {
         seekPointCooldown -= Time.deltaTime;
@@ -88,15 +96,21 @@ public class EnemyType1 : Enemy
             stayOnScreenCooldown--;
         }
         TotalForce += Seek(targetPos) * seekWeight;
-        TotalForce += Separate();
+        if(spawnedByManager)
+        {
+            TotalForce += Separate();
+        }
         //TotalForce += StayInBoundsForce() * boundsWeight;
     }
 
     private void LeaveScreen()
     {
+        gameObject.tag = "FleeingEnemy";
+        fleeing = true;
         Vector3 exitPoint = new Vector3(0.0f, 5.0f, 0.0f);
         TotalForce = Flee(exitPoint);
-        maxSpeed += 2.0f * Time.fixedDeltaTime;
+        TotalForce += Flee(new Vector3(0.0f, -2.0f, 0.0f)) * 0.4f;
+        maxSpeed += 2.0f * Time.deltaTime;
         maxForce = 1.5f;
         enemyRB.freezeRotation = false;
         if (TotalForce != Vector3.zero)
@@ -104,8 +118,7 @@ public class EnemyType1 : Enemy
             transform.rotation = Quaternion.LookRotation(Vector3.forward, -TotalForce.normalized);
         }
         firingEnabled = false;
-        transform.localScale += new Vector3(-0.08f * Time.fixedDeltaTime, -0.08f * Time.fixedDeltaTime, 0.0f);
-        enemyBoxCollider.enabled = false;
+        transform.localScale += new Vector3(-0.2f * Time.deltaTime, -0.2f * Time.deltaTime, 0.0f);
 
         // attempt at a rotation change will look at later
         enemyRB.rotation = Mathf.Atan(Vector3.Normalize(TotalForce).x / Vector3.Normalize(TotalForce).y);

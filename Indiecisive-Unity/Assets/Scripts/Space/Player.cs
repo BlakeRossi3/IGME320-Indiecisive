@@ -85,7 +85,11 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject specialStatus;
     [SerializeField]
+    private SpriteRenderer specialStatusSprite;
+    [SerializeField]
     private GameObject shieldStatus;
+    [SerializeField]
+    private SpriteRenderer shieldStatusSprite;
 
     //list of health display objects
     private List<GameObject> health = new List<GameObject>();
@@ -150,7 +154,7 @@ public class Player : MonoBehaviour
 
         //Displays bullet count and credit count
         chargeText.text = (": " + bulletCount);
-        coinText.text = (": " + creditCount);
+        //coinText.text = (": " + creditCount);
 
         //TODO: check active special and adjust timers/duration as needed
 
@@ -453,10 +457,11 @@ public class Player : MonoBehaviour
         }
 
         //Deactivates "ready" indicator
-        specialStatus.SetActive(false);
+        //specialStatus.SetActive(false);
+        specialStatusSprite.color = Color.red;
     }
 
-    //Handles timer and activation forspecials
+    //Handles timer and activation for specials
     private void specialTimers()
     {
         if (specialActive)
@@ -486,7 +491,8 @@ public class Player : MonoBehaviour
         //If special is available, activates indicator
         if (specialCDTimer <= 0)
         {
-            specialStatus.SetActive(true);
+            //specialStatus.SetActive(true);
+            specialStatusSprite.color = Color.green;
         }
     }
 
@@ -502,7 +508,8 @@ public class Player : MonoBehaviour
             shieldCDTimer = shieldCD;
             playSound(shieldClip);
             //hides "ready" indicator
-            shieldStatus.SetActive(false);
+            //shieldStatus.SetActive(false);
+            shieldStatusSprite.color = Color.red;
         }
 
         //handles shield timers
@@ -528,7 +535,8 @@ public class Player : MonoBehaviour
         //if shield is available, displays "ready" indicator
         if (shieldCDTimer <= 0)
         {
-            shieldStatus.SetActive(true);
+            //shieldStatus.SetActive(true);
+            shieldStatusSprite.color = Color.green; 
         }
     }
 

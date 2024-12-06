@@ -68,6 +68,10 @@ public class GameManager : MonoBehaviour
     public GameObject bossMeter;
 
 
+    // Sounds wow very cool man
+    [SerializeField] SoundService soundService;
+    [SerializeField] AudioClip Audio_MenuTraversal;
+
     void Start()
     {
 
@@ -272,10 +276,12 @@ public class GameManager : MonoBehaviour
                     //move selection via arrow keys
                     if (Input.GetKeyDown(KeyCode.DownArrow) && selection < 4)
                     {
+                        soundService.playSound(Audio_MenuTraversal);
                         selection++;
                     }
                     else if (Input.GetKeyDown(KeyCode.UpArrow) && selection > 1)
                     {
+                        soundService.playSound(Audio_MenuTraversal);
                         selection--;
                     }
 

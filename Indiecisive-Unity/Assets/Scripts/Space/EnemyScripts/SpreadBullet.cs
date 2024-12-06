@@ -41,7 +41,7 @@ public class SpreadBullet : MonoBehaviour
         initSpeed = speed;
 
         // sets a random decceleration for varying heights of explosion
-        decceleration = Random.Range(1.5f, 1.8f) * Time.fixedDeltaTime;
+        decceleration = Random.Range(3.5f, 4.8f) * Time.deltaTime;
     }
 
     // Update is called once per frame

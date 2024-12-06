@@ -31,6 +31,9 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField]
     protected GameObject player;
 
+    [SerializeField]
+    protected bool spawnedByManager; // enables / disables things depenent on an enemy manager
+
     protected Rigidbody2D enemyRB;
     protected BoxCollider2D enemyBoxCollider;
     protected Vector3 TotalForce = Vector3.zero;
@@ -43,14 +46,14 @@ public abstract class Enemy : MonoBehaviour
     private Vector3 screenMin = Vector3.zero;
 
     //TODO: placeholder hp
-    protected float currentHP = 1f;
+    protected float currentHP = 2f;
     protected float maxHP = 2f;
+    protected bool fleeing = false;
     private float flashPause = 0.1f;
 
     public float FireDelay { get { return fireDelay; } set { fireDelay = value; } }
     public Vector3 ScreenMax { get { return screenMax; } }
     public Vector3 ScreenMin { get { return screenMin; } }
-
     // Start is called before the first frame update
     void Start()
     {
@@ -68,6 +71,8 @@ public abstract class Enemy : MonoBehaviour
         cameraSize.x = cameraSize.y * Camera.main.aspect;
         screenMin = new Vector3(-(cameraSize.x / 2), cameraSize.y / 2, 0);
         screenMax = new Vector3(cameraSize.x / 2, -(cameraSize.y / 2), 0);
+
+        SetHealth();
     }
 
     // Update is called once per frame
@@ -87,10 +92,11 @@ public abstract class Enemy : MonoBehaviour
 
         if(enemySprite.color == Color.red)
         {
-            flashPause -= 0.1f * Time.fixedDeltaTime;
+            flashPause -= 0.5f * Time.deltaTime;
             if(flashPause <= 0.0f)
             {
                 enemySprite.color = Color.white;
+                flashPause = 0.1f;
             }
         }
     }
@@ -98,6 +104,8 @@ public abstract class Enemy : MonoBehaviour
     protected abstract void CalcSteeringForces();
 
     protected abstract void ShootBullets();
+
+    protected abstract void SetHealth();
 
     /// <summary>
     /// Sets the direction of the velocity to the direction of targetPos
@@ -155,7 +163,7 @@ public abstract class Enemy : MonoBehaviour
     {
         // Sum of all flee forces to separate
         Vector3 separateForce = Vector3.zero;
-
+        
         if(manager.Enemies.Count > 1)
         {
             // Go through all agents
@@ -242,23 +250,23 @@ public abstract class Enemy : MonoBehaviour
         //checks bullet type with tag
         if (collision.gameObject.CompareTag("PlayerBullet"))
         {
+            // this will flash due to the code in update
+            enemySprite.color = Color.red;
             currentHP -= 1;
             //destroys bullet that hit the enemy
             Destroy(collision.gameObject);
-
-            //destroys the enemy if health is at 0
-            if (currentHP <= 0)
-            {
-                Destroy(gameObject);
-                manager.Enemies.Remove(this);
-            }
         }
 
-        // feedback for collision with enemy
-        if (collision.gameObject.CompareTag("Player"))
+        // if the enemy is fleeing the screen, don't allow collisions with the player
+        if(!fleeing)
         {
-            // this will flash due to the code in update
-            enemySprite.color = Color.red;
+            // feedback for collision with enemy
+            if (collision.gameObject.CompareTag("Player"))
+            {
+                // this will flash due to the code in update
+                enemySprite.color = Color.red;
+                currentHP -= 1;
+            }
         }
 
         //hi this is Julia adding code to enemy again
@@ -267,13 +275,13 @@ public abstract class Enemy : MonoBehaviour
         if (collision.gameObject.CompareTag("PlayerSpecial"))
         {
             currentHP -= 1;
+        }
 
-            //destroys the enemy if health is at 0
-            if (currentHP <= 0)
-            {
-                Destroy(gameObject);
-                manager.Enemies.Remove(this);
-            }
+        //destroys the enemy if health is at 0
+        if (currentHP <= 0)
+        {
+            Destroy(gameObject);
+            if(spawnedByManager) { manager.Enemies.Remove(this); }
         }
     }
 }

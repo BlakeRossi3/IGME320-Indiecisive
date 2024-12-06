@@ -123,4 +123,9 @@ public class EnemyType3 : Enemy
             fireCooldown = fireDelay;
         }
     }
+
+    protected override void SetHealth()
+    {
+        currentHP = 4;
+    }
 }

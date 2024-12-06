@@ -42,6 +42,13 @@ public class InputController : MonoBehaviour
 
     //animator = GetComponent<Animator>();
 
+    // Sounds
+    [SerializeField] SoundService soundService;
+
+    [SerializeField] AudioClip Sound_SideMenu;
+    [SerializeField] AudioClip Sound_OpenDialogInteraction;
+    [SerializeField] AudioClip Sound_OpenShopInteraction;
+
     void Start()
     {
         uiPanel.SetActive(false);
@@ -75,6 +82,7 @@ public class InputController : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Z))
         {
             SideMenuToggle();
+            soundService.playSound(Sound_SideMenu);
         }
 
        
@@ -289,6 +297,7 @@ public class InputController : MonoBehaviour
         NPC npcComponent = interactables[type].GetComponent<NPC>();
         if (npcComponent != null)
         {
+            soundService.playSound(Sound_OpenDialogInteraction);
             npcComponent.moveSpeed = 0;
             
         }
