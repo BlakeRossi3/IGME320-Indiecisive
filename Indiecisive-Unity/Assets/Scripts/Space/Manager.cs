@@ -129,11 +129,11 @@ public class Manager : MonoBehaviour
 
             if (playerText.i == 10)
             {
-                shieldStatus.transform.position = new Vector3(-4.66f, -3.51f, 0.0f);
+                shieldStatus.transform.position = new Vector3(-4.66f, -3.94f, 0.0f);
             }
             if (playerText.i == 11)
             {
-                specialStatus.transform.position = new Vector3(-5.52f, -3.38f, 0.0f);
+                specialStatus.transform.position = new Vector3(-5.55f, -3.94f, 0.0f);
             }
 
             if (enemyType2 != null)
