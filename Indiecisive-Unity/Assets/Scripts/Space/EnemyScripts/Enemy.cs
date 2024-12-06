@@ -250,6 +250,8 @@ public abstract class Enemy : MonoBehaviour
         //checks bullet type with tag
         if (collision.gameObject.CompareTag("PlayerBullet"))
         {
+            // this will flash due to the code in update
+            enemySprite.color = Color.red;
             currentHP -= 1;
             //destroys bullet that hit the enemy
             Destroy(collision.gameObject);

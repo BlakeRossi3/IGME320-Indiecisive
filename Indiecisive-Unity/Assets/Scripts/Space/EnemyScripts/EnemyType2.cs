@@ -91,7 +91,7 @@ public class EnemyType2 : Enemy
 
     protected override void SetHealth()
     {
-        currentHP = 4;
+        currentHP = 3;
     }
 
     private void MovementOnScreen()
