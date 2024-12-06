@@ -261,6 +261,7 @@ public class GameManager : MonoBehaviour
                         if (Coins >= bulletPrice * bulletNum)
                         {
                             Player.coins -= bulletPrice * bulletNum;
+                            Player.charge += bulletNum * 10;
                             bulletNum = 1;
                         }
 
