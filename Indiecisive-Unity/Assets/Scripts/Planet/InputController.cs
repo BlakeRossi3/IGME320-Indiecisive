@@ -25,12 +25,16 @@ public class InputController : MonoBehaviour
     public Sprite leftSprite;
     public Sprite rightSprite;
 
+    public bool shipActive;
+    public bool vendActive;
     public bool shopActive;
     public bool shovel;
     public int coins;
     public GameObject uiPanel;
     private bool uiToggle = false;
     public int charge;
+
+    
 
     public bool inFog;
 
@@ -45,11 +49,9 @@ public class InputController : MonoBehaviour
         charge = PlayerPrefs.GetInt("charge", 0);
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-
         currentDirection = null;
         queuedDirection = null;
         rb.freezeRotation = true;
-        
 
         // hide interaction text
         if (interactionText != null)
@@ -67,13 +69,16 @@ public class InputController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Z))
             {
-                SceneManager.LoadScene("Explore");
+              //  SceneManager.LoadScene("Explore");
             }
         }
         if(Input.GetKeyDown(KeyCode.Z))
         {
             SideMenuToggle();
         }
+
+       
+
     }
 
     void HandleMovementInput()
@@ -235,21 +240,15 @@ public class InputController : MonoBehaviour
             }
 
 
-
+            NPC npcComponent = interactables[objectNum].GetComponent<NPC>();
             float distanceToObject2 = Vector2.Distance(transform.position, interactables[objectNum].transform.position);
 
-            if (Input.GetKeyDown(KeyCode.C) && distanceToObject2 < interactionRadius)
-            {
-                Interact(objectNum);
-            }
-
-            NPC npcComponent = interactables[objectNum].GetComponent<NPC>();
             if (distanceToObject2 > interactionRadius)
             {
                 // Hide the interaction prompt if the player is too far
                 interactionText.gameObject.SetActive(false);
                 textSwitch = false;
-                
+
                 if (npcComponent != null)
                 {
                     npcComponent.moveSpeed = 2f;
@@ -261,7 +260,21 @@ public class InputController : MonoBehaviour
 
             }
 
-            if(objectNum == 4 && inFog && Input.GetKeyDown(KeyCode.X))
+
+
+
+            if (Input.GetKeyDown(KeyCode.C) && distanceToObject2 < interactionRadius && !shopActive && !vendActive && !inFog && !shipActive)
+            {
+                Interact(objectNum);
+            }
+            else if(Input.GetKeyDown(KeyCode.X) && distanceToObject2 < interactionRadius && (shopActive || vendActive || inFog || shipActive))
+            {
+                Interact(objectNum);
+            }
+
+          
+
+            if(objectNum == 3 && inFog && Input.GetKeyDown(KeyCode.X))
             {
                 inFog = false;
                 npcComponent.MenuInteraction();
@@ -279,23 +292,45 @@ public class InputController : MonoBehaviour
             npcComponent.moveSpeed = 0;
             
         }
-        if (type < 3)
+        //determine interaction based on type
+        if (type < 2) //npcs
         {
             npcComponent.DialogueOutput(type);
         }
-        if (type == 4 && !shopActive)
+        else if (type == 2 && !shipActive) //ship
         {
+            moveSpeed = 0;
+            shipActive = true;
+        }
+        else if (type == 2 && shipActive) //ship
+        {
+            moveSpeed = 10;
+            shipActive = false;
+        }
+        else if (type == 3 && !shopActive) //shop
+        {
+            Debug.Log("Shop Active 2");
             moveSpeed = 0;
             shopActive = true;
         }
-        else if (type == 4 && shopActive)
+        else if (type == 3 && shopActive) //shop
         {
             moveSpeed = 10;
             shopActive = false;
         }
-        if (type == 5)
+        else if (type == 4) // explore
         {
             inFog = true;
+        }
+        else if (type == 5 && !vendActive) //shop
+        {
+            moveSpeed = 0;
+            vendActive = true;
+        }
+        else if (type == 5 && vendActive) //shop
+        {
+            moveSpeed = 10;
+            vendActive = false;
         }
         npcComponent.MenuInteraction();
     }
