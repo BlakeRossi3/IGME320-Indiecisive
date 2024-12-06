@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI upgradeInfoText;
     public TextMeshProUGUI upgradePriceText;
 
+    public TextMeshProUGUI creditsVend;
+
     int currentLaserLevel;
     int currentShieldLevel;
     int currentSpeedLevel;
@@ -45,12 +47,26 @@ public class GameManager : MonoBehaviour
     public int selection = 1;
 
     public GameObject upgrade;
+    public GameObject upgradeVend;
 
     float scaleSpeed = 250.0f;  // Amount to scale per frame
     float maxScale = 675f;
     float minScale = 10f;
     private string originalSceneName = "Planet";
     private bool hasSwitchedScenes = false;
+
+    public int bulletNum;
+    public int bulletPrice;
+    public TextMeshProUGUI bulletPriceText;
+    public TextMeshProUGUI bulletCountText;
+     
+    public int selection2 = 1;
+    public GameObject goToSpaceButton;
+    public GameObject challengeBoss;
+
+    public GameObject spaceMeter;
+    public GameObject bossMeter;
+
 
     // Sounds wow very cool man
     [SerializeField] SoundService soundService;
@@ -68,7 +84,8 @@ public class GameManager : MonoBehaviour
         currentSpecialLevel = PlayerPrefs.GetInt("specialLevel", 1);
 
         float ScaleX = 80f;  // Amount to scale
-
+        bulletNum = 0;
+        bulletPrice = 5;
         for (int i = 0; i < currentLaserLevel - 1; i++)
         {
             RectTransform LaserMete = LaserMeter.GetComponent<RectTransform>();
@@ -106,37 +123,156 @@ public class GameManager : MonoBehaviour
         }
     }
 
-        // Update is called once per frame
-        void Update()
+    // Update is called once per frame
+    void Update()
+    {
+        Canvas.ForceUpdateCanvases();
+
+        PlayerPrefs.SetInt("credits", Coins);
+        PlayerPrefs.SetInt("charge", Charge);
+
+        PlayerPrefs.SetInt("laserLevel", currentLaserLevel);
+        PlayerPrefs.SetInt("shieldLevel", currentShieldLevel);
+        PlayerPrefs.SetInt("speedLevel", currentSpeedLevel);
+        PlayerPrefs.SetInt("specialLevel", currentSpecialLevel);
+        PlayerPrefs.Save();
+
+
+
+        if (currentState == GameState.Planet)
         {
-            Canvas.ForceUpdateCanvases();
 
-            PlayerPrefs.SetInt("credits", Coins);
-            PlayerPrefs.SetInt("charge", Charge);
+            InputController Player = player.GetComponent<InputController>();
+            Coins = Player.coins;
+            Charge = Player.charge;
+            creditText.text = (" : " + Coins);
+            creditTextShop.text = (" : " + Coins);
+            bulletText.text = (" : " + Charge);
+            bulletTextShop.text = (" : " + Charge);
 
-            PlayerPrefs.SetInt("laserLevel", currentLaserLevel);
-            PlayerPrefs.SetInt("shieldLevel", currentShieldLevel);
-            PlayerPrefs.SetInt("speedLevel", currentSpeedLevel);
-            PlayerPrefs.SetInt("specialLevel", currentSpecialLevel);
-            PlayerPrefs.Save();
+            bulletCountText.text = ("x" + bulletNum);
+            bulletPriceText.text = ("" + (bulletPrice * bulletNum));
+            creditsVend.text = (" : " + Coins);
 
-
-
-            if (currentState == GameState.Planet)
+            //SHIP MENU
+            if (Player.shipActive)
             {
+                Transform spaceButton = goToSpaceButton.GetComponent<Transform>();
+                Transform bossButton = challengeBoss.GetComponent<Transform>();
 
-                InputController Player = player.GetComponent<InputController>();
-                Coins = Player.coins;
-                Charge = Player.charge;
-                creditText.text = (" : " + Coins);
-                creditTextShop.text = (" : " + Coins);
-                bulletText.text = (" : " + Charge);
-                bulletTextShop.text = (" : " + Charge);
-
-
-                //shop menu logic
-                if (Select != null && Player.shopActive)
+                if (Input.GetKeyDown(KeyCode.DownArrow) && selection2 == 1)
                 {
+                    selection2++;
+
+                    spaceButton.localScale = new Vector3(spaceButton.localScale.x - 15f, spaceButton.localScale.y - 15f, 1);
+                }
+
+                else if (Input.GetKeyDown(KeyCode.UpArrow) && selection2 == 2)
+                {
+                    selection2--;
+
+                    bossButton.localScale = new Vector3(bossButton.localScale.x - 15f, bossButton.localScale.y - 15f, 1);
+                }
+
+                RectTransform upgradeMeterSpace = spaceMeter.GetComponent<RectTransform>();
+                RectTransform upgradeMeterBoss = bossMeter.GetComponent<RectTransform>();
+
+
+                //shrink meters if no key is held
+                if ((upgradeMeterSpace.localScale.x > .02f) && ((!Input.GetKey(KeyCode.C)) || (selection2 == 2)))
+                {
+                    upgradeMeterSpace.localScale = new Vector3(upgradeMeterSpace.localScale.x - 1f * Time.deltaTime, upgradeMeterSpace.localScale.y, 1);
+                    upgradeMeterSpace.localPosition -= new Vector3((1f * Time.deltaTime) / 2, 0f, 0f);  // Move to the left as it grows
+                }
+                if ((upgradeMeterBoss.localScale.x > .02f) && ((!Input.GetKey(KeyCode.C)) || (selection2 == 1)))
+                {
+                    upgradeMeterBoss.localScale = new Vector3(upgradeMeterBoss.localScale.x - 1f * Time.deltaTime, upgradeMeterBoss.localScale.y, 1);
+                    upgradeMeterBoss.localPosition -= new Vector3((1f * Time.deltaTime) / 2, 0f, 0f);  // Move to the left as it grows
+                }
+
+
+                if (selection2 == 1)
+                {
+                    spaceButton.localScale = new Vector3(bossButton.localScale.x + 15f, bossButton.localScale.y + 15f, 1);
+
+                    // Grow the upgrade meter while C is held down and the meter hasn't reached max scale
+                    if (Input.GetKey(KeyCode.C) && upgradeMeterSpace.localScale.x <= 3.2f)
+                    {
+                        upgradeMeterSpace.localScale = new Vector3(upgradeMeterSpace.localScale.x + 1f * Time.deltaTime, upgradeMeterSpace.localScale.y, 1);
+                        upgradeMeterSpace.localPosition += new Vector3((1f * Time.deltaTime) / 2, 0f, 0f);  // Move to the left as it grows
+                    }
+                    if (upgradeMeterSpace.localScale.x > 3.15f)
+                    {
+                        SceneManager.LoadScene("Space");
+                    }
+                }
+                else if (selection2 == 2)
+                {
+                    bossButton.localScale = new Vector3(spaceButton.localScale.x + 15f, spaceButton.localScale.y + 15f, 1);
+
+                    // Grow the upgrade meter while C is held down and the meter hasn't reached max scale
+                    if (Input.GetKey(KeyCode.C) && upgradeMeterBoss.localScale.x <= 4.2f)
+                    {
+                        upgradeMeterBoss.localScale = new Vector3(upgradeMeterBoss.localScale.x + 1f * Time.deltaTime, upgradeMeterBoss.localScale.y, 1);
+                        upgradeMeterBoss.localPosition += new Vector3((1f * Time.deltaTime) / 2, 0f, 0f);  // Move to the left as it grows
+                    }
+
+                    if (upgradeMeterBoss.localScale.x > 4.15f)
+                    {
+                        SceneManager.LoadScene("Boss");
+                    }
+                }
+
+
+            }
+
+
+
+                //VENDING MACHINE
+                if (Player.vendActive)
+                {
+                    RectTransform upgradeMeter2 = upgradeVend.GetComponent<RectTransform>();
+
+                    //increase purchase number of bullets
+                    if (Input.GetKeyDown(KeyCode.LeftArrow) && bulletNum > 1)
+                    {
+                        bulletNum--;
+                    }
+                    else if (Input.GetKeyDown(KeyCode.RightArrow) && bulletNum < 20)
+                    {
+                        bulletNum++;
+                    }
+
+                    //increase meter size
+                    if (Input.GetKey(KeyCode.C) && upgradeMeter2.localScale.x <= 5.2f)
+                    {
+                        upgradeMeter2.localScale = new Vector3(upgradeMeter2.localScale.x + 2f * Time.deltaTime, upgradeMeter2.localScale.y, 1);
+                        upgradeMeter2.localPosition += new Vector3((2f * Time.deltaTime) / 2, 0f, 0f);  // Move to the left as it grows
+                    }
+                    else if (!Input.GetKey(KeyCode.C) && upgradeMeter2.localScale.x > .2f)
+                    {
+                        upgradeMeter2.localScale = new Vector3(upgradeMeter2.localScale.x - 2f * Time.deltaTime, upgradeMeter2.localScale.y, 1);
+                        upgradeMeter2.localPosition -= new Vector3((2f * Time.deltaTime) / 2, 0f, 0f);  // Move to the right as it shrinks
+                    }
+
+                    //handle vending machine purchase
+                    if (upgradeMeter2.localScale.x > 5.15f)
+                    {
+                        if (Coins >= bulletPrice * bulletNum)
+                        {
+                            Player.coins -= bulletPrice * bulletNum;
+                            bulletNum = 1;
+                        }
+
+                        upgradeMeter2.localScale = new Vector3(.2f, upgradeMeter2.localScale.y, 1);
+                        upgradeMeter2.localPosition = new Vector3(-5f, upgradeMeter2.localPosition.y, -1.5f); // Adjust position as needed
+                    }
+                }
+
+                // SHOP MENU
+                if (Player.shopActive)
+                {
+                    Debug.Log("ShopActive");
                     //move selection via arrow keys
                     if (Input.GetKeyDown(KeyCode.DownArrow) && selection < 4)
                     {
@@ -184,13 +320,13 @@ public class GameManager : MonoBehaviour
                     }
                     RectTransform upgradeMeter = upgrade.GetComponent<RectTransform>();
                     // Grow the upgrade meter while X is held down and the meter hasn't reached max scale
-                    if (Input.GetKey(KeyCode.X) && upgradeMeter.localScale.x <= maxScale)
+                    if (Input.GetKey(KeyCode.C) && upgradeMeter.localScale.x <= maxScale)
                     {
                         upgradeMeter.localScale = new Vector3(upgradeMeter.localScale.x + scaleSpeed * Time.deltaTime, upgradeMeter.localScale.y, 1);
                         upgradeMeter.localPosition += new Vector3((scaleSpeed * Time.deltaTime) / 2, 0f, 0f);  // Move to the left as it grows
                     }
                     // Shrink the upgrade meter when X is released and the meter is above min scale
-                    else if (!Input.GetKey(KeyCode.X) && upgradeMeter.localScale.x > minScale)
+                    else if (!Input.GetKey(KeyCode.C) && upgradeMeter.localScale.x > minScale)
                     {
                         upgradeMeter.localScale = new Vector3(upgradeMeter.localScale.x - scaleSpeed * Time.deltaTime, upgradeMeter.localScale.y, 1);
                         upgradeMeter.localPosition -= new Vector3((scaleSpeed * Time.deltaTime) / 2, 0f, 0f);  // Move to the right as it shrinks
@@ -226,9 +362,10 @@ public class GameManager : MonoBehaviour
 
                 }
 
-            }
+            
 
         }
+    }
     
 
     // Enum to hold different game states
