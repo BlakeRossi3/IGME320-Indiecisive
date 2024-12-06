@@ -1125,7 +1125,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 88afa0dfb3177e643aaea8e3e0ae86a8, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.065
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1520,6 +1520,7 @@ MonoBehaviour:
   - alright!
   - let's land on this nearby planet,
   - and restock on resources!
+  - 
   - 
   invokeBool: 1
   i: 0
