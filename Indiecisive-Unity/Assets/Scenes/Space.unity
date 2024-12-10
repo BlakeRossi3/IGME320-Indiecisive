@@ -1272,7 +1272,6 @@ RectTransform:
   - {fileID: 1962098200}
   - {fileID: 2027596620}
   - {fileID: 515512434}
-  - {fileID: 566407694}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1375,7 +1374,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 1380f8b27335d954a99e9811f3d79356, type: 3}
+  m_audioClip: {fileID: 8300000, guid: e3334c8abab4c2944a00f0ee45ab1532, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -1809,6 +1808,13 @@ MonoBehaviour:
   enemies: {fileID: 44939680}
   timer: {fileID: 1192453956}
   startDelay: 3.3
+  playerText: {fileID: 0}
+  enemyType1: {fileID: 0}
+  enemyType2: {fileID: 0}
+  playerHealth: {fileID: 0}
+  shieldStatus: {fileID: 0}
+  specialStatus: {fileID: 0}
+  timeManager: {fileID: 0}
 --- !u!4 &1080302709
 Transform:
   m_ObjectHideFlags: 0
@@ -2925,6 +2931,18 @@ PrefabInstance:
     - target: {fileID: 1282703061755308135, guid: 614a32956712b4e459f0341936be313f, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4521343322438697022, guid: 614a32956712b4e459f0341936be313f, type: 3}
+      propertyPath: m_Size.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4521343322438697022, guid: 614a32956712b4e459f0341936be313f, type: 3}
+      propertyPath: m_Size.y
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 4521343322438697022, guid: 614a32956712b4e459f0341936be313f, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.25
       objectReference: {fileID: 0}
     - target: {fileID: 4772400719935655383, guid: 614a32956712b4e459f0341936be313f, type: 3}
       propertyPath: source0
